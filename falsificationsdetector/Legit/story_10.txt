@@ -1,0 +1,45 @@
+﻿•	FBI agents can only see see spy data on Americans in certain circumstances 
+•	But declassified documents show laws are being bent and broken 
+•	Data has been shared with outside parties, and client-lawyer privilege breached
+•	Comey also said only people with 'appropriate training and oversight' see data
+•	But for years FBI failed to install review teams to vet intercepted data for legality
+•	And only now are they aggressively training up staff so they can vet it 
+•	Comey said agents only see 'lawfully collected, carefully overseen' data
+•	But court heard FBI searches give access to all data - including US citizens'
+By James Wilkinson For Dailymail.com 
+The FBI has illegally shared spy data on US citizens with a series of outside bodies including the NSA, government contractors and a 'private entity,' newly released documents show.
+The declassified memos claim there were repeated breaches of laws designed to protect Americans from being illicitly snooped on and that FBI agents were not properly trained to handle the data, Circa reported.
+That directly contradicts statements made by former FBI director James Comey on May 3, in his last congressional hearing before he was fired.
+He claimed that his agents only used spy data on Americans without a warrant when it had been 'lawfully collected, carefully overseen and checked' - but the memos say that's not true.
+
+The claims emerged in a newly declassified April ruling by the Foreign Intelligence Surveillance Court (FISA) that accuses the FBI of hundreds of violations.
+Among those violations are instances of the agency sharing data illegally with third parties including a 'private entity' with no legal right to access the information.
+The FBI also accessed protected attorney-client communications that had been intercepted without using the oversight procedures it claimed had been put in place.
+Not only that, but they failed for two years to put in place properly trained review teams that can determine whether intercepts break attorney-client privilege.
+The FBI told the FISA court that it was training up agents in this area to solve the problem.
+Unfortunately that remark contradicted a statement made by Comey last year: 'Nobody gets to see FISA information of any kind unless they've had the appropriate training and have the appropriate oversight,' he told 
+The FISA court itself said that it was 'concerned about the FBI's apparent disregard' of rules designed to minimize access to restricted info.
+It also questioned 'whether the FBI is engaging in similar disclosures of raw Section 702 information that have not been reported.' 
+Some FBI agents had accessed spy data without adhering to the proper rules - at least one time intentionally, the court heard. And data was shared illegally with third parties including a private party
+Section 702 of the Foreign Surveillance Act lets the FBI access - without a warrant - US citizens' communications 'foreign targets' that have been collected by the NSA.
+Without it, the FBI cannot surveil an American citizen without a warrant. 
+The court also said in a footnote that 'Improper access' by FBI contractors to NSA spy data 'seems to have been the result of deliberate decision-making.'
+That is, there was an intentional breach of rules designed to safeguard the security of Americans. 
+The court added that that it it now 'investigating whether there have been similar cases in which the FBI improperly afforded non-FBI personnel access to raw FISA-acquired information on FBI systems.'
+Amy Jeffress, a former security adviser to ex-Attorney General Eric Holder, was appointed to lead an independent investigation by FISA in 2015.
+She said that one major problem with the FBI's system was that it treats the sensitive data like any other information.
+Because it did not distinguish between data collected on US citizens and that of non-US citizens, 'the FBI may query the data using US-person identifiers for purposes of any criminal investigation or even an assessment,' she wrote in her report.
+'There is no requirement that the matter be a serious one, or that it even have any relation to national security.
+She added: 'the practices do not comply with Section 702 [which outlines legal restrictions on usage of data] or the Fourth Amendment'. 
+
+Amy Jeffress (pictured) headed up an independent investigation in 2015 that concluded the FBI's data searches made it too easy to access info on Americans without a warrant or even any legal justification
+A lawyer for the Justice Department, meanwhile, said that agencies needed to go beyond the bounds of what Jeffress was comfortable with in order to effectively gather intelligence.
+'If we require our agents to write a full justification every time - think about if you wrote a full justification every time you used Google,' a Justice Department lawyer said.
+'Among other things, you would use Google a lot less.'
+The 2015 court rejected Jeffress' claims.
+Section 702, last amended in 2008, is up for renewal this year.
+Lawmakers are currently discussing amendments that have left some intelligence officials on edge.
+Representative Trent Frank (R-Ariz) is a member of the House Judiciary Committee who will help table the new 702 law.
+He said politicians on both sides of the aisle are becoming uncomfortable with how far the intelligence community can now reach - and want to make sure they toe the line.
+'The bottom line is the law has to be followed, and when it isn't there has to be consequence that is of significance so that it deters others from breaking the same law,' he said.
+

@@ -1,0 +1,43 @@
+﻿Wi-Fi hack was revealed in CIA documents released by Wikileaks last week
+•  The implant is capable of infecting routers from 10 well-know US manufacturers
+•  Once infected, routers are used to spy on the internet activity of targets
+•  In total the firmware runs on 25 home router models but could infect more
+Leaked CIA documents have revealed the agency has been hacking people's Wi-Fi routers and using them as covert listening points.
+Infected routers are used to spy on the activity of internet-connected device, according to decade-old secret documents leaked on Thursday by Wikileaks. 
+Home routers from 10 US manufacturers, including Linksys, DLink, and Belkin, have been used by the CIA to monitor internet traffic. 	
+Home routers from 10 US manufacturers, including Linksys, DLink, and Belkin, have been used by the CIA to monitor internet traffic. Pictured is a list of some of the routers vulnerable to the agency's 'CherryBlossom' implant
+THE CHERRYBLOSSOM WI-FI HACK
+Once installed, CherryBlossom turns the device into a 'Flytrap' that sends messages to a CIA-controlled server known as 'CherryTree'.
+The Flytrap sends the router's device status and security information, which CherryTree logs to a database.
+The CherryTree server then sends the infected device a 'mission' with specific tasks tailored to the target.
+A web-based user interface known as 'CherryWeb' is used by CIA operators to check the Flytrap's status and web traffic and to assign the infected device new missions.
+Missions assigned to the Flytrap can target specific laptops or phones in the house based on IP and email addresses, chat user names and MAC addresses.
+Mission tasks include copying some or all of the user's internet traffic, email exchanges and private chat usernames.
+Wikileaks released the entire 175-page CIA user manual for the implant, which is codenamed 'CherryBlossom'.
+In total, the manual says that the firmware runs on 25 router models, but could run on more than 100 with minor modifications.
+'The Cherry Blossom (CB) system provides a means of monitoring the internet activity of and performing software exploits on targets of interest,' the document reads.
+'In particular, CB is focused on compromising wireless networking devices, such as wireless (802.11) routers and access points (APs), to achieve these goals.'
+The firmware is especially effective against some D-Link-made DIR-130 and Linksys-manufactured WRT300N models because they can be remotely infected even if they have a strong administrator password.
+An exploit codenamed 'tomato' can extract passwords from these routers if a default feature known as universal plug and play is left on.
+
+Routers protected with a default or weak password are easily infected by the firmware, the manual says.
+Once installed, CherryBlossom turns the device into a 'Flytrap' that sends messages called beacons to a CIA-controlled server known as 'CherryTree'.
+The Flytrap sends the router's device status and security information, which CherryTree logs to a database.
+
+
+Figure 1: once installed, the 'CherryBlossom' implant turns the router into a 'Flytrap' (right) that sends messages called 'beacons' to a CIA server known as 'CherryTree' (top left). The CherryTree server then sends the infected device a 'mission' with specific ta
+ 
+Figure 2: Missions assigned to the flytrap can target specific laptops or phones in the house based on IP and email addresses, chat user names and MAC addresses. Mission tasks include copying some or all of the user's internet traffic, email exchanges and privat
+ 
+
+The CherryTree server then sends the infected device a 'mission' with specific tasks tailored to the target.
+A web-based user interface known as 'CherryWeb' is used by CIA operators to check the Flytrap's status and web traffic and to assign the infected device new missions.
+Missions assigned to the Flytrap can target specific laptops or phones in the house based on IP and email addresses, chat user names and MAC addresses.
+Figure 3: Missions assigned to the Flytrap can target specific laptops or phones in the house based on IP and email addresses, chat user names and MAC addresses. Image shows a Linksys router, one of the large US firms whose products are mentioned in the leaked d
+ 
+Missions tasks include copying some or all of the user's internet traffic, email exchanges and private chat usernames.
+All exchanges between the Flytrap and device and the CIA's CherryTree server are encrypted and and cryptographically authenticated. 
+The documents date back to 2007, meaning the agency has been using the Wi-Fi hack for at least a decade.
+CIA officials are yet to comment on the legitimacy of the leaked documents. 
+Figure 4: CIA documents released by Wikileaks have revealed that the agency has been hacking people's Wi-Fi routers for years and using them as covert listening points (stock image)
+ 

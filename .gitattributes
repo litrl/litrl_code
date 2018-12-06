@@ -1,0 +1,17 @@
+clickbaitdetector/index.html linguist-vendored
+clickbaitdetector/plots_features/* linguist-vendored
+satiredetector/nadia/html/* linguist-vendored
+clickbaitdetector/public/* linguist-vendored
+satiredetector/nadia/html/* linguist-vendored
+clickbaitdetector/notclickbaitswearing.txt linguist-vendored
+clickbaitdetector/stopwordswearing.txt linguist-vendored
+clickbaitdetector/features.txt linguist-vendored
+clickbaitdetector/truth-means.txt linguist-vendored
+clickbaitdetector/ganguly-stop-clickbait/README.txt linguist-vendored
+clickbaitdetector/ganguly-stop-clickbait/CITATION_FOR_THESE_FILES.txt linguist-vendored
+vs_solution/LITRL/Decoy/License-LGPL.txt linguist-vendored
+clickbaitdetector/dependencies/* linguist-vendored
+clickbaitdetector/analytics/* linguist-vendored
+vs_solution/LITRL/Decoy/detectors/* linguist-vendored
+# Auto detect text files and perform LF normalization
+* text=auto

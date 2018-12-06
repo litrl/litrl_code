@@ -1,0 +1,1 @@
+Public domain, see https://system.data.sqlite.org/index.html/doc/trunk/www/copyright.wiki

@@ -2,7 +2,7 @@
 
 Demonstration: https://www.youtube.com/watch?v=OtitQ-f4AL4
 
-Welcome to the Litrl (pronounced "literal") Web Browser, which implements aspects of Prof. Victoria Rubin's (Western University, Canada) News Verification Suite concept (https://www.researchgate.net/publication/316754164_News_Verification_Suite_Towards_System_Design_to_Supplement_Reporters'_and_Editors'_Judgements)
+Welcome to the Litrl (pronounced "literal") Browser, which implements aspects of Prof. Victoria Rubin's (Western University, Canada) News Verification Suite concept (https://www.researchgate.net/publication/316754164_News_Verification_Suite_Towards_System_Design_to_Supplement_Reporters'_and_Editors'_Judgements)
 
 The Litrl Browser provides visual identification of clickbait, satire, and falsification text, to a certain accuracy level. Images and video are unsupported - only text is processed. Litrl Browser is not perfect and is not always correct. Digital literacy is key for everyone to effectively evaluate potential misinformation online, and the Litrl Browser is **NOT** a replacement for that.
 

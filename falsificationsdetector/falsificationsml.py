@@ -41,6 +41,7 @@ from pattern.en import parsetree
 from pattern.en import parse
 from pattern.en import tokenize
 from pattern.en import tree
+from pattern.en import positive
 from pattern.en.wordlist import PROFANITY
 from pattern.en.wordlist import TIME
 
@@ -49,17 +50,12 @@ from nltk import word_tokenize, ne_chunk, pos_tag
 from nltk import sent_tokenize
 from nltk import FreqDist
 from nltk.tree import Tree
-#from statistics import mean
 from pattern.en import sentiment
 
-#fix me
-slangARRAY=[]
-generalizingARRAY=[]
-negativeARRAY=[]
-positiveARRAY=[]
-
-uncertainwordsARRAY=[]
-forwardRef=[]
+slangARRAY=['OMG', 'LOL', 'Whoah', 'Wow', 'Whoa', 'Epic', 'aha', 'alas', 'woops', 'oops', 'jeez', 'uggh', 'gosh', 'hmmm', 'hmm', 'ha', 'haa', 'bravo']
+generalizingARRAY=['all', 'everyone', 'everywhere', 'everybody', 'everything', 'nobody', 'none', 'most', 'many', 'lot', 'always', 'entire', 'entirely', 'complete', 'completely', 'absolute', 'absolutely', 'total', 'totally', 'whole', 'wholly', 'utter', 'utterly', 'someone', 'somebody', 'somewhere', 'anyone', 'anywhere']
+uncertainwordsARRAY=['maybe', 'perhaps', 'peradventure', 'possibly', 'probably', 'perchance']
+forwardRef=['this', 'that', 'these', 'those', 'yon', 'yonder', 'she', 'her', 'he', 'him', 'it', 'I', 'me', 'you', 'we', 'us', 'they', 'them', 'my', 'hers', 'his', 'your', 'its', 'their', 'our']
 
 class falsificationDetector:
 
@@ -606,9 +602,9 @@ class falsificationDetector:
 						lowercaseCHAR=newSentences1[c].lower()
 						wordLIST.append(lowercaseCHAR)
 						c=c+1
-						if lowercaseCHAR in positiveARRAY:
+						if positive(lowercaseCHAR, threshold=0.5):
 						   positiveCOUNTER=positiveCOUNTER+1
-						if lowercaseCHAR in negativeARRAY:
+						else:
 						   negativeCOUNTER=negativeCOUNTER+1
 		totalAFFECT=float(negativeCOUNTER+positiveCOUNTER)
 		Affect=float(totalAFFECT/sentencecount)

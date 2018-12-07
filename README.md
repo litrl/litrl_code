@@ -18,6 +18,8 @@ litrlbrowser@gmail.com
 ### If you use Litrl Browser for research, we ask that you cite the following for now (a full publication is in process):
 Rubin, Victoria L., Brogly, Chris, Conroy, Nadia, Chen, Yimin, Cornwell, Sarah, Asubiaro, Toluwase (2018). LitRL News Verification Browser: Clickbait, Satirical Fakes, and Falsified News Detectors. GitHub. https://github.com/litrl/litrl_code. DOI.
 
+[![DOI](https://zenodo.org/badge/160725581.svg)](https://zenodo.org/badge/latestdoi/160725581)
+
 ## Why not a plugin?
 Various plugins have already been attempted in this area. We decided to develop a separate research tool for deception with a simple user interface that allowed for easier real-world testing of our group's previous work.
 

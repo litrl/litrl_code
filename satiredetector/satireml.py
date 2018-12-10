@@ -458,22 +458,61 @@ class satireDetector:
             else: humflag=0
         return humflag
 
-
-    def train(self, allClassifiers=False, crossValidate=False):
-
+    def trainTestSplit(self, train_percent=0.8):
         #THE TRAINING SET USED IN THE MODEL IS RETRIEVED HERE#
         train = pd.read_csv("./data/All_Data_475_no_newlines.csv", header=0, sep=",", error_bad_lines=False)
 
+        self.satire = []
+        self.not_satire = []
+
+        i = 0
+        for i in xrange(0, len(train['Full Text'])):
+            if train['Satire Flag'][i] == 0:
+                self.not_satire.append(str(train['Full Text'][i]).decode('utf-8',errors='ignore'))
+            else:
+                self.satire.append(str(train['Full Text'][i]).decode('utf-8',errors='ignore'))
+            i = i + 1
+
+        self.notSatireTrain, self.notSatireTest = train_test_split(self.not_satire, train_size = train_percent)
+        self.satireTrain, self.satireTest = train_test_split(self.satire, train_size = train_percent)
+
+        Xtrain = np.array(self.notSatireTrain + self.satireTrain)
+        Ytrain = []
+
+        for x in xrange(len(self.notSatireTrain)):
+            Ytrain.append(0)
+        for x in xrange(len(self.satireTrain)):
+            Ytrain.append(1)
+
+        Xtest = np.array(self.notSatireTest + self.satireTest)
+        Ytest = []
+
+        for x in xrange(len(self.notSatireTest)):
+            Ytest.append(0)
+        for x in xrange(len(self.satireTest)):
+            Ytest.append(1)
+
+        print "Satire Stories for Training: ", len(Xtrain)
+        print "Satire Stories for Testing: ", len(Xtest)
+
+        self.train(Xtrain, Ytrain)
+
+        correct_preds = 0
+
+        for x in xrange(len(Ytest)):
+            pred = self.classifier_linear.predict(self.getScores([Xtest[x]]))
+            if pred == Ytest[x]:
+                correct_preds = correct_preds + 1
+
+        print "Correct classifications: ", correct_preds
+        print "Total classifications:   ", len(Ytest)
+        self.classifierScore_SVM = "SVM Test set score: ", correct_preds / float(len(Ytest))
+        print self.classifierScore_SVM
+
+    def train(self, train_data, Ytrain, allClassifiers=False, crossValidate=False):
+
         avgSatire = []
         avgNotSatire = []
-
-        Ytrain =[]
-        for train_label in train['Satire Flag']:
-           Ytrain.append(int(train_label))
-
-        train_data =[]
-        for story in train['Full Text']:
-            train_data.append(str(story).decode('utf-8',errors='ignore'))
 
         ######################## vectors construction and training ####################
 
@@ -494,7 +533,7 @@ class satireDetector:
         for story in train_data:
 
             avgArrayName = ""
-            if train['Satire Flag'][train_count] == 0:
+            if Ytrain[train_count] == 0:
                 avgArrayName = "NotSatire"
             else:
                 avgArrayName = "Satire"
@@ -654,24 +693,7 @@ class satireDetector:
             #PERFORM 10-fold Cross Validation for Accuracy Score
             scores = cross_val_score(self.classifier_linear,Xtrain, Ytrain, cv=10, scoring='accuracy')
 
-    def predict(self, text):
-        #accept a headline and body text
-        test_dataF = text
-
-        if test_dataF:
-            test_dataF= test_dataF.replace("\n","")
-
-            #COMBINE THE HEADLINE AND BODY INTO ONE INPUT
-            test_dataF = test_dataF
-
-        t = {'Full Text': [test_dataF]}
-        test = pd.DataFrame(data=t)
-
-		#Read the stories in the test set
-        test_data = []
-
-        for testitem in test['Full Text']:
-            test_data.append(str(testitem).decode('utf-8',errors='ignore'))
+    def getScores(self, test_data):
 
         test_tdfvectors = self.vectorizer.transform(array(test_data))
 
@@ -769,6 +791,28 @@ class satireDetector:
 
         Xtest = np.append(test_tdfvectors.toarray(), featuresWithFlags)
         Xtest=Xtest.reshape(1,-1)
+        return Xtest
+
+    def predict(self, text):
+        #accept a headline and body text
+        test_dataF = text
+
+        if test_dataF:
+            test_dataF= test_dataF.replace("\n","")
+
+            #COMBINE THE HEADLINE AND BODY INTO ONE INPUT
+            test_dataF = test_dataF
+
+        t = {'Full Text': [test_dataF]}
+        test = pd.DataFrame(data=t)
+
+		#Read the stories in the test set
+        test_data = []
+
+        for testitem in test['Full Text']:
+            test_data.append(str(testitem).decode('utf-8',errors='ignore'))
+
+        Xtest = self.getScores(test_data)
 
         prediction_linear = self.classifier_linear.predict(Xtest)
         prediction_scores = self.classifier_linear.predict_proba(Xtest)

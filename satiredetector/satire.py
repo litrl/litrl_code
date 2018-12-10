@@ -41,7 +41,7 @@ def main():
     pr.enable()
 
     detector = satireDetector()
-    detector.train()
+    detector.trainTestSplit()
 
     #dump (serialize) the detector object so we don't have to retrain every time
     #use a dump of the detector that has the highest observed accuracy

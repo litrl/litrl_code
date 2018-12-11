@@ -18,12 +18,12 @@
 '''
 
 #-------------------------------------------------------------------------------
-# Name:        falsificationsml.py
-# Purpose:     detect falsifications in text
-#              Warning: This code contains a lot of REALLY offensive + bad words!
-#                       These words may be more likely to occur in falsified content.
+# Name:        falsificationml.py
+# Purpose:     detect falsifications
 #
-# Created:     01/2018
+# Created:     December 2018
+#              This work is a combination of the original falsification detector
+#              and the Falsification detector to attempt to improve accuracy.
 #
 # Language and Information Technology Research Lab
 # Faculty of Information and Media Studies (FIMS)
@@ -31,11 +31,39 @@
 #-------------------------------------------------------------------------------
 
 import codecs
-import numpy as np
 import warnings
+import operator
+import nltk
+import math
+import numpy as np
+import sys
+import csv
+import json
+import pandas as pd
+import os
+from io import BytesIO
+from nltk import ne_chunk, pos_tag, word_tokenize, sent_tokenize
+from nltk.tokenize import sent_tokenize
+from nltk.tree import Tree
+from nltk.corpus import wordnet as wn
+from nltk.corpus import brown
 from numpy import array
 from sklearn import svm
-from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import MultinomialNB
+from nltk import PunktSentenceTokenizer
+from sklearn.feature_extraction.text import TfidfTransformer
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.cross_validation import KFold
+from sklearn.cross_validation import cross_val_score
+from sklearn.cross_validation import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import classification_report
+from sklearn import metrics
+from pattern.en import ngrams, modality, mood, sentiment, number, wordnet
+from pattern.vector import Document, Model
+from os.path import isfile, join
+
 from pattern.en import tag
 from pattern.en import parsetree
 from pattern.en import parse
@@ -45,171 +73,169 @@ from pattern.en import positive
 from pattern.en.wordlist import PROFANITY
 from pattern.en.wordlist import TIME
 
-import nltk, re, pprint
-from nltk import word_tokenize, ne_chunk, pos_tag
-from nltk import sent_tokenize
-from nltk import FreqDist
-from nltk.tree import Tree
+from nltk import ne_chunk, pos_tag, re, pprint, FreqDist
 from pattern.en import sentiment
 
-slangARRAY=['OMG', 'LOL', 'Whoah', 'Wow', 'Whoa', 'Epic', 'aha', 'alas', 'woops', 'oops', 'jeez', 'uggh', 'gosh', 'hmmm', 'hmm', 'ha', 'haa', 'bravo']
-generalizingARRAY=['all', 'everyone', 'everywhere', 'everybody', 'everything', 'nobody', 'none', 'most', 'many', 'lot', 'always', 'entire', 'entirely', 'complete', 'completely', 'absolute', 'absolutely', 'total', 'totally', 'whole', 'wholly', 'utter', 'utterly', 'someone', 'somebody', 'somewhere', 'anyone', 'anywhere']
-uncertainwordsARRAY=['maybe', 'perhaps', 'peradventure', 'possibly', 'probably', 'perchance']
-forwardRef=['this', 'that', 'these', 'those', 'yon', 'yonder', 'she', 'her', 'he', 'him', 'it', 'I', 'me', 'you', 'we', 'us', 'they', 'them', 'my', 'hers', 'his', 'your', 'its', 'their', 'our']
+slangARRAY = ['OMG', 'LOL', 'Whoah', 'Wow', 'Whoa', 'Epic', 'aha', 'alas', 'woops', 'oops', 'jeez', 'uggh', 'gosh', 'hmmm', 'hmm', 'ha', 'haa', 'bravo']
+generalizingARRAY = ['all', 'everyone', 'everywhere', 'everybody', 'everything', 'nobody', 'none', 'most', 'many', 'lot', 'always', 'entire', 'entirely', 'complete', 'completely', 'absolute', 'absolutely', 'total', 'totally', 'whole', 'wholly', 'utter', 'utterly', 'someone', 'somebody', 'somewhere', 'anyone', 'anywhere']
+uncertainwordsARRAY = ['maybe', 'perhaps', 'peradventure', 'possibly', 'probably', 'perchance']
+forwardRef = ['this', 'that', 'these', 'those', 'yon', 'yonder', 'she', 'her', 'he', 'him', 'it', 'I', 'me', 'you', 'we', 'us', 'they', 'them', 'my', 'hers', 'his', 'your', 'its', 'their', 'our']
 
 class falsificationDetector:
 
     def __init__(self):
         self.AMT_STORIES_FAKE = 138
         self.AMT_STORIES_LEGIT = 138
+        print "Total Falsification stories (legit):  ", self.AMT_STORIES_LEGIT
+        print "Total Falsification stories (fake): ", self.AMT_STORIES_FAKE
+        print "Total Falsification stories: ", self.AMT_STORIES_FAKE + self.AMT_STORIES_LEGIT
         self.PATH_LEGIT = './Legit/story_'
         self.PATH_FAKE = './Fake/storyf_'
-        self.TRAIN_SIZE = 0.8
         self.loadSwearing()
 
-    def train(self):
-        print "Training Falsifications Detector..."
-        legitScores = []
-        falseScores = []
+    def v(self, verbose, text):
+        if verbose:
+            print "Verbose Output: ", text
 
-        avgLegitScores = []
-        avgFalseScores = []
+    ######################## named entities  #########################
 
-        for x in xrange(1, self.AMT_STORIES_LEGIT):
-            lineLIST = self.getParagraphs(self.PATH_LEGIT, x)
-            legitScore = self.getScores(lineLIST)
+    def keywithmaxval(self, A):
+         newA = dict(sorted(A.iteritems(), key=operator.itemgetter(1), reverse=True)[:3])
+         return newA
 
-            #set up our list of features averages based on the size of our first sample
-            if len(avgLegitScores) == 0:
-                for c in xrange(len(legitScore)):
-                    avgLegitScores.append(0)
+    def get_continuous_chunks(self, s):
+      #FIND A LIST OF NAMED ENTITES IN A STORY, INCLUDING LEAF NODES IN THE CASE OF TREES
+      continuous_chunk = []
+      chunked = ne_chunk(pos_tag(word_tokenize(s)))
+      prev = None
+      current_chunk = []
+      for i in chunked:
+         if type(i) == Tree:
+              current_chunk.append(" ".join([token for token, pos in i.leaves()]))
+         elif current_chunk:
+              named_entity = " ".join(current_chunk)
+              if named_entity not in continuous_chunk:
+                 continuous_chunk.append(named_entity)
+                 current_chunk = []
+         else:
+              continue
+      return continuous_chunk
 
-            #sum everything to get an average later
-            for x in xrange(len(legitScore)):
-                avgLegitScores[x] = float(avgLegitScores[x]) + float(legitScore[x])
+    #f - feature
+    #f1: PRP + PRP$ (check)
+    def getPronouns(self, partsOfSpeech, wordCount):
+        count = 0
+        for pos in partsOfSpeech:
+            if u"PRP" in pos:
+                count = count + 1
+        return (float(count) / float(wordCount)) * 100
 
-            legitScores.append(legitScore)
-        for x in xrange(1, self.AMT_STORIES_FAKE):
-            lineLIST = self.getParagraphs(self.PATH_FAKE, x)
-            falseScore = self.getScores(lineLIST)
+    #f2
+    #PRP
+    def getPersonalPronouns(self, partsOfSpeech, wordCount):
+        count = 0
+        for pos in partsOfSpeech:
+            if u"PRP" == pos:
+                count = count + 1
+        return (float(count) / float(wordCount)) * 100
 
-            #set up our list of features averages based on the size of our first sample
-            if len(avgFalseScores) == 0:
-                for c in xrange(len(falseScore)):
-                    avgFalseScores.append(0)
+    #f3: PRP$ (pronouns, possessive. check)
+    def getPossessivePronouns(self, partsOfSpeech, wordCount):
+        count = 0
+        for pos in partsOfSpeech:
+            if u"PRP$" == pos:
+                count = count + 1
+        return (float(count) / float(wordCount)) * 100
 
-            #sum everything to get an average later
-            for x in xrange(len(falseScore)):
-                avgFalseScores[x] = float(avgFalseScores[x]) + float(falseScore[x])
+    #f4: PP (prepositional phrase? check)
+    def getPrepositionalPhrases(self, chunksOfSpeech, wordCount):
+        count = 0
+        for chunk in chunksOfSpeech:
+            if u"PP" == chunk.type:
+                count = count + 1
+        return (float(count) / float(wordCount)) * 100
 
-            falseScores.append(falseScore)
+    #f5: VP
+    def getVerbPhrases(self, chunksOfSpeech, wordCount):
+        count = 0
+        for chunk in chunksOfSpeech:
+            if u"VP" == chunk.type:
+                count = count + 1
+        return (float(count) / float(wordCount)) * 100
 
-        #divide to get avgs
-        for x in xrange(len(avgFalseScores)):
-            avgFalseScores[x] = avgFalseScores[x] / float(len(avgFalseScores))
-        for x in xrange(len(avgLegitScores)):
-            avgLegitScores[x] = avgLegitScores[x] / float(len(avgLegitScores))
+    #f6: CC, IN
+    def getConjunctions(self, partsOfSpeech, wordCount):
+        count = 0
+        for pos in partsOfSpeech:
+            if u"CC" == pos:
+                count = count + 1
+            elif u"IN" == pos:
+                count = count + 1
+        return (float(count) / float(wordCount)) * 100
 
-        print "AVG Legit Scores"
-        print avgLegitScores
+    #f7: ADVP
+    def getAdverbPhrases(self, chunksOfSpeech, wordCount):
+        count = 0
+        for chunk in chunksOfSpeech:
+            if u"ADVP" == chunk.type:
+                count = count + 1
+        return (float(count) / float(wordCount)) * 100
 
-        print "AVG False Scores"
-        print avgFalseScores
+    #f8: ADJP
+    def getAdjectivePhrases(self, chunksOfSpeech, wordCount):
+        count = 0
+        for chunk in chunksOfSpeech:
+            if u"ADJP" == chunk.type:
+                count = count + 1
+        return (float(count) / float(wordCount)) * 100
 
-        legitTrain, legitTest = train_test_split(legitScores, train_size = self.TRAIN_SIZE)
-        falseTrain, falseTest = train_test_split(falseScores, train_size = self.TRAIN_SIZE)
+    #f9: no equal for periods. write.
+    def getPeriods(self, sentence):
+        count = sentence.string.count(u".")
+        return count
 
-        Xtrain = []
-        Ytrain = []
+    #f10: ,
+    def getCommas(self, sentence):
+        count = sentence.string.count(u",")
+        return count
 
-        Xtrain = legitTrain + falseTrain
-        for x in xrange(len(legitTrain)):
-            Ytrain.append(0)
-        for x in xrange(len(falseTrain)):
-            Ytrain.append(1)
+    #f11:
+    def getColon(self, sentence):
+        count = sentence.string.count(u":")
+        return count
 
-        Xtest = []
-        Ytest = []
+    #f12: no equal for semicolon. write.
+    def getSemicolon(self, sentence):
+        count = sentence.string.count(u";")
+        return count
 
-        Xtest = legitTest + falseTest
-        for x in xrange(len(legitTest)):
-            Ytest.append(0)
-        for x in xrange(len(falseTest)):
-            Ytest.append(1)
+    #f13: percent of sentences ending with a "?"
+    def getQuestionMarks(self, sentence):
+        count = sentence.string.count(u"?")
+        return count
 
-        # Perform classification with SVM, kernel=linear
-        self.classifier_linear = svm.SVC(kernel='linear', probability = True)
-        self.classifier_linear.fit(Xtrain, Ytrain)
+    #f14: no equal exclamations. write.
+    def getExclamationMarks(self, sentence):
+        count = sentence.string.count(u"!")
+        return count
 
-        test_pred = self.classifier_linear.predict(Xtest)
-
-        #store the predictions
-        npYtest = np.array(Ytest)
-        classifierScoreSVM = "Test set score: {:.2f}".format(np.mean(test_pred == npYtest))
-
-        print "Train set Legit Stories Amount: ", str(len(legitTrain))
-        print "Train set False Stories Amount: ", str(len(falseTrain))
-
-        print "Test set Legit Stories Amount: ", str(len(legitTest))
-        print "Test set False Stories Amount: ", str(len(falseTest))
-
-        print classifierScoreSVM
-
-    def predict(self, text):
-        lineLIST = text.split(".")
-
-        with warnings.catch_warnings():
-            warnings.simplefilter("ignore")
-            features = self.getScores(lineLIST)
-            prediction_linear = self.classifier_linear.predict(features)
-            prediction_scores = self.classifier_linear.predict_proba(features)
-
-        betterString = str(prediction_scores[0])[1:-1]
-        classValues = betterString.split(" ")
-        classValues = filter(None, classValues) # fastest
-        return ",".join(classValues) + "," + ",".join(str(featScore) for featScore in features)
-
-    def getScores(self, lineLIST):
-        f1 = self.getNoOfParagraphsPerNewsStory(lineLIST)
-        f2 = self.getAVGWordLength(lineLIST)     #NOTE: definitely a bug in this function, results are too low
-        f3 = self.getAVGNoOfSentencesPerParagraph(lineLIST)
-        f4 = self.getAVGNoOfWordsPerSentence(lineLIST)
-        f5 = self.getAVGNoOfWordsPerParagraph(lineLIST)
-        f6 = self.getPausality(lineLIST)
-        f7 = 0 #self.getVerifiableFACTSperSENTENCE(lineLIST) #too slow or infinite loop, disabled
-        f8 = self.getEMOTIVENESS(lineLIST)
-        f9 = self.getPRONOUNcountperSENTENCE(lineLIST)
-        f10 = self.getINFORMALITY(lineLIST)
-        f11 = self.getLEXICALdiversity(lineLIST)
-        f12 = self.getAFFECT(lineLIST)
-        scores = [f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12]
-        return scores
-
-    def getParagraphs(self, filePath, storyNum):
-        lineLIST = list()
+	#falsification add-ons
+    def getText(self, filePath, storyNum):
+        text = ""
         fileextension = '.txt'
         fullPath = filePath + str(storyNum) + fileextension
         with codecs.open(fullPath,"rU", encoding="utf-8", errors='ignore') as f:
 			for line in f:
 				line1 = line.encode('utf-8', errors='ignore')
-				line2 = line1.decode('utf-8').strip()
-				lineLIST.append(line2)
+				line2 = line1.decode('utf-8')
+				text = text + line2
+        return text
 
+    def getParagraphs(self, story):
+        lineLIST = story.splitlines()
         return lineLIST
 
-    def getSentences(self, lineLIST):
-		ALLsentences=list()
-		everyLINE=0
-		paragraphcount=0
-		sentencecount=0
-		Sentences1=[]
-		wordCount=0
-		for everyPARAGRAPH in lineLIST:
-			Sentences1=sent_tokenize(lineLIST[everyLINE])
-			ALLsentences.append(Sentences1)
-			everyLINE=everyLINE+1
-		return ALLsentences
-
+	#f15
     def getAVGNoOfWordsPerParagraph(self, lineLIST):
 		everyLINE=0
 		paragraphcount=0
@@ -231,6 +257,7 @@ class falsificationDetector:
 		AVGwordsperParagraph=float(wordCount)/paragraphcount
 		return AVGwordsperParagraph
 
+	#f16
     def getAVGNoOfWordsPerSentence(self, lineLIST):
 		everyLINE=0
 		paragraphcount=0
@@ -252,6 +279,7 @@ class falsificationDetector:
 		AVGwordsperSentence=float(wordCount)/sentencecount
 		return AVGwordsperSentence
 
+	#f17
     def getAVGNoOfSentencesPerParagraph(self, lineLIST):
 		everyLINE=0
 		paragraphcount=0
@@ -273,10 +301,12 @@ class falsificationDetector:
 		AVGsentenceperParagraph=float(sentencecount)/paragraphcount
 		return AVGsentenceperParagraph
 
+	#f18
     def getNoOfParagraphsPerNewsStory(self, lineLIST):
 		paragraphcount=len(lineLIST)
 		return paragraphcount
 
+	#f19
     def getAVGWordLength(self, lineLIST):
         wordLength=list()
         everyLINE=0
@@ -299,6 +329,7 @@ class falsificationDetector:
         sumWordLengths = sum(wordLength)
         return float(sumWordLengths) / float(len(wordLength))
 
+	#f20
     def getLEXICALdiversity(self, lineLIST):
 		everyLINE=0
 		paragraphcount=0
@@ -327,6 +358,7 @@ class falsificationDetector:
 		LexicalDIVERSITY=float(allTOKENS/setTOKENS)
 		return LexicalDIVERSITY
 
+	#f21
     def getPausality(self, lineLIST):
 		wordLIST=list()
 		everyLINE=0
@@ -394,55 +426,7 @@ class falsificationDetector:
 		Pausality=float(Punctuations/sentencecount)
 		return Pausality
 
-    def getVerifiableFACTSperSENTENCE(self, lineLIST):
-        wordLIST=list()
-        named_entities=list()
-        continuous_chunk = []
-        everyLINE=0
-        paragraphcount=0
-        sentencecount=0
-        Sentences1=[]
-        timeCOUNTER=0
-        wordCount=0
-        for everyPARAGRAPH in lineLIST:
-            Sentences1=sent_tokenize(lineLIST[everyLINE].encode('ascii', errors='ignore'))
-            newsentencecount=len(Sentences1)
-            sentencecount=sentencecount+newsentencecount
-            count1=0
-            for everysentence in Sentences1:
-                if count1<len(Sentences1)and len(Sentences1)>0:
-                    newSentences1=word_tokenize(Sentences1[count1])
-                    count1=count1+1
-                    c=0
-                    for everyword in newSentences1:
-                        lowercaseCHAR=newSentences1[c].lower()
-                        wordLIST.append(lowercaseCHAR)
-                        c=c+1
-                        if lowercaseCHAR in TIME:
-                            timeCOUNTER=timeCOUNTER+1
-                    chunked = ne_chunk(pos_tag(everysentence))
-                    prev = None
-                    current_chunk = []
-                    for i in chunked:
-						if type(i) == Tree:
-							current_chunk.append(" ".join([token for token, pos in i.leaves()]))
-						elif current_chunk:
-							named_entity = " ".join(current_chunk)
-							continuous_chunk.append(named_entity)
-							current_chunk = []
-						else:
-							continue
-                    parse_tree = nltk.ne_chunk(nltk.tag.pos_tag(everysentence.split()), binary=True)
-                    for t in parse_tree.subtrees():
-						if t.label() == 'NE':
-							named_entities.append(t)
-                    count1=count1+1
-            everyLINE=everyLINE+1
-        noofnamed_ENTITY=len(named_entities)
-        verifableFACTS=float(timeCOUNTER+noofnamed_ENTITY)
-        verifableFACTSperSENTENCE=float(verifableFACTS/sentencecount)
-        return verifableFACTSperSENTENCE
-
+	#f22
     def getEMOTIVENESS(self, lineLIST):
 		wordLIST=list()
 		everyLINE=0
@@ -535,20 +519,7 @@ class falsificationDetector:
 		Emotiveness=float(Modifiers/Emotiveness_denominator)
 		return Emotiveness
 
-    def loadSwearing(self):
-        self.swears = set()
-        fk = open('swearing.txt', 'r')
-        swears = fk.readlines()
-        for x in xrange(len(swears)):
-            self.swears.add(unicode(swears[x].rstrip().lower(), "utf-8"))
-        print "Swear/emotive word count: ", len(self.swears)
-
-    def isSwear(self, CHAR):
-        if CHAR.lower() in self.swears:
-            return True
-        else:
-            return False
-
+	#f23
     def getINFORMALITY(self, lineLIST):
 		wordLIST=list()
 		swearwordCOUNTER=0
@@ -581,6 +552,7 @@ class falsificationDetector:
 		informality=float(totalINFORMAL/sentencecount)
 		return informality
 
+	#f24
     def getAFFECT(self, lineLIST):
 		wordLIST=list()
 		positiveCOUNTER=0
@@ -610,6 +582,7 @@ class falsificationDetector:
 		Affect=float(totalAFFECT/sentencecount)
 		return Affect
 
+	#f25
     def getPRONOUNcountperSENTENCE(self, lineLIST):
 		wordLIST=list()
 		everyLINE=0
@@ -649,3 +622,384 @@ class falsificationDetector:
 		Pronoun_Count=float(Possessive_Pronoun+Personal_Pronoun+Possesive_wh_Pronoun+Wh_Pronoun)
 		Pronoun_CountperSENTENCE=float(Pronoun_Count/sentencecount)
 		return Pronoun_CountperSENTENCE
+
+    def loadSwearing(self):
+        self.swears = set()
+        fk = open('swearing.txt', 'r')
+        swears = fk.readlines()
+        for x in xrange(len(swears)):
+            self.swears.add(unicode(swears[x].rstrip().lower(), "utf-8"))
+        print "Swear/emotive word count: ", len(self.swears)
+
+    def isSwear(self, CHAR):
+        if CHAR.lower() in self.swears:
+            return True
+        else:
+            return False
+
+    def getPercentage(self, count, divisor):
+        return (float(count) / divisor) * 100
+
+    def getAbsurdityScore(self, test_data):
+        # COMPUTE ABSURDITY SCORE
+        # FOR EVERY STORY, TOKENIZE THE STORY, GET A LIST OF THE NAMED ENTIES IN THE STORY ASIDE FROM LAST SENTENCE.
+        # GET A LIST OF NAMED ENTITIES IN LAST SENTENCE. IF THERE IS NO OVERALAP THE RETURN 1  x
+        absflag = 0
+        sents = sent_tokenize(test_data.encode('ascii', 'ignore'))
+        all = []
+        for s in sents[0:-1]:
+            ents = self.get_continuous_chunks(s)# get all the entities in all the story except the last sentence
+            all.append(" ".join([t for t in ents]))
+        if len(sents) > 0:
+            last_ents = self.get_continuous_chunks(sents[-1])# get entities in the last sentence
+            if last_ents:
+              for l in last_ents:
+                if l in all: #if an entity from the last is found in the rest then not absurd
+                  absflag= 0
+                else:
+                  absflag=1
+                  break;
+            else:
+                  absflag =0
+        else:
+            absflag = 0
+        return absflag
+
+    def trainTestSplit(self, train_percent=0.8):
+        self.Falsification = []
+        self.not_Falsification = []
+
+		#append stories to correct lists
+        for x in xrange(1, self.AMT_STORIES_FAKE):
+            text = self.getText(self.PATH_FAKE, x)
+            self.Falsification.append(text)
+        for x in xrange(1, self.AMT_STORIES_LEGIT):
+            text = self.getText(self.PATH_LEGIT, x)
+            self.not_Falsification.append(text)
+
+        self.notFalsificationTrain, self.notFalsificationTest = train_test_split(self.not_Falsification, train_size = train_percent)
+        self.FalsificationTrain, self.FalsificationTest = train_test_split(self.Falsification, train_size = train_percent)
+
+        Xtrain = np.array(self.notFalsificationTrain + self.FalsificationTrain)
+        Ytrain = []
+
+        for x in xrange(len(self.notFalsificationTrain)):
+            Ytrain.append(0)
+        for x in xrange(len(self.FalsificationTrain)):
+            Ytrain.append(1)
+
+        Xtest = np.array(self.notFalsificationTest + self.FalsificationTest)
+        Ytest = []
+
+        for x in xrange(len(self.notFalsificationTest)):
+            Ytest.append(0)
+        for x in xrange(len(self.FalsificationTest)):
+            Ytest.append(1)
+
+        print "Falsification Stories for Training: ", len(Xtrain)
+        print "Falsification Stories for Testing: ", len(Xtest)
+
+        self.train(Xtrain, Ytrain)
+
+        correct_preds = 0
+
+        for x in xrange(len(Ytest)):
+            pred = self.classifier_linear.predict(self.getScores([Xtest[x]]))
+            if pred == Ytest[x]:
+                correct_preds = correct_preds + 1
+
+        print "Correct classifications: ", correct_preds
+        print "Total classifications:   ", len(Ytest)
+        self.classifierScore_SVM = "SVM Test set score: ", correct_preds / float(len(Ytest))
+        print self.classifierScore_SVM
+
+    def train(self, train_data, Ytrain, allClassifiers=False, crossValidate=False):
+
+        avgFalsification = []
+        avgNotFalsification = []
+
+        ######################## vectors construction and training ####################
+
+        #BUILD THE TF-IDF VECTORS THAT INDEXES UNIGRAMS AND BIGRAMS AND REMOVES STOPWORDS
+
+        self.vectorizer = TfidfVectorizer(min_df=2, ngram_range=(1,2), stop_words='english')
+        train_tdfvectors = self.vectorizer.fit_transform(train_data)
+
+        # CREATE A NUMPY ARRAY THAT READS THE LIWC VARIABLES THAT ARE BEING USED IN THE TRAINING AND APPENDS THEM TO THE TF-IDF VECTOR
+        #the following list is from the old precomputed values, we have to re-calculate them here with the LIWC replacements
+        #good_feat_list = ['pronoun','ppron','ipron','prep','verb','conj','adverb','adj','negemo','Period','Comma','Colon','SemiC','QMark','Exclam','Quote','Absurd','Humor']
+
+        #feature scores for stories from the training set
+        #cannot use the values in the training set because the LIWC features produce different values than the replacement code.
+        train_feat = []
+        train_count = 0
+
+        for story in train_data:
+
+            avgArrayName = ""
+            if Ytrain[train_count] == 0:
+                avgArrayName = "NotFalsification"
+            else:
+                avgArrayName = "Falsification"
+
+            train_count = train_count + 1
+
+            patternParseTree = parsetree(story, tokenize=True, tags=True, chunks=True, relations=True, lemmata=True)
+            lstTextPOS = []
+            lstTextWords = []
+            lstTextChunks = []
+
+            f9 = 0
+            f10 = 0
+            f11 = 0
+            f12 = 0
+            f13 = 0
+            f14 = 0
+
+            for sentence in patternParseTree:
+				f9 = f9 + self.getPeriods(sentence)
+				f10 = f10 + self.getCommas(sentence)
+				f11 = f11 + self.getColon(sentence)
+				f12 = f12 + self.getSemicolon(sentence)
+				f13 = f13 + self.getQuestionMarks(sentence)
+				f14 = f14 + self.getExclamationMarks(sentence)
+				for chunk in sentence.chunks:
+					lstTextChunks.append(chunk)
+					for word in chunk.words:
+						lstTextPOS.append(word.type)
+						lstTextWords.append(word.string)
+
+            divisorWordCount = float(len(lstTextWords))
+
+			#f - feature
+			#f1: PRP + PRP$ (check)
+            f1 = self.getPronouns(lstTextPOS, len(lstTextWords))
+
+			#f2: PRP
+            f2 = self.getPersonalPronouns(lstTextPOS, len(lstTextWords))
+
+            #f3: PRP$ (pronouns, possessive. check)
+            f3 = self.getPossessivePronouns(lstTextPOS, len(lstTextWords))
+
+            #f4: PP (prepositional phrase? check)
+            f4 = self.getPrepositionalPhrases(lstTextChunks, len(lstTextWords))
+
+            #f5: VP
+            f5 = self.getVerbPhrases(lstTextChunks, len(lstTextWords))
+
+            #f6: CC, IN
+            f6 = self.getConjunctions(lstTextPOS, len(lstTextWords))
+
+            #f7: ADVP
+            f7 = self.getAdverbPhrases(lstTextChunks, len(lstTextWords))
+
+            #f8: ADJP
+            f8 = self.getAdjectivePhrases(lstTextChunks, len(lstTextWords))
+
+            #f9-14 are all done during sentence processing
+
+            #f9: periods, may not be the same as the LIWC functions
+            f9 = self.getPercentage(f9, divisorWordCount)
+            #f10: ,
+            f10 = self.getPercentage(f10, divisorWordCount)
+            #f11: :
+            f11 = self.getPercentage(f11, divisorWordCount)
+            #f12: semicolons
+            f12 = self.getPercentage(f12, divisorWordCount)
+            #f13: question marks
+            f13 = self.getPercentage(f13, divisorWordCount)
+            #f14: exclamations
+            f14 = self.getPercentage(f14, divisorWordCount)
+
+            #falsification add-on features
+            lineLIST = self.getParagraphs(story)
+            f15 = self.getNoOfParagraphsPerNewsStory(lineLIST)
+            f16 = self.getAVGWordLength(lineLIST)     #NOTE: definitely a bug in this function, results are too low
+            f17 = self.getAVGNoOfSentencesPerParagraph(lineLIST)
+            f18 = self.getAVGNoOfWordsPerSentence(lineLIST)
+            f19 = self.getAVGNoOfWordsPerParagraph(lineLIST)
+            f20 = self.getPausality(lineLIST)
+            f21 = self.getEMOTIVENESS(lineLIST)
+            f22 = self.getPRONOUNcountperSENTENCE(lineLIST)
+            f23 = self.getINFORMALITY(lineLIST)
+            f24 = self.getLEXICALdiversity(lineLIST)
+            f25 = self.getAFFECT(lineLIST)
+
+            #print story
+            absflag = self.getAbsurdityScore(story)
+
+            story_features = [f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14, f15, f16, f17, f18, f19, f20, f21, f22, f23, f24, f25, absflag]
+
+            if avgArrayName == "Falsification":
+                #set up our list of features averages based on the size of our first sample
+                if len(avgFalsification) == 0:
+                    for c in xrange(len(story_features)):
+                        avgFalsification.append(0)
+
+                #sum everything to get an average later
+                for x in xrange(len(story_features)):
+                    avgFalsification[x] = float(avgFalsification[x]) + float(story_features[x])
+            elif avgArrayName == "NotFalsification":
+                #set up our list of features averages based on the size of our first sample
+                if len(avgNotFalsification) == 0:
+                    for c in xrange(len(story_features)):
+                        avgNotFalsification.append(0)
+
+                #sum everything to get an average later
+                for x in xrange(len(story_features)):
+                    avgNotFalsification[x] = float(avgNotFalsification[x]) + float(story_features[x])
+
+            print train_count, story_features
+
+            train_feat.append(story_features)
+
+        Xtrain = np.hstack([train_tdfvectors.toarray(), train_feat])
+
+        #divide to get avgs
+        for x in xrange(len(avgFalsification)):
+            avgFalsification[x] = avgFalsification[x] / float(len(avgFalsification))
+        for x in xrange(len(avgNotFalsification)):
+            avgNotFalsification[x] = avgNotFalsification[x] / float(len(avgNotFalsification))
+
+        print "AVG Not Falsification Feature Scores"
+        print avgFalsification
+
+        print "AVG Falsification Feature Scores"
+        print avgNotFalsification
+
+        # Perform classification with SVM, kernel=linear
+        self.classifier_linear = svm.SVC(kernel='linear', probability = True)
+        self.classifier_linear.fit(Xtrain, Ytrain)
+
+    def getScores(self, test_data, returnBoth = False):
+
+        test_tdfvectors = self.vectorizer.transform(array(test_data))
+
+        #disabled for now
+        #print test_data[0]
+        absflag = self.getAbsurdityScore(test_data[0])
+        humflag = 0 #self.getHumorScore(test_data)
+
+        #all liwc calls are replaced here with generally eqviliant calls to pattern
+        #from what I understand "goodfeatures" holds numbers from liwc for the entire test set
+        #test_data here is a single new story
+
+        #liwc=receptiviti.get_liwc(name, [test_data])
+        #goodfeatures = array([liwc['categories']['pronoun'],liwc['categories']['ppron'],liwc['categories']['ipron'],liwc['categories']['prep'],liwc['categories']['verb'],liwc['categories']['conj'],liwc['categories']['adverb'],liwc['categories']['adj'],liwc['categories']['negemo'],liwc['categories']['Period'],liwc['categories']['Comma'],liwc['categories']['Colon'],liwc['categories']['SemiC'], liwc['categories']['QMark'],liwc['categories']['Exclam'],liwc['categories']['Quote']])
+        liwc_feat_list = ['Pronouns','Personal Pronouns ','Impersonal Pronouns','Prepositions','Verbs','Conjunctions','Adverbs','Adjectives','Negative Emotions','Periods','Commas','Colons','Semicolons','Question Marks','Exclamations','Quotes']
+
+        patternParseTree = parsetree(test_data[0], tokenize=True, tags=True, chunks=True, relations=True, lemmata=True)
+        lstTextPOS = []
+        lstTextWords = []
+        lstTextChunks = []
+
+        f9 = 0
+        f10 = 0
+        f11 = 0
+        f12 = 0
+        f13 = 0
+        f14 = 0
+
+        for sentence in patternParseTree:
+            f9 = f9 + self.getPeriods(sentence)
+            f10 = f10 + self.getCommas(sentence)
+            f11 = f11 + self.getColon(sentence)
+            f12 = f12 + self.getSemicolon(sentence)
+            f13 = f13 + self.getQuestionMarks(sentence)
+            f14 = f14 + self.getExclamationMarks(sentence)
+            for chunk in sentence.chunks:
+                lstTextChunks.append(chunk)
+                for word in chunk.words:
+                    lstTextPOS.append(word.type)
+                    lstTextWords.append(word.string)
+
+        divisorWordCount = float(len(lstTextWords))
+
+        #f - feature
+        #f1: PRP + PRP$ (check)
+        f1 = self.getPronouns(lstTextPOS, len(lstTextWords))
+
+        #f2: PRP
+        f2 = self.getPersonalPronouns(lstTextPOS, len(lstTextWords))
+
+        #f3: PRP$ (pronouns, possessive. check)
+        f3 = self.getPossessivePronouns(lstTextPOS, len(lstTextWords))
+
+        #f4: PP (prepositional phrase? check)
+        f4 = self.getPrepositionalPhrases(lstTextChunks, len(lstTextWords))
+
+        #f5: VP
+        f5 = self.getVerbPhrases(lstTextChunks, len(lstTextWords))
+
+        #f6: CC, IN
+        f6 = self.getConjunctions(lstTextPOS, len(lstTextWords))
+
+        #f7: ADVP
+        f7 = self.getAdverbPhrases(lstTextChunks, len(lstTextWords))
+
+        #f8: ADJP
+        f8 = self.getAdjectivePhrases(lstTextChunks, len(lstTextWords))
+
+        #f9-14 are all done during sentence processing
+
+        #f9: periods, may not be the same as the LIWC functions
+        f9 = self.getPercentage(f9, divisorWordCount)
+        #f10: ,
+        f10 = self.getPercentage(f10, divisorWordCount)
+        #f11: :
+        f11 = self.getPercentage(f11, divisorWordCount)
+        #f12: semicolons
+        f12 = self.getPercentage(f12, divisorWordCount)
+        #f13: question marks
+        f13 = self.getPercentage(f13, divisorWordCount)
+        #f14: exclamations
+        f14 = self.getPercentage(f14, divisorWordCount)
+
+		#falsification add-on features
+        lineLIST = self.getParagraphs(test_data[0])
+        f15 = self.getNoOfParagraphsPerNewsStory(lineLIST)
+        f16 = self.getAVGWordLength(lineLIST)     #NOTE: definitely a bug in this function, results are too low
+        f17 = self.getAVGNoOfSentencesPerParagraph(lineLIST)
+        f18 = self.getAVGNoOfWordsPerSentence(lineLIST)
+        f19 = self.getAVGNoOfWordsPerParagraph(lineLIST)
+        f20 = self.getPausality(lineLIST)
+        f21 = self.getEMOTIVENESS(lineLIST)
+        f22 = self.getPRONOUNcountperSENTENCE(lineLIST)
+        f23 = self.getINFORMALITY(lineLIST)
+        f24 = self.getLEXICALdiversity(lineLIST)
+        f25 = self.getAFFECT(lineLIST)
+
+        featuresWithFlags = [f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14, f15, f16, f17, f18, f19, f20, f21, f22, f23, f24, f25, absflag]
+
+        Xtest = np.append(test_tdfvectors.toarray(), featuresWithFlags)
+        Xtest=Xtest.reshape(1,-1)
+
+        if returnBoth == False:
+            return Xtest
+        else:
+            return [featuresWithFlags, Xtest]
+
+    def predict(self, text):
+        test_dataF = text
+
+        if test_dataF:
+            test_dataF= test_dataF.replace("\n","")
+
+        t = {'Full Text': [test_dataF]}
+        test = pd.DataFrame(data=t)
+
+        test_data = []
+        for testitem in test['Full Text']:
+            test_data.append(str(testitem).decode('utf-8',errors='ignore'))
+
+        pairFeaturesXtest = self.getScores(test_data, True)
+        features = pairFeaturesXtest[0]
+        Xtest = pairFeaturesXtest[1]
+
+        prediction_linear = self.classifier_linear.predict(Xtest)
+        prediction_scores = self.classifier_linear.predict_proba(Xtest)
+
+        betterString = str(prediction_scores[0])[1:-1]
+        classValues = betterString.split(" ")
+        classValues = filter(None, classValues)
+        return ",".join(classValues) + "," + ",".join(str(featScore) for featScore in features)

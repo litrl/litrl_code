@@ -693,7 +693,7 @@ class satireDetector:
             #PERFORM 10-fold Cross Validation for Accuracy Score
             scores = cross_val_score(self.classifier_linear,Xtrain, Ytrain, cv=10, scoring='accuracy')
 
-    def getScores(self, test_data):
+    def getScores(self, test_data, returnBoth = False):
 
         test_tdfvectors = self.vectorizer.transform(array(test_data))
 
@@ -791,33 +791,33 @@ class satireDetector:
 
         Xtest = np.append(test_tdfvectors.toarray(), featuresWithFlags)
         Xtest=Xtest.reshape(1,-1)
-        return Xtest
+
+        if returnBoth == False:
+            return Xtest
+        else:
+            return [featuresWithFlags, Xtest]
 
     def predict(self, text):
-        #accept a headline and body text
         test_dataF = text
 
         if test_dataF:
             test_dataF= test_dataF.replace("\n","")
 
-            #COMBINE THE HEADLINE AND BODY INTO ONE INPUT
-            test_dataF = test_dataF
-
         t = {'Full Text': [test_dataF]}
         test = pd.DataFrame(data=t)
 
-		#Read the stories in the test set
         test_data = []
-
         for testitem in test['Full Text']:
             test_data.append(str(testitem).decode('utf-8',errors='ignore'))
 
-        Xtest = self.getScores(test_data)
+        pairFeaturesXtest = self.getScores(test_data, True)
+        features = pairFeaturesXtest[0]
+        Xtest = pairFeaturesXtest[1]
 
         prediction_linear = self.classifier_linear.predict(Xtest)
         prediction_scores = self.classifier_linear.predict_proba(Xtest)
 
         betterString = str(prediction_scores[0])[1:-1]
         classValues = betterString.split(" ")
-        classValues = filter(None, classValues) # fastest
-        return ",".join(classValues) + "," + str(absflag) + "," + str(humflag) + "," + ",".join(str(featScore) for featScore in features)
+        classValues = filter(None, classValues)
+        return ",".join(classValues) + "," + ",".join(str(featScore) for featScore in features)

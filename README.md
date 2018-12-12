@@ -54,4 +54,6 @@ Identifying Deliberate Misinformation in Online News.
 
 [CLICKBAIT DATASET 2] Martin Potthast, Tim Gollub, Kristof Komlossy, Sebastian Schuster, Matti Wiegmann, Erika Patricia Garces Fernandez, Matthias Hagen, and Benno Stein. Crowdsourcing a Large Corpus of Clickbait on Twitter. In Proceedings of the 27th International Conference on Computational Linguistics (COLING 2018), pages 1498–1507, August 2018. The COLING 2018 Organizing Committee. (URL: https://webis.de/data/webis-clickbait-17.html)
 
+[SATIRE DATASET 1] Rubin, V. R., Conroy, N. J., Chen, Y. & Cornwell, S. (2016) Fake News or Truth? Using Satirical Cues to Detect Potentially Misleading News. In the Proceedings of the Workshop on Computational Approaches to Deception Detection at the 15th Annual Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies.  (NAACL-CADD2016), San Diego, California, June 17, 2016.
+
 Library licenses can be found in the "licenses" folder.

@@ -16,7 +16,7 @@ Litrl Browser is licensed under the GPLv3.
 litrlbrowser@gmail.com
 
 ### If you use Litrl Browser for research, we ask that you cite the following for now (a full publication is in process):
-Rubin, Victoria L., Brogly, Chris, Conroy, Nadia, Chen, Yimin, Cornwell, Sarah E., Asubiaro, Toluwase V. (2018). litrl/litrl_code: Litrl Browser Experimental 0.12.0.0 Public (Version exp-0.12.0.0). Zenodo. 10.5281/zenodo.2016627.
+Rubin, Victoria L.; Brogly, Chris; Conroy, Nadia; Chen, Yimin; Cornwell, Sarah E.; Asubiaro, Toluwase V. (2018). litrl/litrl_code: Litrl Browser Experimental 0.12.0.0 Public (Version exp-0.12.0.0). Zenodo. 10.5281/zenodo.2016627.
 
 [![DOI](https://zenodo.org/badge/160725581.svg)](https://zenodo.org/badge/latestdoi/160725581)
 

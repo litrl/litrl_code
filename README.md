@@ -34,7 +34,7 @@ Various plugins have already been attempted in this area. We decided to develop 
 ## Installing the software
 Prerequisites to install:
 1) VC++ 2017 redistributable: https://aka.ms/vs/15/release/vc_redist.x64.exe
-2) .NET 4.6.2 (minimum) runtime: https://www.microsoft.com/net/download/dotnet-framework/net462
+2) .NET 4.6.2 (minimum) runtime: https://dotnet.microsoft.com/download/thank-you/net462
 
 Then run the installer for the Litrl Browser. Dependencies are not included.
 

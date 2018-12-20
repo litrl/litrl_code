@@ -26,7 +26,7 @@ authors:
   orcid: 0000-0003-0718-7739
   affiliation: "1, 2"
 affiliations: 
-- name: The Language and Information Technology Research Lab (LiT.RL), Faculty of Media and Information Studies, The University of Western Ontario, London, Ontario, Canada.
+- name: Language and Information Technology Research Lab (LiT.RL), Faculty of Information and Media Studies, The University of Western Ontario, London, Ontario, Canada.
   index: 1
 - name: E. Latunde Odeku Medical Library, College of Medicine, University of Ibadan, Ibadan, Nigeria
   index: 2 
@@ -43,7 +43,7 @@ The LiT.RL News Verification Browser is a research tool for news readers, journa
 Widespread adoption of internet technologies has changed the way that news is created and consumed. The current online news environment is one that incentivizes speed and spectacle in reporting at the cost of fact-checking and verification, encouraging the proliferation of misinformation and disinformation. The LiT.RL News Verification (NV) Browser is a system that offers a first step counter-measure by automatically detecting and highlighting fake news headlines and articles. The system is presented to users as a set of assistive technologies built into a stand-alone browser tuned to identify different varieties of fakes [@Rubin:2015; @Rubin:2017]. Our algorithms look for patterns of subtle lexico-syntactic features in text. Images, audio and video formats are unsupported. The core of the functionality is in the natural language processing (NLP) of textual data and automated classification of results with machine learning using support vector machines.
 
 The LiT.RL NV Browser offers three discrete functionalities:
-a.	Detection of clickbait headlines [@Chen:2015:MOC:2823465.2823467; @brogly];
+a.	Detection of clickbait headlines [@Chen:2015:MOC:2823465.2823467; @Brogly];
 b.	Detection of satirical article content [@Rubin:2016];
 c.	Detection of falsified news articles [@Rubin:2012; @Asubiaro].
 

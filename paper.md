@@ -1,5 +1,5 @@
-title: A News Verification Browser for the Detection of Clickbait, Satire, and Falsified News
-
+---
+title: 'A News Verification Browser for the Detection of Clickbait, Satire, and Falsified News'
 tags:
 - clickbait
 - satire
@@ -8,19 +8,25 @@ tags:
 - disinformation
 authors:
 - name: Victoria L. Rubin
-  orcid: 0000-0003-3610-9967    affiliation: 1
+  orcid: 0000-0003-3610-9967
+  affiliation: 1
 - name: Chris Brogly
-  orcid: 0000-0001-5688-0287    affiliation: 1
+  orcid: 0000-0001-5688-0287
+  affiliation: 1
 - name: Nadia Conroy
-  orcid: 0000-0003-4826-4489    affiliation: 1
+  orcid: 0000-0003-4826-4489
+  affiliation: "1, 3"
 - name: Yimin Chen
-  orcid: 0000-0002-0924-3661    affiliation: 1
+  orcid: 0000-0002-0924-3661
+  affiliation: 1
 - name: Sarah E. Cornwell
-  orcid: 0000-0002-2367-3668    affiliation: 1
+  orcid: 0000-0002-2367-3668
+  affiliation: 1
 - name: Toluwase V. Asubiaro    
-  orcid: 0000-0003-0718-7739affiliation: "1, 2"
+  orcid: 0000-0003-0718-7739
+  affiliation: "1, 2"
 affiliations: 
-- name: The Language and Information Technology Research Lab (LiT.RL), The Faculty of Media and Information Studies, The University of Western Ontario, London, Ontario, Canada.
+- name: The Language and Information Technology Research Lab (LiT.RL), Faculty of Media and Information Studies, The University of Western Ontario, London, Ontario, Canada.
   index: 1
 - name: E. Latunde Odeku Medical Library, College of Medicine, University of Ibadan, Ibadan, Nigeria
   index: 2 
@@ -28,6 +34,7 @@ affiliations:
   index: 3
 date: 12 December 2018
 bibliography: paper.bib
+---
 
 # Description-in-Brief
 The LiT.RL News Verification Browser is a research tool for news readers, journalists, editors or information professionals. The tool analyzes the language used in digital news web pages to determine if they are clickbait, satirical news, or falsified news, and visualizes the results by highlighting content in color-coded categories.

@@ -45,7 +45,7 @@ Widespread adoption of internet technologies has changed the way that news is cr
 The LiT.RL NV Browser offers three discrete functionalities:
 a.	Detection of clickbait headlines [@Chen:2015:MOC:2823465.2823467; @Brogly];
 b.	Detection of satirical article content [@Rubin:2016];
-c.	Detection of falsified news articles [@Rubin:2012; @Asubiaro].
+c.	Detection of falsified news articles [@Rubin:2012; @Asubiaro:2018; @Asubiaro].
 
 Each is implemented as a separate overlay option through three tabs at the bottom right of the browser. Currently in its proof of concept stage, the system runs over a batch of website content, such as news feed on a website, and visualizes the results by highlighting content in red, orange or green, by analogy with the traffic stop-light.
  

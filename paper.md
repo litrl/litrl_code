@@ -52,7 +52,7 @@ Each is implemented as a separate overlay option through three tabs at the botto
 ![Figure 1: Screenshot of LiT.RL News Verification Browser clickbait detection on the CNN homepage (December 12, 2018)](figure.png)
 
 # Limitations
-This browser is meant to augment our human discernment, rather than replace it, by highlighting potentially false information which may require further scrutiny. Digital literacy is key for everyone to effectively evaluate potential misinformation online, and the LiT.RL Browser is NOT a replacement for that. News readers’ critical thinking remains key to navigating the increasingly fraught online information landscape. The News Verification Browser is not a replacement for a day-to-day web browser and should not be used where security is critical. 
+This browser is meant to augment our human discernment, rather than replace it, by highlighting potentially false information which may require further scrutiny. Digital literacy is key for everyone to effectively evaluate potential misinformation online, and the LiT.RL Browser is NOT a replacement for that [@Chen:2015]. News readers’ critical thinking remains key to navigating the increasingly fraught online information landscape. The News Verification Browser is not a replacement for a day-to-day web browser and should not be used where security is critical. 
 
 # Availability
  The source code is openly available on GitHub [@litrl2018] under the GPLv3 license for anyone in the research and development community to use or improve on. The public can download the browser for experimentation on their own computers with “no strings attached”. 

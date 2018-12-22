@@ -1,7 +1,7 @@
 ## Contributing
-Litrl Browser was developed by the Language and Information Technology Lab at Western University. Several RAs (Research Assistants) work in the lab. We welcome contributions from the community via pull requests. Any contributions will be reviewed by an RA and finally by the Lab Director.
+Litrl Browser was developed by the Language and Information Technology Lab at Western University. Several RAs (Research Assistants) work in the lab. We welcome contributions from the community via pull requests. Any contributions will be reviewed by an RA and finally approved by the Lab Director.
 
-## Reporting issues
+## Reporting bugs/requesting features
 Please first check the issues board to see if this problem has already been brought up. If it has not, please create a new issue.
 
 ## Support

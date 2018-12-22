@@ -2,23 +2,13 @@
 
 Demonstration: https://www.youtube.com/watch?v=OtitQ-f4AL4
 
-Welcome to the Litrl (pronounced "literal") Browser, which implements aspects of Prof. Victoria Rubin's (Western University, Canada) News Verification Suite concept (https://www.researchgate.net/publication/316754164_News_Verification_Suite_Towards_System_Design_to_Supplement_Reporters'_and_Editors'_Judgements)
-
-The Litrl Browser provides visual identification of clickbait, satire, and falsification text, to varying degrees of accuracy. Images and video are unsupported - only text is processed. Litrl Browser is not perfect and is not always correct. Digital literacy is key for everyone to effectively evaluate potential misinformation online, and the Litrl Browser is **NOT** a replacement for that.
+The Litrl (pronouned "literal") Browser is a research tool for news readers, journalists, editors or information professionals. The tool analyzes the language used in digital news web pages to determine if they are clickbait, satirical news, or falsified news, and visualizes the results by highlighting content in color-coded categories. All processing is completed on the local machine - clickbait, satirical news, and falsified news results are not sent to or from a remote server. Results may be saved locally to a standard SQLite database for further analysis. Litrl Browser is not perfect and is not always correct. Digital literacy is key for everyone to effectively evaluate potential misinformation online, and the Litrl Browser is **NOT** a replacement for that. The Litrl Browser is based on of Prof. Victoria Rubin's (Western University, Canada) News Verification Suite concept (https://www.researchgate.net/publication/316754164_News_Verification_Suite_Towards_System_Design_to_Supplement_Reporters'_and_Editors'_Judgements).
 
 Litrl Browser should be used with caution as it is still highly experimental, may contain bugs and security issues, and was intended to be used as a tool for further research into deception on the internet and the effectiveness of deception detectors. It is **NOT** designed as a replacement for your day-to-day web browser and should not be used where security is critical. The falsifications detector is still in very early alpha stages and is still being written - although it performs acceptably on test data, in practice it is not always effective. Use this feature with added caution.
 
 The software was developed by the LiT.RL (Language and Information Technology Research Lab) at FIMS (Faculty of Information and Media Studies), Western University, Canada.
 
 Litrl Browser is licensed under the GPLv3.
-
-### Questions and inquiries should be directed to:
-litrlbrowser@gmail.com
-
-### If you use Litrl Browser for research, we ask that you cite the following for now (a full publication is in process):
-Rubin, Victoria L.; Brogly, Chris; Conroy, Nadia; Chen, Yimin; Cornwell, Sarah E.; Asubiaro, Toluwase V. (2018). litrl/litrl_code: Litrl Browser Experimental 0.12.0.0 Public (Version exp-0.12.0.0). Zenodo. 10.5281/zenodo.2016627.
-
-[![DOI](https://zenodo.org/badge/160725581.svg)](https://zenodo.org/badge/latestdoi/160725581)
 
 ## Why not a plugin?
 Various plugins have already been attempted in this area. We decided to develop a separate research tool for deception with a simple user interface that allowed for easier real-world testing of our group's previous work.
@@ -42,6 +32,15 @@ The installer package for modern Windows systems (7, 8.1, 10) is available under
 
 ## Uninstalling the software
 Simply delete the Litrl Browser shortcut and LITRL folder from your desktop. That's it!
+
+### Questions and inquiries should be directed to:
+litrlbrowser@gmail.com
+
+### If you use Litrl Browser for research, we ask that you cite the following for now (a full publication is in process):
+Rubin, Victoria L.; Brogly, Chris; Conroy, Nadia; Chen, Yimin; Cornwell, Sarah E.; Asubiaro, Toluwase V. (2018). litrl/litrl_code: Litrl Browser Experimental 0.12.0.0 Public (Version exp-0.12.0.0). Zenodo. 10.5281/zenodo.2016627.
+
+[![DOI](https://zenodo.org/badge/160725581.svg)](https://zenodo.org/badge/latestdoi/160725581)
+
 
 ## Acknowledgments
 This research has been funded by the Government of Canada Social Sciences and Humanities Research Council 

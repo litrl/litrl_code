@@ -190,6 +190,10 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="..\..\..\clickbaitdetector\pickles\clickbait_detector.dill">
+      <Link>detectors\clickbait\pickles\clickbait_detector.dill</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="..\..\..\falsificationsdetector\pickles\falsification_detector.dill">
       <Link>detectors\falsifications\pickles\falsification_detector.dill</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -206,9 +210,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="dependencies\python-2.7.15.msi">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="detectors\clickbait\pickles\clickbait_detector.dill">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="homepage.path">

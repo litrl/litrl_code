@@ -35,6 +35,9 @@ The installer package for modern Windows systems (7, 8.1, 10) is available under
 ## Uninstalling the software
 Simply delete the Litrl Browser shortcut and LITRL folder from your desktop. That's it!
 
+## Compiling and running the software
+Please see the Development & Build process page on the wiki at https://github.com/litrl/litrl_code/wiki/Development-&-build-process
+
 ### Questions and inquiries should be directed to:
 litrlbrowser@gmail.com
 

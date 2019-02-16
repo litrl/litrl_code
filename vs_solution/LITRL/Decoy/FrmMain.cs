@@ -1700,7 +1700,7 @@ namespace Decoy
 
                     for (var i = notClickbait.length - 2; i < notClickbait.length; ++i) {{
                         for (var j = 0; j < lnks.length; ++j) {{
-                            if (lnks[j].innerText.replace(/[“’”—]/g, '') == notClickbait[i]) {{
+                            if (lnks[j].innerText.replace(/[“’”—ó‘’á]/g, '') == notClickbait[i]) {{
                                 console.log('match: ' + lnks[j].innerText + ' ' + notClickbait[i]);
                                 lnks[j].style.backgroundColor = 'rgba({5}, 0.7)';
                             }}
@@ -1708,7 +1708,7 @@ namespace Decoy
                     }}
                     for (var i = slightClickbait.length - 2; i < slightClickbait.length; ++i) {{
                         for (var j = 0; j < lnks.length; ++j) {{
-                            if (lnks[j].innerText.replace(/[“’”—]/g, '')  == slightClickbait[i]) {{
+                            if (lnks[j].innerText.replace(/[“’”—ó‘’á]/g, '')  == slightClickbait[i]) {{
                                 console.log('match: ' + lnks[j].innerText + ' ' + slightClickbait[i]);
                                 lnks[j].style.backgroundColor = 'rgba({6}, 0.7)';;
                             }}
@@ -1716,7 +1716,7 @@ namespace Decoy
                     }}
                     for (var i = moderateClickbait.length - 2; i < moderateClickbait.length; ++i) {{
                         for (var j = 0; j < lnks.length; ++j) {{
-                            if (lnks[j].innerText.replace(/[“’”—]/g, '')  == moderateClickbait[i]) {{
+                            if (lnks[j].innerText.replace(/[“’”—ó‘’á]/g, '')  == moderateClickbait[i]) {{
                                 console.log('match: ' + lnks[j].innerText + ' ' + moderateClickbait[i]);
                                 lnks[j].style.backgroundColor = 'rgba({7}, 0.7)';
                             }}
@@ -1724,7 +1724,7 @@ namespace Decoy
                     }}
                     for (var i = heavyClickbait.length - 2; i < heavyClickbait.length; ++i) {{
                         for (var j = 0; j < lnks.length; ++j) {{
-                            if (lnks[j].innerText.replace(/[“’”—]/g, '') == heavyClickbait[i]) {{
+                            if (lnks[j].innerText.replace(/[“’”—ó‘’á]/g, '') == heavyClickbait[i]) {{
                                 console.log('match: ' + lnks[j].innerText + ' ' + heavyClickbait[i]);
                                 lnks[j].style.backgroundColor = 'rgba({8}, 0.7)';
                             }}
@@ -1837,7 +1837,7 @@ namespace Decoy
 
                     for (var i = 0; i < notClickbait.length; ++i) {{
                         for (var j = 0; j < lnks.length; ++j) {{
-                            if (lnks[j].innerText == notClickbait[i]) {{
+                            if (lnks[j].innerText.replace(/[“’”—ó‘’á]/g, '') == notClickbait[i]) {{
                                 console.log('match: ' + lnks[j].innerText + ' ' + notClickbait[i]);
                                 lnks[j].style.backgroundColor = 'rgba({5}, 0.7)';
                             }}
@@ -1845,7 +1845,7 @@ namespace Decoy
                     }}
                     for (var i = 0; i < slightClickbait.length; ++i) {{
                         for (var j = 0; j < lnks.length; ++j) {{
-                            if (lnks[j].innerText  == slightClickbait[i]) {{
+                            if (lnks[j].innerText.replace(/[“’”—ó‘’á]/g, '')  == slightClickbait[i]) {{
                                 console.log('match: ' + lnks[j].innerText + ' ' + slightClickbait[i]);
                                 lnks[j].style.backgroundColor = 'rgba({6}, 0.7)';;
                             }}
@@ -1853,7 +1853,7 @@ namespace Decoy
                     }}
                     for (var i = 0; i < moderateClickbait.length; ++i) {{
                         for (var j = 0; j < lnks.length; ++j) {{
-                            if (lnks[j].innerText  == moderateClickbait[i]) {{
+                            if (lnks[j].innerText.replace(/[“’”—ó‘’á]/g, '')  == moderateClickbait[i]) {{
                                 console.log('match: ' + lnks[j].innerText + ' ' + moderateClickbait[i]);
                                 lnks[j].style.backgroundColor = 'rgba({7}, 0.7)';
                             }}
@@ -1861,7 +1861,7 @@ namespace Decoy
                     }}
                     for (var i = 0; i < heavyClickbait.length; ++i) {{
                         for (var j = 0; j < lnks.length; ++j) {{
-                            if (lnks[j].innerText == heavyClickbait[i]) {{
+                            if (lnks[j].innerText.replace(/[“’”—ó‘’á]/g, '') == heavyClickbait[i]) {{
                                 console.log('match: ' + lnks[j].innerText + ' ' + heavyClickbait[i]);
                                 lnks[j].style.backgroundColor = 'rgba({8}, 0.7)';
                             }}
@@ -2103,7 +2103,7 @@ namespace Decoy
 
         private void FrmMain_Shown(object sender, EventArgs e)
         {
-            MessageBox.Show("The Litrl ('literal') Browser is experimental research software. Digital literacy is key for everyone to effectively evaluate potential misinformation online, and this program is NOT a replacement for that.  Use this program with caution!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            MessageBox.Show("The Litrl ('literal') Browser is experimental research software and is not perfect and is not correct all the time. Digital literacy is key for everyone to effectively evaluate potential misinformation online, and this program is NOT a replacement for that.  Use this program with caution!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
     }
 }

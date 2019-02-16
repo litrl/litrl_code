@@ -1664,6 +1664,8 @@ namespace Decoy
             if (TabsDetectors.SelectedTab.Text != "CLICKBAIT" && ChkAlwaysProcessClickbait.Checked == false)
                 return;
 
+            //note that ".replace(/[“’”]/g, '')" was added to compensate for the encoding issues between the UI and Python 2.7... can be removed when upgraded to 3
+
             string jsClickbait = @"
                     var notClickbait = [
                         {0}
@@ -1698,7 +1700,7 @@ namespace Decoy
 
                     for (var i = notClickbait.length - 2; i < notClickbait.length; ++i) {{
                         for (var j = 0; j < lnks.length; ++j) {{
-                            if (lnks[j].innerText == notClickbait[i]) {{
+                            if (lnks[j].innerText.replace(/[“’”—]/g, '') == notClickbait[i]) {{
                                 console.log('match: ' + lnks[j].innerText + ' ' + notClickbait[i]);
                                 lnks[j].style.backgroundColor = 'rgba({5}, 0.7)';
                             }}
@@ -1706,7 +1708,7 @@ namespace Decoy
                     }}
                     for (var i = slightClickbait.length - 2; i < slightClickbait.length; ++i) {{
                         for (var j = 0; j < lnks.length; ++j) {{
-                            if (lnks[j].innerText  == slightClickbait[i]) {{
+                            if (lnks[j].innerText.replace(/[“’”—]/g, '')  == slightClickbait[i]) {{
                                 console.log('match: ' + lnks[j].innerText + ' ' + slightClickbait[i]);
                                 lnks[j].style.backgroundColor = 'rgba({6}, 0.7)';;
                             }}
@@ -1714,7 +1716,7 @@ namespace Decoy
                     }}
                     for (var i = moderateClickbait.length - 2; i < moderateClickbait.length; ++i) {{
                         for (var j = 0; j < lnks.length; ++j) {{
-                            if (lnks[j].innerText  == moderateClickbait[i]) {{
+                            if (lnks[j].innerText.replace(/[“’”—]/g, '')  == moderateClickbait[i]) {{
                                 console.log('match: ' + lnks[j].innerText + ' ' + moderateClickbait[i]);
                                 lnks[j].style.backgroundColor = 'rgba({7}, 0.7)';
                             }}
@@ -1722,7 +1724,7 @@ namespace Decoy
                     }}
                     for (var i = heavyClickbait.length - 2; i < heavyClickbait.length; ++i) {{
                         for (var j = 0; j < lnks.length; ++j) {{
-                            if (lnks[j].innerText == heavyClickbait[i]) {{
+                            if (lnks[j].innerText.replace(/[“’”—]/g, '') == heavyClickbait[i]) {{
                                 console.log('match: ' + lnks[j].innerText + ' ' + heavyClickbait[i]);
                                 lnks[j].style.backgroundColor = 'rgba({8}, 0.7)';
                             }}

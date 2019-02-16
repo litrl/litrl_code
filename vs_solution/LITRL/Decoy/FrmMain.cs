@@ -2057,8 +2057,11 @@ namespace Decoy
 
         private void LstBookmarks_SelectedValueChanged(object sender, EventArgs e)
         {
-            lastURL = "";
-            c.Browser.Load(LstBookmarks.SelectedItems[0].ToString());
+            if (LstBookmarks.SelectedItems.Count > 0)
+            {
+                lastURL = "";
+                c.Browser.Load(LstBookmarks.SelectedItems[0].ToString());
+            }
         }
 
         private void ShowHighlightColorDialog()

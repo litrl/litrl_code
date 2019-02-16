@@ -22,6 +22,7 @@ along with Litrl Browser.If not, see<https://www.gnu.org/licenses/>.
 using System;
 using System.Windows.Forms;
 using CefSharp;
+using CefSharp.WinForms;
 
 namespace Decoy
 {

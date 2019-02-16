@@ -116,6 +116,7 @@ namespace Decoy
             TabDocument.Controls.Add(c);
             editorInput.Dock = DockStyle.Fill;
             PanEditor.Controls.Add(editorInput);
+            editorInput.Browser.LoadHtml("<html><body contentEditable='true'></body></html>", "http://yourinputdoc");
 
             c.Browser.LoadingStateChanged += Browser_LoadingStateChanged;
             c.Browser.LifeSpanHandler = new PopupHandler(lastURL);

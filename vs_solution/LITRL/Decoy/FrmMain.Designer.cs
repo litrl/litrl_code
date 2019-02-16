@@ -147,6 +147,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.BtnForward = new System.Windows.Forms.Button();
             this.BtnBack = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -940,6 +941,8 @@
             this.txtBottomLine.TabIndex = 1;
             this.txtBottomLine.Text = "Waiting for clickbait input...";
             this.txtBottomLine.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.toolTip1.SetToolTip(this.txtBottomLine, "This message is determined by the values for Slight/Moderate/Heavy clickbait in \"" +
+        "Highlight Options\"");
             // 
             // tabPage2
             // 
@@ -1629,6 +1632,7 @@
             this.Name = "FrmMain";
             this.Text = "Litrl Browser - News Verification Suite - Experimental Version ";
             this.Load += new System.EventHandler(this.FrmMain_Load);
+            this.Shown += new System.EventHandler(this.FrmMain_Shown);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -1809,6 +1813,7 @@
         private System.Windows.Forms.Panel PanelFilter;
         private System.Windows.Forms.TextBox TxtCBFilter;
         private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 

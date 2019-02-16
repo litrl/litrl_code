@@ -2100,5 +2100,10 @@ namespace Decoy
                 e.Handled = true;
             }
         }
+
+        private void FrmMain_Shown(object sender, EventArgs e)
+        {
+            MessageBox.Show("The Litrl ('literal') Browser is experimental research software. Digital literacy is key for everyone to effectively evaluate potential misinformation online, and this program is NOT a replacement for that.  Use this program with caution!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
     }
 }

@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="label12.Text" xml:space="preserve">
-    <value>These also determine the Page Message (above graph), based on the % of moderate/heavy clickbait.
+    <value>These determine the Page Message based on the % of moderate/heavy clickbait.
 &lt; Slight %, Page clickbaiting level is low.
 &gt;= Slight %, Page is slightly clickbaiting
 &gt;= Moderate %, Page is moderately clickbaiting

@@ -197,6 +197,7 @@
             this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Location = new System.Drawing.Point(0, 38);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -209,8 +210,8 @@
             this.splitContainer1.Panel2.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.splitContainer1.Panel2.Controls.Add(this.TabsDetectors);
             this.splitContainer1.Panel2MinSize = 510;
-            this.splitContainer1.Size = new System.Drawing.Size(1184, 623);
-            this.splitContainer1.SplitterDistance = 670;
+            this.splitContainer1.Size = new System.Drawing.Size(1184, 640);
+            this.splitContainer1.SplitterDistance = 669;
             this.splitContainer1.TabIndex = 4;
             // 
             // TabsBrowser
@@ -222,9 +223,10 @@
             this.TabsBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TabsBrowser.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TabsBrowser.Location = new System.Drawing.Point(0, 0);
+            this.TabsBrowser.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.TabsBrowser.Name = "TabsBrowser";
             this.TabsBrowser.SelectedIndex = 0;
-            this.TabsBrowser.Size = new System.Drawing.Size(668, 621);
+            this.TabsBrowser.Size = new System.Drawing.Size(667, 638);
             this.TabsBrowser.TabIndex = 0;
             this.TabsBrowser.SelectedIndexChanged += new System.EventHandler(this.TabsBrowser_SelectedIndexChanged);
             this.TabsBrowser.Selected += new System.Windows.Forms.TabControlEventHandler(this.TabsBrowser_Selected);
@@ -232,9 +234,10 @@
             // TabDocument
             // 
             this.TabDocument.Location = new System.Drawing.Point(4, 4);
+            this.TabDocument.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.TabDocument.Name = "TabDocument";
-            this.TabDocument.Padding = new System.Windows.Forms.Padding(3);
-            this.TabDocument.Size = new System.Drawing.Size(660, 590);
+            this.TabDocument.Padding = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.TabDocument.Size = new System.Drawing.Size(659, 607);
             this.TabDocument.TabIndex = 0;
             this.TabDocument.Text = "BROWSER";
             this.TabDocument.UseVisualStyleBackColor = true;
@@ -245,9 +248,10 @@
             this.TabAnalysis.Controls.Add(this.GrpSaveResults);
             this.TabAnalysis.Controls.Add(this.groupBox2);
             this.TabAnalysis.Location = new System.Drawing.Point(4, 4);
+            this.TabAnalysis.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.TabAnalysis.Name = "TabAnalysis";
-            this.TabAnalysis.Padding = new System.Windows.Forms.Padding(3);
-            this.TabAnalysis.Size = new System.Drawing.Size(660, 590);
+            this.TabAnalysis.Padding = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.TabAnalysis.Size = new System.Drawing.Size(660, 607);
             this.TabAnalysis.TabIndex = 1;
             this.TabAnalysis.Text = "ANALYSIS";
             this.TabAnalysis.UseVisualStyleBackColor = true;
@@ -258,9 +262,11 @@
             this.groupBox1.Controls.Add(this.label21);
             this.groupBox1.Controls.Add(this.panel6);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Location = new System.Drawing.Point(616, 81);
+            this.groupBox1.Location = new System.Drawing.Point(616, 83);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(41, 506);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.groupBox1.Size = new System.Drawing.Size(42, 521);
             this.groupBox1.TabIndex = 24;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Saved URLs";
@@ -272,10 +278,11 @@
             this.LstBookmarks.FormattingEnabled = true;
             this.LstBookmarks.HorizontalScrollbar = true;
             this.LstBookmarks.ItemHeight = 18;
-            this.LstBookmarks.Location = new System.Drawing.Point(3, 93);
+            this.LstBookmarks.Location = new System.Drawing.Point(2, 94);
+            this.LstBookmarks.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.LstBookmarks.Name = "LstBookmarks";
             this.LstBookmarks.ScrollAlwaysVisible = true;
-            this.LstBookmarks.Size = new System.Drawing.Size(35, 410);
+            this.LstBookmarks.Size = new System.Drawing.Size(38, 424);
             this.LstBookmarks.TabIndex = 8;
             this.LstBookmarks.SelectedValueChanged += new System.EventHandler(this.LstBookmarks_SelectedValueChanged);
             // 
@@ -283,7 +290,8 @@
             // 
             this.label21.AutoSize = true;
             this.label21.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label21.Location = new System.Drawing.Point(3, 75);
+            this.label21.Location = new System.Drawing.Point(2, 76);
+            this.label21.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(92, 18);
             this.label21.TabIndex = 7;
@@ -294,9 +302,10 @@
             this.panel6.Controls.Add(this.label20);
             this.panel6.Controls.Add(this.TxtHomepageURL);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel6.Location = new System.Drawing.Point(3, 22);
+            this.panel6.Location = new System.Drawing.Point(2, 22);
+            this.panel6.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(35, 53);
+            this.panel6.Size = new System.Drawing.Size(38, 54);
             this.panel6.TabIndex = 6;
             // 
             // label20
@@ -304,6 +313,7 @@
             this.label20.AutoSize = true;
             this.label20.Dock = System.Windows.Forms.DockStyle.Top;
             this.label20.Location = new System.Drawing.Point(0, 0);
+            this.label20.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(90, 18);
             this.label20.TabIndex = 2;
@@ -313,9 +323,10 @@
             // 
             this.TxtHomepageURL.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.TxtHomepageURL.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TxtHomepageURL.Location = new System.Drawing.Point(0, 27);
+            this.TxtHomepageURL.Location = new System.Drawing.Point(0, 28);
+            this.TxtHomepageURL.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.TxtHomepageURL.Name = "TxtHomepageURL";
-            this.TxtHomepageURL.Size = new System.Drawing.Size(35, 26);
+            this.TxtHomepageURL.Size = new System.Drawing.Size(38, 26);
             this.TxtHomepageURL.TabIndex = 3;
             this.TxtHomepageURL.TextChanged += new System.EventHandler(this.TxtHomepageURL_TextChanged);
             // 
@@ -324,9 +335,11 @@
             this.GrpSaveResults.Controls.Add(this.GrpSecondaryAnalysisFuncs);
             this.GrpSaveResults.Controls.Add(this.panel5);
             this.GrpSaveResults.Dock = System.Windows.Forms.DockStyle.Left;
-            this.GrpSaveResults.Location = new System.Drawing.Point(3, 81);
+            this.GrpSaveResults.Location = new System.Drawing.Point(2, 83);
+            this.GrpSaveResults.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.GrpSaveResults.Name = "GrpSaveResults";
-            this.GrpSaveResults.Size = new System.Drawing.Size(613, 506);
+            this.GrpSaveResults.Padding = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.GrpSaveResults.Size = new System.Drawing.Size(614, 521);
             this.GrpSaveResults.TabIndex = 23;
             this.GrpSaveResults.TabStop = false;
             this.GrpSaveResults.Text = "Save Detector Results";
@@ -335,9 +348,11 @@
             // 
             this.GrpSecondaryAnalysisFuncs.Controls.Add(this.rtbPageNotes);
             this.GrpSecondaryAnalysisFuncs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.GrpSecondaryAnalysisFuncs.Location = new System.Drawing.Point(3, 376);
+            this.GrpSecondaryAnalysisFuncs.Location = new System.Drawing.Point(2, 385);
+            this.GrpSecondaryAnalysisFuncs.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.GrpSecondaryAnalysisFuncs.Name = "GrpSecondaryAnalysisFuncs";
-            this.GrpSecondaryAnalysisFuncs.Size = new System.Drawing.Size(607, 127);
+            this.GrpSecondaryAnalysisFuncs.Padding = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.GrpSecondaryAnalysisFuncs.Size = new System.Drawing.Size(610, 133);
             this.GrpSecondaryAnalysisFuncs.TabIndex = 23;
             this.GrpSecondaryAnalysisFuncs.TabStop = false;
             this.GrpSecondaryAnalysisFuncs.Text = "Detector/page notes (will be saved to dataset if above option was checked)";
@@ -346,9 +361,10 @@
             // 
             this.rtbPageNotes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rtbPageNotes.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbPageNotes.Location = new System.Drawing.Point(3, 22);
+            this.rtbPageNotes.Location = new System.Drawing.Point(2, 22);
+            this.rtbPageNotes.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.rtbPageNotes.Name = "rtbPageNotes";
-            this.rtbPageNotes.Size = new System.Drawing.Size(601, 102);
+            this.rtbPageNotes.Size = new System.Drawing.Size(606, 108);
             this.rtbPageNotes.TabIndex = 13;
             this.rtbPageNotes.Text = "";
             // 
@@ -368,15 +384,17 @@
             this.panel5.Controls.Add(this.chkSatire);
             this.panel5.Controls.Add(this.chkFalsification);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel5.Location = new System.Drawing.Point(3, 22);
+            this.panel5.Location = new System.Drawing.Point(2, 22);
+            this.panel5.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(607, 354);
+            this.panel5.Size = new System.Drawing.Size(610, 363);
             this.panel5.TabIndex = 22;
             // 
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(13, 190);
+            this.label19.Location = new System.Drawing.Point(14, 194);
+            this.label19.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(81, 18);
             this.label19.TabIndex = 28;
@@ -386,7 +404,8 @@
             // 
             this.label15.AutoSize = true;
             this.label15.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(13, 164);
+            this.label15.Location = new System.Drawing.Point(14, 168);
+            this.label15.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(565, 15);
             this.label15.TabIndex = 27;
@@ -396,7 +415,8 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(13, 114);
+            this.label14.Location = new System.Drawing.Point(14, 117);
+            this.label14.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(104, 18);
             this.label14.TabIndex = 26;
@@ -405,7 +425,8 @@
             // TxtPageSaveURL
             // 
             this.TxtPageSaveURL.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TxtPageSaveURL.Location = new System.Drawing.Point(16, 135);
+            this.TxtPageSaveURL.Location = new System.Drawing.Point(16, 138);
+            this.TxtPageSaveURL.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.TxtPageSaveURL.Name = "TxtPageSaveURL";
             this.TxtPageSaveURL.Size = new System.Drawing.Size(562, 26);
             this.TxtPageSaveURL.TabIndex = 25;
@@ -415,7 +436,8 @@
             this.chkNotes.AutoSize = true;
             this.chkNotes.Checked = true;
             this.chkNotes.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkNotes.Location = new System.Drawing.Point(310, 221);
+            this.chkNotes.Location = new System.Drawing.Point(310, 226);
+            this.chkNotes.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.chkNotes.Name = "chkNotes";
             this.chkNotes.Size = new System.Drawing.Size(68, 22);
             this.chkNotes.TabIndex = 24;
@@ -426,7 +448,8 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(13, 65);
+            this.label4.Location = new System.Drawing.Point(14, 66);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(464, 30);
             this.label4.TabIndex = 23;
@@ -440,6 +463,7 @@
             this.CboDatabases.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CboDatabases.FormattingEnabled = true;
             this.CboDatabases.Location = new System.Drawing.Point(16, 30);
+            this.CboDatabases.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.CboDatabases.Name = "CboDatabases";
             this.CboDatabases.Size = new System.Drawing.Size(562, 32);
             this.CboDatabases.TabIndex = 16;
@@ -447,9 +471,10 @@
             // label10
             // 
             this.label10.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(13, 306);
+            this.label10.Location = new System.Drawing.Point(14, 314);
+            this.label10.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(535, 45);
+            this.label10.Size = new System.Drawing.Size(534, 46);
             this.label10.TabIndex = 22;
             this.label10.Text = "**This will include the current system time, URL, detector results, and your own " +
     "evaluation (Observer) of the clickbait, satire, and falsification scores (if the" +
@@ -458,7 +483,8 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(13, 9);
+            this.label9.Location = new System.Drawing.Point(14, 10);
+            this.label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(115, 18);
             this.label9.TabIndex = 17;
@@ -466,7 +492,8 @@
             // 
             // BtnInsertResults
             // 
-            this.BtnInsertResults.Location = new System.Drawing.Point(16, 250);
+            this.BtnInsertResults.Location = new System.Drawing.Point(16, 257);
+            this.BtnInsertResults.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.BtnInsertResults.Name = "BtnInsertResults";
             this.BtnInsertResults.Size = new System.Drawing.Size(288, 38);
             this.BtnInsertResults.TabIndex = 18;
@@ -479,7 +506,8 @@
             this.chkClickbait.AutoSize = true;
             this.chkClickbait.Checked = true;
             this.chkClickbait.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkClickbait.Location = new System.Drawing.Point(16, 221);
+            this.chkClickbait.Location = new System.Drawing.Point(16, 226);
+            this.chkClickbait.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.chkClickbait.Name = "chkClickbait";
             this.chkClickbait.Size = new System.Drawing.Size(88, 22);
             this.chkClickbait.TabIndex = 19;
@@ -491,7 +519,8 @@
             this.chkSatire.AutoSize = true;
             this.chkSatire.Checked = true;
             this.chkSatire.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkSatire.Location = new System.Drawing.Point(110, 221);
+            this.chkSatire.Location = new System.Drawing.Point(110, 226);
+            this.chkSatire.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.chkSatire.Name = "chkSatire";
             this.chkSatire.Size = new System.Drawing.Size(69, 22);
             this.chkSatire.TabIndex = 20;
@@ -503,7 +532,8 @@
             this.chkFalsification.AutoSize = true;
             this.chkFalsification.Checked = true;
             this.chkFalsification.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkFalsification.Location = new System.Drawing.Point(185, 221);
+            this.chkFalsification.Location = new System.Drawing.Point(186, 226);
+            this.chkFalsification.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.chkFalsification.Name = "chkFalsification";
             this.chkFalsification.Size = new System.Drawing.Size(119, 22);
             this.chkFalsification.TabIndex = 21;
@@ -519,9 +549,11 @@
             this.groupBox2.Controls.Add(this.BtnSavePageToDisk);
             this.groupBox2.Controls.Add(this.BtnOpenLocalPage);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox2.Location = new System.Drawing.Point(3, 3);
+            this.groupBox2.Location = new System.Drawing.Point(2, 3);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(654, 78);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.groupBox2.Size = new System.Drawing.Size(656, 80);
             this.groupBox2.TabIndex = 22;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Browser";
@@ -529,17 +561,19 @@
             // ChkAlwaysProcessClickbait
             // 
             this.ChkAlwaysProcessClickbait.Location = new System.Drawing.Point(938, 22);
+            this.ChkAlwaysProcessClickbait.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.ChkAlwaysProcessClickbait.Name = "ChkAlwaysProcessClickbait";
-            this.ChkAlwaysProcessClickbait.Size = new System.Drawing.Size(147, 45);
+            this.ChkAlwaysProcessClickbait.Size = new System.Drawing.Size(146, 46);
             this.ChkAlwaysProcessClickbait.TabIndex = 7;
             this.ChkAlwaysProcessClickbait.Text = "Always highlight Clickbait";
             this.ChkAlwaysProcessClickbait.UseVisualStyleBackColor = true;
             // 
             // BtnSetHomepage
             // 
-            this.BtnSetHomepage.Location = new System.Drawing.Point(747, 30);
+            this.BtnSetHomepage.Location = new System.Drawing.Point(746, 30);
+            this.BtnSetHomepage.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.BtnSetHomepage.Name = "BtnSetHomepage";
-            this.BtnSetHomepage.Size = new System.Drawing.Size(176, 27);
+            this.BtnSetHomepage.Size = new System.Drawing.Size(176, 28);
             this.BtnSetHomepage.TabIndex = 6;
             this.BtnSetHomepage.Text = "Set As Homepage";
             this.BtnSetHomepage.UseVisualStyleBackColor = true;
@@ -547,9 +581,10 @@
             // 
             // BtnDeleteBookmark
             // 
-            this.BtnDeleteBookmark.Location = new System.Drawing.Point(565, 30);
+            this.BtnDeleteBookmark.Location = new System.Drawing.Point(566, 30);
+            this.BtnDeleteBookmark.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.BtnDeleteBookmark.Name = "BtnDeleteBookmark";
-            this.BtnDeleteBookmark.Size = new System.Drawing.Size(176, 27);
+            this.BtnDeleteBookmark.Size = new System.Drawing.Size(176, 28);
             this.BtnDeleteBookmark.TabIndex = 5;
             this.BtnDeleteBookmark.Text = "Delete Bookmark";
             this.BtnDeleteBookmark.UseVisualStyleBackColor = true;
@@ -557,9 +592,10 @@
             // 
             // BtnAddBookmark
             // 
-            this.BtnAddBookmark.Location = new System.Drawing.Point(383, 30);
+            this.BtnAddBookmark.Location = new System.Drawing.Point(382, 30);
+            this.BtnAddBookmark.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.BtnAddBookmark.Name = "BtnAddBookmark";
-            this.BtnAddBookmark.Size = new System.Drawing.Size(176, 27);
+            this.BtnAddBookmark.Size = new System.Drawing.Size(176, 28);
             this.BtnAddBookmark.TabIndex = 4;
             this.BtnAddBookmark.Text = "Add Bookmark";
             this.BtnAddBookmark.UseVisualStyleBackColor = true;
@@ -568,9 +604,10 @@
             // BtnSavePageToDisk
             // 
             this.BtnSavePageToDisk.Enabled = false;
-            this.BtnSavePageToDisk.Location = new System.Drawing.Point(19, 30);
+            this.BtnSavePageToDisk.Location = new System.Drawing.Point(18, 30);
+            this.BtnSavePageToDisk.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.BtnSavePageToDisk.Name = "BtnSavePageToDisk";
-            this.BtnSavePageToDisk.Size = new System.Drawing.Size(176, 27);
+            this.BtnSavePageToDisk.Size = new System.Drawing.Size(176, 28);
             this.BtnSavePageToDisk.TabIndex = 3;
             this.BtnSavePageToDisk.Text = "Save Document";
             this.BtnSavePageToDisk.UseVisualStyleBackColor = true;
@@ -578,9 +615,10 @@
             // 
             // BtnOpenLocalPage
             // 
-            this.BtnOpenLocalPage.Location = new System.Drawing.Point(201, 30);
+            this.BtnOpenLocalPage.Location = new System.Drawing.Point(202, 30);
+            this.BtnOpenLocalPage.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.BtnOpenLocalPage.Name = "BtnOpenLocalPage";
-            this.BtnOpenLocalPage.Size = new System.Drawing.Size(176, 27);
+            this.BtnOpenLocalPage.Size = new System.Drawing.Size(176, 28);
             this.BtnOpenLocalPage.TabIndex = 2;
             this.BtnOpenLocalPage.Text = "Open Document";
             this.BtnOpenLocalPage.UseVisualStyleBackColor = true;
@@ -591,8 +629,9 @@
             this.TabInput.Controls.Add(this.PanEditor);
             this.TabInput.Controls.Add(this.inputToolStrip);
             this.TabInput.Location = new System.Drawing.Point(4, 4);
+            this.TabInput.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.TabInput.Name = "TabInput";
-            this.TabInput.Size = new System.Drawing.Size(660, 590);
+            this.TabInput.Size = new System.Drawing.Size(660, 607);
             this.TabInput.TabIndex = 2;
             this.TabInput.Text = "INPUT";
             this.TabInput.UseVisualStyleBackColor = true;
@@ -601,14 +640,16 @@
             // 
             this.PanEditor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PanEditor.Location = new System.Drawing.Point(0, 31);
+            this.PanEditor.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.PanEditor.Name = "PanEditor";
-            this.PanEditor.Size = new System.Drawing.Size(660, 559);
+            this.PanEditor.Size = new System.Drawing.Size(660, 576);
             this.PanEditor.TabIndex = 3;
             // 
             // inputToolStrip
             // 
             this.inputToolStrip.BackColor = System.Drawing.Color.White;
             this.inputToolStrip.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.inputToolStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.inputToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.BtnInputSendToBrowser,
             this.BtnInputClear,
@@ -624,6 +665,7 @@
             this.BtnInputP});
             this.inputToolStrip.Location = new System.Drawing.Point(0, 0);
             this.inputToolStrip.Name = "inputToolStrip";
+            this.inputToolStrip.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.inputToolStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.inputToolStrip.Size = new System.Drawing.Size(660, 31);
             this.inputToolStrip.TabIndex = 2;
@@ -752,10 +794,11 @@
             this.TabsDetectors.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TabsDetectors.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TabsDetectors.Location = new System.Drawing.Point(0, 0);
+            this.TabsDetectors.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.TabsDetectors.Multiline = true;
             this.TabsDetectors.Name = "TabsDetectors";
             this.TabsDetectors.SelectedIndex = 0;
-            this.TabsDetectors.Size = new System.Drawing.Size(508, 621);
+            this.TabsDetectors.Size = new System.Drawing.Size(509, 638);
             this.TabsDetectors.TabIndex = 2;
             this.TabsDetectors.SelectedIndexChanged += new System.EventHandler(this.TabsDetectors_SelectedIndexChanged);
             // 
@@ -763,9 +806,10 @@
             // 
             this.tabPage1.Controls.Add(this.splitContainerClickbait);
             this.tabPage1.Location = new System.Drawing.Point(4, 4);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(500, 590);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.tabPage1.Size = new System.Drawing.Size(501, 607);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "CLICKBAIT";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -773,7 +817,8 @@
             // splitContainerClickbait
             // 
             this.splitContainerClickbait.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerClickbait.Location = new System.Drawing.Point(3, 3);
+            this.splitContainerClickbait.Location = new System.Drawing.Point(2, 3);
+            this.splitContainerClickbait.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.splitContainerClickbait.Name = "splitContainerClickbait";
             this.splitContainerClickbait.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -787,16 +832,17 @@
             // 
             this.splitContainerClickbait.Panel2.Controls.Add(this.zedGraphClickbait);
             this.splitContainerClickbait.Panel2.Controls.Add(this.txtBottomLine);
-            this.splitContainerClickbait.Size = new System.Drawing.Size(494, 584);
-            this.splitContainerClickbait.SplitterDistance = 317;
+            this.splitContainerClickbait.Size = new System.Drawing.Size(497, 601);
+            this.splitContainerClickbait.SplitterDistance = 325;
             this.splitContainerClickbait.TabIndex = 2;
             // 
             // PanelMain
             // 
             this.PanelMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PanelMain.Location = new System.Drawing.Point(0, 64);
+            this.PanelMain.Location = new System.Drawing.Point(0, 66);
+            this.PanelMain.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.PanelMain.Name = "PanelMain";
-            this.PanelMain.Size = new System.Drawing.Size(494, 222);
+            this.PanelMain.Size = new System.Drawing.Size(497, 227);
             this.PanelMain.TabIndex = 6;
             // 
             // PanelFilter
@@ -804,18 +850,20 @@
             this.PanelFilter.Controls.Add(this.TxtCBFilter);
             this.PanelFilter.Controls.Add(this.label22);
             this.PanelFilter.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.PanelFilter.Location = new System.Drawing.Point(0, 286);
+            this.PanelFilter.Location = new System.Drawing.Point(0, 293);
+            this.PanelFilter.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.PanelFilter.Name = "PanelFilter";
-            this.PanelFilter.Padding = new System.Windows.Forms.Padding(0, 5, 0, 0);
-            this.PanelFilter.Size = new System.Drawing.Size(494, 31);
+            this.PanelFilter.Padding = new System.Windows.Forms.Padding(0, 6, 0, 0);
+            this.PanelFilter.Size = new System.Drawing.Size(497, 32);
             this.PanelFilter.TabIndex = 5;
             // 
             // TxtCBFilter
             // 
             this.TxtCBFilter.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TxtCBFilter.Location = new System.Drawing.Point(40, 5);
+            this.TxtCBFilter.Location = new System.Drawing.Point(40, 6);
+            this.TxtCBFilter.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.TxtCBFilter.Name = "TxtCBFilter";
-            this.TxtCBFilter.Size = new System.Drawing.Size(454, 26);
+            this.TxtCBFilter.Size = new System.Drawing.Size(457, 26);
             this.TxtCBFilter.TabIndex = 1;
             this.TxtCBFilter.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtCBFilter_KeyDown);
             // 
@@ -823,7 +871,8 @@
             // 
             this.label22.Dock = System.Windows.Forms.DockStyle.Left;
             this.label22.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label22.Location = new System.Drawing.Point(0, 5);
+            this.label22.Location = new System.Drawing.Point(0, 6);
+            this.label22.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(40, 26);
             this.label22.TabIndex = 0;
@@ -839,14 +888,16 @@
             this.panel1.Controls.Add(this.label2);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(494, 64);
+            this.panel1.Size = new System.Drawing.Size(497, 66);
             this.panel1.TabIndex = 3;
             // 
             // BtnClickbaitColors
             // 
             this.BtnClickbaitColors.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BtnClickbaitColors.Location = new System.Drawing.Point(311, 32);
+            this.BtnClickbaitColors.Location = new System.Drawing.Point(313, 33);
+            this.BtnClickbaitColors.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.BtnClickbaitColors.Name = "BtnClickbaitColors";
             this.BtnClickbaitColors.Size = new System.Drawing.Size(180, 26);
             this.BtnClickbaitColors.TabIndex = 6;
@@ -856,7 +907,8 @@
             // 
             // BtnDetectClickbaitSelected
             // 
-            this.BtnDetectClickbaitSelected.Location = new System.Drawing.Point(3, 3);
+            this.BtnDetectClickbaitSelected.Location = new System.Drawing.Point(2, 3);
+            this.BtnDetectClickbaitSelected.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.BtnDetectClickbaitSelected.Name = "BtnDetectClickbaitSelected";
             this.BtnDetectClickbaitSelected.Size = new System.Drawing.Size(304, 26);
             this.BtnDetectClickbaitSelected.TabIndex = 5;
@@ -867,7 +919,8 @@
             // BtnTagSelectClickbait
             // 
             this.BtnTagSelectClickbait.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BtnTagSelectClickbait.Location = new System.Drawing.Point(311, 3);
+            this.BtnTagSelectClickbait.Location = new System.Drawing.Point(313, 3);
+            this.BtnTagSelectClickbait.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.BtnTagSelectClickbait.Name = "BtnTagSelectClickbait";
             this.BtnTagSelectClickbait.Size = new System.Drawing.Size(180, 26);
             this.BtnTagSelectClickbait.TabIndex = 3;
@@ -878,7 +931,8 @@
             // NumMinWordCount
             // 
             this.NumMinWordCount.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.NumMinWordCount.Location = new System.Drawing.Point(233, 32);
+            this.NumMinWordCount.Location = new System.Drawing.Point(234, 33);
+            this.NumMinWordCount.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.NumMinWordCount.Maximum = new decimal(new int[] {
             7,
             0,
@@ -905,7 +959,8 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(3, 34);
+            this.label2.Location = new System.Drawing.Point(2, 34);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(223, 18);
             this.label2.TabIndex = 1;
@@ -915,7 +970,7 @@
             // 
             this.zedGraphClickbait.Dock = System.Windows.Forms.DockStyle.Fill;
             this.zedGraphClickbait.Location = new System.Drawing.Point(0, 26);
-            this.zedGraphClickbait.Margin = new System.Windows.Forms.Padding(4);
+            this.zedGraphClickbait.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.zedGraphClickbait.Name = "zedGraphClickbait";
             this.zedGraphClickbait.ScrollGrace = 0D;
             this.zedGraphClickbait.ScrollMaxX = 0D;
@@ -924,7 +979,7 @@
             this.zedGraphClickbait.ScrollMinX = 0D;
             this.zedGraphClickbait.ScrollMinY = 0D;
             this.zedGraphClickbait.ScrollMinY2 = 0D;
-            this.zedGraphClickbait.Size = new System.Drawing.Size(494, 237);
+            this.zedGraphClickbait.Size = new System.Drawing.Size(497, 246);
             this.zedGraphClickbait.TabIndex = 2;
             this.zedGraphClickbait.UseExtendedPrintDialog = true;
             // 
@@ -935,9 +990,10 @@
             this.txtBottomLine.Dock = System.Windows.Forms.DockStyle.Top;
             this.txtBottomLine.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtBottomLine.Location = new System.Drawing.Point(0, 0);
+            this.txtBottomLine.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.txtBottomLine.Name = "txtBottomLine";
             this.txtBottomLine.ReadOnly = true;
-            this.txtBottomLine.Size = new System.Drawing.Size(494, 26);
+            this.txtBottomLine.Size = new System.Drawing.Size(497, 26);
             this.txtBottomLine.TabIndex = 1;
             this.txtBottomLine.Text = "Waiting for clickbait input...";
             this.txtBottomLine.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -948,9 +1004,10 @@
             // 
             this.tabPage2.Controls.Add(this.splitContainer2);
             this.tabPage2.Location = new System.Drawing.Point(4, 4);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(500, 590);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.tabPage2.Size = new System.Drawing.Size(501, 607);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "SATIRE";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -958,7 +1015,8 @@
             // splitContainer2
             // 
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer2.Location = new System.Drawing.Point(3, 3);
+            this.splitContainer2.Location = new System.Drawing.Point(2, 3);
+            this.splitContainer2.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.splitContainer2.Name = "splitContainer2";
             this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -973,17 +1031,17 @@
             this.splitContainer2.Panel2.Controls.Add(this.zedGraphSatire);
             this.splitContainer2.Panel2.Controls.Add(this.PanelUserScores);
             this.splitContainer2.Panel2.Controls.Add(this.txtSatireFeatureScores);
-            this.splitContainer2.Size = new System.Drawing.Size(494, 584);
-            this.splitContainer2.SplitterDistance = 255;
+            this.splitContainer2.Size = new System.Drawing.Size(497, 601);
+            this.splitContainer2.SplitterDistance = 261;
             this.splitContainer2.TabIndex = 9;
             // 
             // rtbSatireResults
             // 
             this.rtbSatireResults.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rtbSatireResults.Location = new System.Drawing.Point(0, 85);
+            this.rtbSatireResults.Location = new System.Drawing.Point(0, 87);
             this.rtbSatireResults.Margin = new System.Windows.Forms.Padding(2);
             this.rtbSatireResults.Name = "rtbSatireResults";
-            this.rtbSatireResults.Size = new System.Drawing.Size(494, 170);
+            this.rtbSatireResults.Size = new System.Drawing.Size(497, 174);
             this.rtbSatireResults.TabIndex = 14;
             this.rtbSatireResults.Text = "The satire detector is loading...";
             // 
@@ -991,7 +1049,8 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label3.Location = new System.Drawing.Point(0, 67);
+            this.label3.Location = new System.Drawing.Point(0, 69);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(410, 18);
             this.label3.TabIndex = 11;
@@ -1005,14 +1064,16 @@
             this.panel2.Controls.Add(this.BtnTagSelectSatire);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 0);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(494, 67);
+            this.panel2.Size = new System.Drawing.Size(497, 69);
             this.panel2.TabIndex = 9;
             // 
             // BtnSatireColors
             // 
             this.BtnSatireColors.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BtnSatireColors.Location = new System.Drawing.Point(310, 31);
+            this.BtnSatireColors.Location = new System.Drawing.Point(313, 32);
+            this.BtnSatireColors.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.BtnSatireColors.Name = "BtnSatireColors";
             this.BtnSatireColors.Size = new System.Drawing.Size(180, 26);
             this.BtnSatireColors.TabIndex = 15;
@@ -1022,9 +1083,10 @@
             // 
             // BtnExploreSatire
             // 
-            this.BtnExploreSatire.Location = new System.Drawing.Point(3, 31);
+            this.BtnExploreSatire.Location = new System.Drawing.Point(2, 32);
+            this.BtnExploreSatire.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.BtnExploreSatire.Name = "BtnExploreSatire";
-            this.BtnExploreSatire.Size = new System.Drawing.Size(301, 26);
+            this.BtnExploreSatire.Size = new System.Drawing.Size(302, 26);
             this.BtnExploreSatire.TabIndex = 14;
             this.BtnExploreSatire.Text = "Explore Satire Detector Results";
             this.BtnExploreSatire.UseVisualStyleBackColor = true;
@@ -1032,9 +1094,10 @@
             // 
             // BtnDetectSatireSelected
             // 
-            this.BtnDetectSatireSelected.Location = new System.Drawing.Point(3, 0);
+            this.BtnDetectSatireSelected.Location = new System.Drawing.Point(2, 0);
+            this.BtnDetectSatireSelected.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.BtnDetectSatireSelected.Name = "BtnDetectSatireSelected";
-            this.BtnDetectSatireSelected.Size = new System.Drawing.Size(301, 26);
+            this.BtnDetectSatireSelected.Size = new System.Drawing.Size(302, 26);
             this.BtnDetectSatireSelected.TabIndex = 4;
             this.BtnDetectSatireSelected.Text = "Detect on selection";
             this.BtnDetectSatireSelected.UseVisualStyleBackColor = true;
@@ -1043,7 +1106,8 @@
             // BtnTagSelectSatire
             // 
             this.BtnTagSelectSatire.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BtnTagSelectSatire.Location = new System.Drawing.Point(310, 0);
+            this.BtnTagSelectSatire.Location = new System.Drawing.Point(313, 0);
+            this.BtnTagSelectSatire.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.BtnTagSelectSatire.Name = "BtnTagSelectSatire";
             this.BtnTagSelectSatire.Size = new System.Drawing.Size(180, 26);
             this.BtnTagSelectSatire.TabIndex = 3;
@@ -1054,8 +1118,8 @@
             // zedGraphSatire
             // 
             this.zedGraphSatire.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.zedGraphSatire.Location = new System.Drawing.Point(0, 118);
-            this.zedGraphSatire.Margin = new System.Windows.Forms.Padding(9, 8, 9, 8);
+            this.zedGraphSatire.Location = new System.Drawing.Point(0, 122);
+            this.zedGraphSatire.Margin = new System.Windows.Forms.Padding(10, 8, 10, 8);
             this.zedGraphSatire.Name = "zedGraphSatire";
             this.zedGraphSatire.ScrollGrace = 0D;
             this.zedGraphSatire.ScrollMaxX = 0D;
@@ -1064,7 +1128,7 @@
             this.zedGraphSatire.ScrollMinX = 0D;
             this.zedGraphSatire.ScrollMinY = 0D;
             this.zedGraphSatire.ScrollMinY2 = 0D;
-            this.zedGraphSatire.Size = new System.Drawing.Size(494, 207);
+            this.zedGraphSatire.Size = new System.Drawing.Size(497, 214);
             this.zedGraphSatire.TabIndex = 11;
             this.zedGraphSatire.UseExtendedPrintDialog = true;
             // 
@@ -1081,9 +1145,10 @@
             this.PanelUserScores.Controls.Add(this.label5);
             this.PanelUserScores.Controls.Add(this.numObservedNotSatire);
             this.PanelUserScores.Dock = System.Windows.Forms.DockStyle.Top;
-            this.PanelUserScores.Location = new System.Drawing.Point(0, 19);
+            this.PanelUserScores.Location = new System.Drawing.Point(0, 20);
+            this.PanelUserScores.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.PanelUserScores.Name = "PanelUserScores";
-            this.PanelUserScores.Size = new System.Drawing.Size(494, 99);
+            this.PanelUserScores.Size = new System.Drawing.Size(497, 102);
             this.PanelUserScores.TabIndex = 10;
             // 
             // label8
@@ -1091,9 +1156,10 @@
             this.label8.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label8.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(366, 34);
+            this.label8.Location = new System.Drawing.Point(367, 34);
+            this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(111, 17);
+            this.label8.Size = new System.Drawing.Size(112, 17);
             this.label8.TabIndex = 9;
             this.label8.Text = "Detector Accuracy";
             this.label8.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -1110,9 +1176,10 @@
             "Moderate",
             "Low",
             "Poor"});
-            this.cboSatireDetectorAcc.Location = new System.Drawing.Point(366, 50);
+            this.cboSatireDetectorAcc.Location = new System.Drawing.Point(367, 51);
+            this.cboSatireDetectorAcc.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.cboSatireDetectorAcc.Name = "cboSatireDetectorAcc";
-            this.cboSatireDetectorAcc.Size = new System.Drawing.Size(111, 26);
+            this.cboSatireDetectorAcc.Size = new System.Drawing.Size(110, 26);
             this.cboSatireDetectorAcc.TabIndex = 8;
             // 
             // label12
@@ -1120,7 +1187,8 @@
             this.label12.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(219, 9);
+            this.label12.Location = new System.Drawing.Point(220, 10);
+            this.label12.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(131, 17);
             this.label12.TabIndex = 7;
@@ -1132,7 +1200,8 @@
             this.LblDetectorSatire.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.LblDetectorSatire.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LblDetectorSatire.ForeColor = System.Drawing.Color.Red;
-            this.LblDetectorSatire.Location = new System.Drawing.Point(222, 62);
+            this.LblDetectorSatire.Location = new System.Drawing.Point(223, 63);
+            this.LblDetectorSatire.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.LblDetectorSatire.Name = "LblDetectorSatire";
             this.LblDetectorSatire.Size = new System.Drawing.Size(138, 26);
             this.LblDetectorSatire.TabIndex = 6;
@@ -1145,7 +1214,8 @@
             this.LblDetectorNotSatire.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.LblDetectorNotSatire.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LblDetectorNotSatire.ForeColor = System.Drawing.Color.Blue;
-            this.LblDetectorNotSatire.Location = new System.Drawing.Point(222, 30);
+            this.LblDetectorNotSatire.Location = new System.Drawing.Point(223, 30);
+            this.LblDetectorNotSatire.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.LblDetectorNotSatire.Name = "LblDetectorNotSatire";
             this.LblDetectorNotSatire.Size = new System.Drawing.Size(138, 26);
             this.LblDetectorNotSatire.TabIndex = 5;
@@ -1157,7 +1227,8 @@
             this.label7.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(121, 9);
+            this.label7.Location = new System.Drawing.Point(122, 10);
+            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(69, 17);
             this.label7.TabIndex = 4;
@@ -1167,7 +1238,8 @@
             // 
             this.numObservedSatire.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.numObservedSatire.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numObservedSatire.Location = new System.Drawing.Point(124, 62);
+            this.numObservedSatire.Location = new System.Drawing.Point(125, 63);
+            this.numObservedSatire.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.numObservedSatire.Name = "numObservedSatire";
             this.numObservedSatire.Size = new System.Drawing.Size(92, 26);
             this.numObservedSatire.TabIndex = 3;
@@ -1178,7 +1250,8 @@
             this.label6.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(29, 67);
+            this.label6.Location = new System.Drawing.Point(30, 69);
+            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(89, 17);
             this.label6.TabIndex = 2;
@@ -1189,7 +1262,8 @@
             this.label5.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(3, 35);
+            this.label5.Location = new System.Drawing.Point(4, 36);
+            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(115, 17);
             this.label5.TabIndex = 1;
@@ -1199,7 +1273,8 @@
             // 
             this.numObservedNotSatire.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.numObservedNotSatire.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numObservedNotSatire.Location = new System.Drawing.Point(124, 30);
+            this.numObservedNotSatire.Location = new System.Drawing.Point(125, 30);
+            this.numObservedNotSatire.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.numObservedNotSatire.Name = "numObservedNotSatire";
             this.numObservedNotSatire.Size = new System.Drawing.Size(92, 26);
             this.numObservedNotSatire.TabIndex = 0;
@@ -1211,11 +1286,12 @@
             this.txtSatireFeatureScores.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtSatireFeatureScores.Dock = System.Windows.Forms.DockStyle.Top;
             this.txtSatireFeatureScores.Location = new System.Drawing.Point(0, 0);
+            this.txtSatireFeatureScores.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.txtSatireFeatureScores.Multiline = true;
             this.txtSatireFeatureScores.Name = "txtSatireFeatureScores";
             this.txtSatireFeatureScores.ReadOnly = true;
             this.txtSatireFeatureScores.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtSatireFeatureScores.Size = new System.Drawing.Size(494, 19);
+            this.txtSatireFeatureScores.Size = new System.Drawing.Size(497, 20);
             this.txtSatireFeatureScores.TabIndex = 9;
             this.txtSatireFeatureScores.Visible = false;
             // 
@@ -1223,8 +1299,9 @@
             // 
             this.tabPage3.Controls.Add(this.splitContainer3);
             this.tabPage3.Location = new System.Drawing.Point(4, 4);
+            this.tabPage3.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(500, 590);
+            this.tabPage3.Size = new System.Drawing.Size(501, 607);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "FALSIFICATIONS (ALPHA)";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -1233,6 +1310,7 @@
             // 
             this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer3.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer3.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.splitContainer3.Name = "splitContainer3";
             this.splitContainer3.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -1247,17 +1325,17 @@
             this.splitContainer3.Panel2.Controls.Add(this.zedGraphFalsification);
             this.splitContainer3.Panel2.Controls.Add(this.panel4);
             this.splitContainer3.Panel2.Controls.Add(this.txtFalsificationFeatureScores);
-            this.splitContainer3.Size = new System.Drawing.Size(500, 590);
-            this.splitContainer3.SplitterDistance = 256;
+            this.splitContainer3.Size = new System.Drawing.Size(501, 607);
+            this.splitContainer3.SplitterDistance = 263;
             this.splitContainer3.TabIndex = 10;
             // 
             // rtbFalsificationResults
             // 
             this.rtbFalsificationResults.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rtbFalsificationResults.Location = new System.Drawing.Point(0, 85);
+            this.rtbFalsificationResults.Location = new System.Drawing.Point(0, 87);
             this.rtbFalsificationResults.Margin = new System.Windows.Forms.Padding(2);
             this.rtbFalsificationResults.Name = "rtbFalsificationResults";
-            this.rtbFalsificationResults.Size = new System.Drawing.Size(500, 171);
+            this.rtbFalsificationResults.Size = new System.Drawing.Size(501, 176);
             this.rtbFalsificationResults.TabIndex = 14;
             this.rtbFalsificationResults.Text = "The falsification detector is loading...";
             // 
@@ -1265,7 +1343,8 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label1.Location = new System.Drawing.Point(0, 67);
+            this.label1.Location = new System.Drawing.Point(0, 69);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(452, 18);
             this.label1.TabIndex = 11;
@@ -1279,14 +1358,16 @@
             this.panel3.Controls.Add(this.BtnDetectFalsificationSelected);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(0, 0);
+            this.panel3.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(500, 67);
+            this.panel3.Size = new System.Drawing.Size(501, 69);
             this.panel3.TabIndex = 9;
             // 
             // BtnFalsColors
             // 
             this.BtnFalsColors.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BtnFalsColors.Location = new System.Drawing.Point(317, 33);
+            this.BtnFalsColors.Location = new System.Drawing.Point(319, 34);
+            this.BtnFalsColors.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.BtnFalsColors.Name = "BtnFalsColors";
             this.BtnFalsColors.Size = new System.Drawing.Size(180, 26);
             this.BtnFalsColors.TabIndex = 16;
@@ -1297,7 +1378,8 @@
             // BtnTagSelectFalsification
             // 
             this.BtnTagSelectFalsification.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BtnTagSelectFalsification.Location = new System.Drawing.Point(317, 3);
+            this.BtnTagSelectFalsification.Location = new System.Drawing.Point(319, 3);
+            this.BtnTagSelectFalsification.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.BtnTagSelectFalsification.Name = "BtnTagSelectFalsification";
             this.BtnTagSelectFalsification.Size = new System.Drawing.Size(180, 26);
             this.BtnTagSelectFalsification.TabIndex = 15;
@@ -1307,9 +1389,10 @@
             // 
             // BtnExploreFalsification
             // 
-            this.BtnExploreFalsification.Location = new System.Drawing.Point(3, 33);
+            this.BtnExploreFalsification.Location = new System.Drawing.Point(2, 34);
+            this.BtnExploreFalsification.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.BtnExploreFalsification.Name = "BtnExploreFalsification";
-            this.BtnExploreFalsification.Size = new System.Drawing.Size(310, 25);
+            this.BtnExploreFalsification.Size = new System.Drawing.Size(310, 26);
             this.BtnExploreFalsification.TabIndex = 14;
             this.BtnExploreFalsification.Text = "Explore Falsification Detector Results";
             this.BtnExploreFalsification.UseVisualStyleBackColor = true;
@@ -1317,7 +1400,8 @@
             // 
             // BtnDetectFalsificationSelected
             // 
-            this.BtnDetectFalsificationSelected.Location = new System.Drawing.Point(3, 3);
+            this.BtnDetectFalsificationSelected.Location = new System.Drawing.Point(2, 3);
+            this.BtnDetectFalsificationSelected.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.BtnDetectFalsificationSelected.Name = "BtnDetectFalsificationSelected";
             this.BtnDetectFalsificationSelected.Size = new System.Drawing.Size(310, 26);
             this.BtnDetectFalsificationSelected.TabIndex = 4;
@@ -1328,8 +1412,8 @@
             // zedGraphFalsification
             // 
             this.zedGraphFalsification.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.zedGraphFalsification.Location = new System.Drawing.Point(0, 120);
-            this.zedGraphFalsification.Margin = new System.Windows.Forms.Padding(9, 8, 9, 8);
+            this.zedGraphFalsification.Location = new System.Drawing.Point(0, 123);
+            this.zedGraphFalsification.Margin = new System.Windows.Forms.Padding(10, 8, 10, 8);
             this.zedGraphFalsification.Name = "zedGraphFalsification";
             this.zedGraphFalsification.ScrollGrace = 0D;
             this.zedGraphFalsification.ScrollMaxX = 0D;
@@ -1338,7 +1422,7 @@
             this.zedGraphFalsification.ScrollMinX = 0D;
             this.zedGraphFalsification.ScrollMinY = 0D;
             this.zedGraphFalsification.ScrollMinY2 = 0D;
-            this.zedGraphFalsification.Size = new System.Drawing.Size(500, 210);
+            this.zedGraphFalsification.Size = new System.Drawing.Size(501, 217);
             this.zedGraphFalsification.TabIndex = 14;
             this.zedGraphFalsification.UseExtendedPrintDialog = true;
             // 
@@ -1356,8 +1440,9 @@
             this.panel4.Controls.Add(this.numObservedLegitScore);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel4.Location = new System.Drawing.Point(0, 21);
+            this.panel4.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(500, 99);
+            this.panel4.Size = new System.Drawing.Size(501, 102);
             this.panel4.TabIndex = 13;
             // 
             // label11
@@ -1365,9 +1450,10 @@
             this.label11.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label11.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label11.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(372, 35);
+            this.label11.Location = new System.Drawing.Point(373, 36);
+            this.label11.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(111, 17);
+            this.label11.Size = new System.Drawing.Size(112, 17);
             this.label11.TabIndex = 9;
             this.label11.Text = "Detector Accuracy";
             this.label11.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -1384,9 +1470,10 @@
             "Moderate",
             "Low",
             "Poor"});
-            this.cboFalsificationDetectorAcc.Location = new System.Drawing.Point(372, 50);
+            this.cboFalsificationDetectorAcc.Location = new System.Drawing.Point(373, 51);
+            this.cboFalsificationDetectorAcc.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.cboFalsificationDetectorAcc.Name = "cboFalsificationDetectorAcc";
-            this.cboFalsificationDetectorAcc.Size = new System.Drawing.Size(111, 26);
+            this.cboFalsificationDetectorAcc.Size = new System.Drawing.Size(110, 26);
             this.cboFalsificationDetectorAcc.TabIndex = 8;
             // 
             // label13
@@ -1394,7 +1481,8 @@
             this.label13.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(220, 9);
+            this.label13.Location = new System.Drawing.Point(221, 10);
+            this.label13.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(131, 17);
             this.label13.TabIndex = 7;
@@ -1406,9 +1494,10 @@
             this.LblDetectorFalsified.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.LblDetectorFalsified.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LblDetectorFalsified.ForeColor = System.Drawing.Color.Red;
-            this.LblDetectorFalsified.Location = new System.Drawing.Point(223, 62);
+            this.LblDetectorFalsified.Location = new System.Drawing.Point(223, 63);
+            this.LblDetectorFalsified.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.LblDetectorFalsified.Name = "LblDetectorFalsified";
-            this.LblDetectorFalsified.Size = new System.Drawing.Size(143, 26);
+            this.LblDetectorFalsified.Size = new System.Drawing.Size(142, 26);
             this.LblDetectorFalsified.TabIndex = 6;
             this.LblDetectorFalsified.Text = "Processing...";
             this.LblDetectorFalsified.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1420,8 +1509,9 @@
             this.LblDetectorLegit.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LblDetectorLegit.ForeColor = System.Drawing.Color.Blue;
             this.LblDetectorLegit.Location = new System.Drawing.Point(223, 30);
+            this.LblDetectorLegit.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.LblDetectorLegit.Name = "LblDetectorLegit";
-            this.LblDetectorLegit.Size = new System.Drawing.Size(143, 26);
+            this.LblDetectorLegit.Size = new System.Drawing.Size(142, 26);
             this.LblDetectorLegit.TabIndex = 5;
             this.LblDetectorLegit.Text = "Processing...";
             this.LblDetectorLegit.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1431,7 +1521,8 @@
             this.label16.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(124, 9);
+            this.label16.Location = new System.Drawing.Point(125, 10);
+            this.label16.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(69, 17);
             this.label16.TabIndex = 4;
@@ -1441,7 +1532,8 @@
             // 
             this.numObservedFalsifiedScore.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.numObservedFalsifiedScore.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numObservedFalsifiedScore.Location = new System.Drawing.Point(127, 62);
+            this.numObservedFalsifiedScore.Location = new System.Drawing.Point(127, 63);
+            this.numObservedFalsifiedScore.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.numObservedFalsifiedScore.Name = "numObservedFalsifiedScore";
             this.numObservedFalsifiedScore.Size = new System.Drawing.Size(90, 26);
             this.numObservedFalsifiedScore.TabIndex = 3;
@@ -1452,7 +1544,8 @@
             this.label17.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.Location = new System.Drawing.Point(16, 67);
+            this.label17.Location = new System.Drawing.Point(17, 69);
+            this.label17.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(105, 17);
             this.label17.TabIndex = 2;
@@ -1463,7 +1556,8 @@
             this.label18.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.Location = new System.Drawing.Point(3, 35);
+            this.label18.Location = new System.Drawing.Point(3, 36);
+            this.label18.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(118, 17);
             this.label18.TabIndex = 1;
@@ -1474,6 +1568,7 @@
             this.numObservedLegitScore.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.numObservedLegitScore.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.numObservedLegitScore.Location = new System.Drawing.Point(127, 30);
+            this.numObservedLegitScore.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.numObservedLegitScore.Name = "numObservedLegitScore";
             this.numObservedLegitScore.Size = new System.Drawing.Size(90, 26);
             this.numObservedLegitScore.TabIndex = 0;
@@ -1485,10 +1580,11 @@
             this.txtFalsificationFeatureScores.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtFalsificationFeatureScores.Dock = System.Windows.Forms.DockStyle.Top;
             this.txtFalsificationFeatureScores.Location = new System.Drawing.Point(0, 0);
+            this.txtFalsificationFeatureScores.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.txtFalsificationFeatureScores.Multiline = true;
             this.txtFalsificationFeatureScores.Name = "txtFalsificationFeatureScores";
             this.txtFalsificationFeatureScores.ReadOnly = true;
-            this.txtFalsificationFeatureScores.Size = new System.Drawing.Size(500, 21);
+            this.txtFalsificationFeatureScores.Size = new System.Drawing.Size(501, 21);
             this.txtFalsificationFeatureScores.TabIndex = 12;
             this.txtFalsificationFeatureScores.Visible = false;
             // 
@@ -1504,6 +1600,7 @@
             this.panToolbar.Controls.Add(this.BtnBack);
             this.panToolbar.Dock = System.Windows.Forms.DockStyle.Top;
             this.panToolbar.Location = new System.Drawing.Point(0, 0);
+            this.panToolbar.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.panToolbar.Name = "panToolbar";
             this.panToolbar.Size = new System.Drawing.Size(1184, 38);
             this.panToolbar.TabIndex = 3;
@@ -1512,9 +1609,10 @@
             // 
             this.txtURL.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtURL.Font = new System.Drawing.Font("Courier New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtURL.Location = new System.Drawing.Point(222, 0);
+            this.txtURL.Location = new System.Drawing.Point(220, 0);
+            this.txtURL.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.txtURL.Name = "txtURL";
-            this.txtURL.Size = new System.Drawing.Size(808, 31);
+            this.txtURL.Size = new System.Drawing.Size(812, 31);
             this.txtURL.TabIndex = 12;
             this.txtURL.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtURL_KeyDown);
             // 
@@ -1525,9 +1623,10 @@
             this.BtnHome.Font = new System.Drawing.Font("Arial", 10F);
             this.BtnHome.ForeColor = System.Drawing.Color.White;
             this.BtnHome.Image = ((System.Drawing.Image)(resources.GetObject("BtnHome.Image")));
-            this.BtnHome.Location = new System.Drawing.Point(171, 0);
+            this.BtnHome.Location = new System.Drawing.Point(170, 0);
+            this.BtnHome.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.BtnHome.Name = "BtnHome";
-            this.BtnHome.Size = new System.Drawing.Size(51, 38);
+            this.BtnHome.Size = new System.Drawing.Size(50, 38);
             this.BtnHome.TabIndex = 11;
             this.BtnHome.UseVisualStyleBackColor = true;
             this.BtnHome.Click += new System.EventHandler(this.BtnHome_Click);
@@ -1539,9 +1638,10 @@
             this.BtnStatisticsWnd.Font = new System.Drawing.Font("Arial", 10F);
             this.BtnStatisticsWnd.ForeColor = System.Drawing.Color.White;
             this.BtnStatisticsWnd.Image = ((System.Drawing.Image)(resources.GetObject("BtnStatisticsWnd.Image")));
-            this.BtnStatisticsWnd.Location = new System.Drawing.Point(1030, 0);
+            this.BtnStatisticsWnd.Location = new System.Drawing.Point(1032, 0);
+            this.BtnStatisticsWnd.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.BtnStatisticsWnd.Name = "BtnStatisticsWnd";
-            this.BtnStatisticsWnd.Size = new System.Drawing.Size(51, 38);
+            this.BtnStatisticsWnd.Size = new System.Drawing.Size(50, 38);
             this.BtnStatisticsWnd.TabIndex = 9;
             this.BtnStatisticsWnd.UseVisualStyleBackColor = true;
             this.BtnStatisticsWnd.Click += new System.EventHandler(this.BtnStatisticsWnd_Click);
@@ -1553,9 +1653,10 @@
             this.BtnDevTools.Font = new System.Drawing.Font("Arial", 10F);
             this.BtnDevTools.ForeColor = System.Drawing.Color.White;
             this.BtnDevTools.Image = ((System.Drawing.Image)(resources.GetObject("BtnDevTools.Image")));
-            this.BtnDevTools.Location = new System.Drawing.Point(1081, 0);
+            this.BtnDevTools.Location = new System.Drawing.Point(1082, 0);
+            this.BtnDevTools.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.BtnDevTools.Name = "BtnDevTools";
-            this.BtnDevTools.Size = new System.Drawing.Size(51, 38);
+            this.BtnDevTools.Size = new System.Drawing.Size(50, 38);
             this.BtnDevTools.TabIndex = 7;
             this.BtnDevTools.UseVisualStyleBackColor = true;
             this.BtnDevTools.Click += new System.EventHandler(this.BtnDevTools_Click);
@@ -1568,8 +1669,9 @@
             this.BtnRefresh.ForeColor = System.Drawing.Color.White;
             this.BtnRefresh.Image = ((System.Drawing.Image)(resources.GetObject("BtnRefresh.Image")));
             this.BtnRefresh.Location = new System.Drawing.Point(120, 0);
+            this.BtnRefresh.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.BtnRefresh.Name = "BtnRefresh";
-            this.BtnRefresh.Size = new System.Drawing.Size(51, 38);
+            this.BtnRefresh.Size = new System.Drawing.Size(50, 38);
             this.BtnRefresh.TabIndex = 6;
             this.BtnRefresh.UseVisualStyleBackColor = true;
             this.BtnRefresh.Click += new System.EventHandler(this.BtnRefresh_Click);
@@ -1583,6 +1685,7 @@
             this.button1.ForeColor = System.Drawing.Color.White;
             this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
             this.button1.Location = new System.Drawing.Point(1132, 0);
+            this.button1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(52, 38);
             this.button1.TabIndex = 4;
@@ -1597,6 +1700,7 @@
             this.BtnForward.ForeColor = System.Drawing.Color.White;
             this.BtnForward.Image = ((System.Drawing.Image)(resources.GetObject("BtnForward.Image")));
             this.BtnForward.Location = new System.Drawing.Point(60, 0);
+            this.BtnForward.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.BtnForward.Name = "BtnForward";
             this.BtnForward.Size = new System.Drawing.Size(60, 38);
             this.BtnForward.TabIndex = 2;
@@ -1613,6 +1717,7 @@
             this.BtnBack.ForeColor = System.Drawing.Color.White;
             this.BtnBack.Image = ((System.Drawing.Image)(resources.GetObject("BtnBack.Image")));
             this.BtnBack.Location = new System.Drawing.Point(0, 0);
+            this.BtnBack.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.BtnBack.Name = "BtnBack";
             this.BtnBack.Size = new System.Drawing.Size(60, 38);
             this.BtnBack.TabIndex = 1;
@@ -1622,13 +1727,14 @@
             // 
             // FrmMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.Indigo;
-            this.ClientSize = new System.Drawing.Size(1184, 661);
+            this.ClientSize = new System.Drawing.Size(1184, 678);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.panToolbar);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.Name = "FrmMain";
             this.Text = "Litrl Browser - News Verification Suite - Experimental Version ";
             this.Load += new System.EventHandler(this.FrmMain_Load);

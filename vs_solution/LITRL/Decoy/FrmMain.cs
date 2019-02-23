@@ -431,6 +431,7 @@ namespace Decoy
             {
                 Invoke(new TxtSatireResultsCallback(TxtSatireResults), new object[] { satireScoreOutput });
             }
+            Invoke(new SatireHighlightCallBack(SatireHighlight), new object[] { });
         }
 
         private void SatireErrorLine(object s, DataReceivedEventArgs ea)
@@ -491,6 +492,8 @@ namespace Decoy
             {
                 Invoke(new TxtFalsificationResultsCallback(TxtFalsificationResults), new object[] { falsificationScoreOutput });
             }
+
+            Invoke(new FalsificationHighlightCallBack(FalsificationHighlight), new object[] { });
         }
 
         private void FalsificationErrorLine(object s, DataReceivedEventArgs ea)
@@ -1759,6 +1762,68 @@ namespace Decoy
 
             js = String.Format(jsClickbait, notClickbaitString, slightClickbaitString, moderateClickbaitString, heavyClickbaitString, tags,
                 CLICKBAIT_LOW_COLOR, CLICKBAIT_SLIGHT_COLOR, CLICKBAIT_MODERATE_COLOR, CLICKBAIT_HEAVY_COLOR);
+
+            c.Browser.ExecuteScriptAsync(js);
+        }
+
+        delegate void SatireHighlightCallBack();
+        private void SatireHighlight()
+        {
+            if (TabsDetectors.SelectedTab.Text != "SATIRE")
+                return;
+
+            string jsHighlight = @"
+                var texts = [];
+
+                {0}
+
+                for (var j = 0; j < texts.length; ++j) {{
+                    texts[j].style.backgroundColor = 'rgba({1}, 0.5)';
+                }}";
+
+            string js = "";
+            string tags = "";
+            string color = "";
+
+            tags = satireTagWnd.GetJSTags("texts.push.apply(texts, document.getElementsByTagName('", "'));");
+
+            if (SATIRE_MOSTLY_LEGIT)
+                color = NOT_SATIRE_TEXT_COLOR;
+            else
+                color = SATIRE_TEXT_COLOR;
+
+            js = String.Format(jsHighlight, tags, color);
+
+            c.Browser.ExecuteScriptAsync(js);
+        }
+
+        delegate void FalsificationHighlightCallBack();
+        private void FalsificationHighlight()
+        {
+            if (TabsDetectors.SelectedTab.Text != "FALSIFICATIONS (ALPHA)")
+                return;
+
+            string jsHighlight = @"
+                var texts = [];
+
+                {0}
+
+                for (var j = 0; j < texts.length; ++j) {{
+                    texts[j].style.backgroundColor = 'rgba({1}, 0.5)';
+                }}";
+
+            string js = "";
+            string tags = "";
+            string color = "";
+
+            tags = falsificationTagWnd.GetJSTags("texts.push.apply(texts, document.getElementsByTagName('", "'));");
+
+            if (FALSIFICATION_MOSTLY_LEGIT)
+                color = NOT_FALSIFICATION_TEXT_COLOR;
+            else
+                color = FALSIFICATION_TEXT_COLOR;
+
+            js = String.Format(jsHighlight, tags, color);
 
             c.Browser.ExecuteScriptAsync(js);
         }

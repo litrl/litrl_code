@@ -134,6 +134,9 @@ namespace Decoy
             clickbaitPane.AxisChange();
             zedGraphClickbait.GraphPane = clickbaitPane;
 
+            //forces the clickbait graph to fit the panel properly on startup
+            zedGraphClickbait.Dock = DockStyle.Fill;
+
             //satire
             GraphPane satirePane = new GraphPane();
             satirePane.Title.Text = "The LiTRL Satire Detector thinks the input text is...";

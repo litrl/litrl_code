@@ -20,6 +20,8 @@ Rubin, Victoria L.; Brogly, Chris; Conroy, Nadia; Chen, Yimin; Cornwell, Sarah E
 
 [![DOI](https://zenodo.org/badge/160725581.svg)](https://zenodo.org/badge/latestdoi/160725581)
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.2588566.svg)](https://doi.org/10.5281/zenodo.2588566)
+
 ## Why not a plugin?
 Various plugins have already been attempted in this area. We decided to develop a separate research tool for deception with a simple user interface that allowed for easier real-world testing of our group's previous work.
 

@@ -15,12 +15,16 @@ Litrl Browser is licensed under the GPLv3.
 ### Questions and inquiries should be directed to:
 litrlbrowser@gmail.com
 
-### If you use Litrl Browser for research, we ask that you cite the following for now (a full publication is in process):
+### If you use Litrl Browser for research we ask that you cite the following:
+Rubin et al., (2019). A News Verification Browser for the Detection of Clickbait, Satire, and Falsified News. Journal of Open Source Software, 4(35), 1208, https://doi.org/10.21105/joss.01208
+
+### The latest archived version of the browser with a DOI can be found here:
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.2588566.svg)](https://doi.org/10.5281/zenodo.2588566)
+
+### The initial archived version of the browser with a DOI, released in 2018, can be found here:
 Rubin, Victoria L.; Brogly, Chris; Conroy, Nadia; Chen, Yimin; Cornwell, Sarah E.; Asubiaro, Toluwase V. (2018). litrl/litrl_code: Litrl Browser Experimental 0.12.0.0 Public (Version exp-0.12.0.0). Zenodo. 10.5281/zenodo.2016627.
 
 [![DOI](https://zenodo.org/badge/160725581.svg)](https://zenodo.org/badge/latestdoi/160725581)
-
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.2588566.svg)](https://doi.org/10.5281/zenodo.2588566)
 
 ## Why not a plugin?
 Various plugins have already been attempted in this area. We decided to develop a separate research tool for deception with a simple user interface that allowed for easier real-world testing of our group's previous work.

@@ -80,7 +80,7 @@ namespace Decoy
             //inputWebBrowser.DocumentText = "<HTML><BODY contentEditable='true'></BODY></HTML>";
 
             // //a | //span | //h1 | //h2 | //h3 | //h4 | //h5
-            string[] clickbaitDefaultTags = { "a", "span", "h1", "h2", "h3", "h4", "h5" };
+            string[] clickbaitDefaultTags = { "a", "span", "h1", "h2", "h3", "h4", "h5", "yt-formatted-string" };
             clickbaitTagWnd = new FrmSelectHtmlTags(clickbaitDefaultTags);
 
             string[] satFalsDefaultTags = { "p" };

@@ -20,10 +20,10 @@ Rubin et al., (2019). A News Verification Browser for the Detection of Clickbait
 
 [![DOI](http://joss.theoj.org/papers/10.21105/joss.01208/status.svg)](https://doi.org/10.21105/joss.01208)
 
-### The latest archived version of the browser with a DOI can be found here:
+#### The code snapshot for the JOSS paper can be found here:
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.2588566.svg)](https://doi.org/10.5281/zenodo.2588566)
 
-### The initial archived version of the browser with a DOI, released in 2018, can be found here:
+### The initial archived version of the browser with a DOI, released in 2018, and all other code releases can be found here:
 Rubin, Victoria L.; Brogly, Chris; Conroy, Nadia; Chen, Yimin; Cornwell, Sarah E.; Asubiaro, Toluwase V. (2018). litrl/litrl_code: Litrl Browser Experimental 0.12.0.0 Public (Version exp-0.12.0.0). Zenodo. 10.5281/zenodo.2016627.
 
 [![DOI](https://zenodo.org/badge/160725581.svg)](https://zenodo.org/badge/latestdoi/160725581)

@@ -12,9 +12,6 @@ The software was developed by the LiT.RL (Language and Information Technology Re
 
 Litrl Browser is licensed under the GPLv3.
 
-### Questions and inquiries should be directed to:
-litrlbrowser@gmail.com
-
 ### If you use Litrl Browser for research we ask that you cite the following:
 Rubin et al., (2019). A News Verification Browser for the Detection of Clickbait, Satire, and Falsified News. Journal of Open Source Software, 4(35), 1208, https://doi.org/10.21105/joss.01208
 

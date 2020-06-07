@@ -1,1 +1,1 @@
-https://www.python.org/download/releases/2.7/license/
+https://docs.python.org/3.6/license.html

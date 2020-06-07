@@ -36,7 +36,7 @@ Function PostInstall
 	;CreateShortCut "$SMPROGRAMS\${MUI_PRODUCT}\Uninstall.lnk" "$INSTDIR\Uninstall.exe" "" "$INSTDIR\Uninstall.exe" 0
 	;CreateShortCut "$SMPROGRAMS\${MUI_PRODUCT}\${MUI_PRODUCT}.lnk" "$INSTDIR\${MUI_FILE}.exe" "" "$INSTDIR\logo_full.ico"
 	
-	MessageBox MB_OK "Litrl Browser depends on Python 2.7, and several Python packages. These will now be installed."
+	MessageBox MB_OK "Litrl Browser depends on Python 3.6, and several Python packages. These will now be installed."
     ExecWait '"$INSTDIR\install.cmd"' "$INSTDIR"
 	MessageBox MB_OK "To uninstall Litrl Browser, simply delete the folder and shortcut to it on your desktop."
 	

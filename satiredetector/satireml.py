@@ -50,9 +50,9 @@ from nltk import PunktSentenceTokenizer
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.cross_validation import KFold
-from sklearn.cross_validation import cross_val_score
-from sklearn.cross_validation import train_test_split
+#from sklearn.cross_validation import KFold
+#from sklearn.cross_validation import cross_val_score
+from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import classification_report
 from sklearn import metrics
@@ -72,12 +72,12 @@ class satireDetector:
 
     def v(self, verbose, text):
         if verbose:
-            print "Verbose Output: ", text
+            print("Verbose Output: ", text)
 
     ######################## named entities  #########################
 
     def keywithmaxval(self, A):
-         newA = dict(sorted(A.iteritems(), key=operator.itemgetter(1), reverse=True)[:3])
+         newA = dict(sorted(iter(A.items()), key=operator.itemgetter(1), reverse=True)[:3])
          return newA
 
     def get_continuous_chunks(self, s):
@@ -131,7 +131,7 @@ class satireDetector:
         ontology between two
         synsets.
         """
-        l_dist = sys.maxint
+        l_dist = sys.maxsize
         if synset_1 is None or synset_2 is None:
             return 0.0
         if synset_1 == synset_2:
@@ -159,7 +159,7 @@ class satireDetector:
         nodes closer to the root are broader and have less semantic similarity
         than nodes further away from the root.
         """
-        h_dist = sys.maxint
+        h_dist = sys.maxsize
         if synset_1 is None or synset_2 is None:
             return h_dist
         if synset_1 == synset_2:
@@ -175,10 +175,10 @@ class satireDetector:
                 lcs_dists = []
                 for lcs_candidate in lcs_candidates:
                     lcs_d1 = 0
-                    if hypernyms_1.has_key(lcs_candidate):
+                    if lcs_candidate in hypernyms_1:
                         lcs_d1 = hypernyms_1[lcs_candidate]
                     lcs_d2 = 0
-                    if hypernyms_2.has_key(lcs_candidate):
+                    if lcs_candidate in hypernyms_2:
                         lcs_d2 = hypernyms_2[lcs_candidate]
                     lcs_dists.append(max([lcs_d1, lcs_d2]))
                 h_dist = max(lcs_dists)
@@ -319,7 +319,7 @@ class satireDetector:
     def getPronouns(self, partsOfSpeech, wordCount):
         count = 0
         for pos in partsOfSpeech:
-            if u"PRP" in pos:
+            if "PRP" in pos:
                 count = count + 1
         return (float(count) / float(wordCount)) * 100
 
@@ -328,7 +328,7 @@ class satireDetector:
     def getPersonalPronouns(self, partsOfSpeech, wordCount):
         count = 0
         for pos in partsOfSpeech:
-            if u"PRP" == pos:
+            if "PRP" == pos:
                 count = count + 1
         return (float(count) / float(wordCount)) * 100
 
@@ -336,7 +336,7 @@ class satireDetector:
     def getPossessivePronouns(self, partsOfSpeech, wordCount):
         count = 0
         for pos in partsOfSpeech:
-            if u"PRP$" == pos:
+            if "PRP$" == pos:
                 count = count + 1
         return (float(count) / float(wordCount)) * 100
 
@@ -344,7 +344,7 @@ class satireDetector:
     def getPrepositionalPhrases(self, chunksOfSpeech, wordCount):
         count = 0
         for chunk in chunksOfSpeech:
-            if u"PP" == chunk.type:
+            if "PP" == chunk.type:
                 count = count + 1
         return (float(count) / float(wordCount)) * 100
 
@@ -352,7 +352,7 @@ class satireDetector:
     def getVerbPhrases(self, chunksOfSpeech, wordCount):
         count = 0
         for chunk in chunksOfSpeech:
-            if u"VP" == chunk.type:
+            if "VP" == chunk.type:
                 count = count + 1
         return (float(count) / float(wordCount)) * 100
 
@@ -360,9 +360,9 @@ class satireDetector:
     def getConjunctions(self, partsOfSpeech, wordCount):
         count = 0
         for pos in partsOfSpeech:
-            if u"CC" == pos:
+            if "CC" == pos:
                 count = count + 1
-            elif u"IN" == pos:
+            elif "IN" == pos:
                 count = count + 1
         return (float(count) / float(wordCount)) * 100
 
@@ -370,7 +370,7 @@ class satireDetector:
     def getAdverbPhrases(self, chunksOfSpeech, wordCount):
         count = 0
         for chunk in chunksOfSpeech:
-            if u"ADVP" == chunk.type:
+            if "ADVP" == chunk.type:
                 count = count + 1
         return (float(count) / float(wordCount)) * 100
 
@@ -378,7 +378,7 @@ class satireDetector:
     def getAdjectivePhrases(self, chunksOfSpeech, wordCount):
         count = 0
         for chunk in chunksOfSpeech:
-            if u"ADJP" == chunk.type:
+            if "ADJP" == chunk.type:
                 count = count + 1
         return (float(count) / float(wordCount)) * 100
 
@@ -387,32 +387,32 @@ class satireDetector:
 
     #f10: no equal for periods. write.
     def getPeriods(self, sentence):
-        count = sentence.string.count(u".")
+        count = sentence.string.count(".")
         return count
 
     #f11: ,
     def getCommas(self, sentence):
-        count = sentence.string.count(u",")
+        count = sentence.string.count(",")
         return count
 
     #f12: :
     def getColon(self, sentence):
-        count = sentence.string.count(u":")
+        count = sentence.string.count(":")
         return count
 
     #f13: no equal for semicolon. write.
     def getSemicolon(self, sentence):
-        count = sentence.string.count(u";")
+        count = sentence.string.count(";")
         return count
 
     #percent of sentences ending with a "?"
     def getQuestionMarks(self, sentence):
-        count = sentence.string.count(u"?")
+        count = sentence.string.count("?")
         return count
 
     #f15: no equal exclamations. write.
     def getExclamationMarks(self, sentence):
-        count = sentence.string.count(u"!")
+        count = sentence.string.count("!")
         return count
 
     #f16: no equal for quotes. write.
@@ -426,7 +426,7 @@ class satireDetector:
         # FOR EVERY STORY, TOKENIZE THE STORY, GET A LIST OF THE NAMED ENTIES IN THE STORY ASIDE FROM LAST SENTENCE.
         # GET A LIST OF NAMED ENTITIES IN LAST SENTENCE. IF THERE IS NO OVERALAP THE RETURN 1  x
         absflag = 0
-        sents = sent_tokenize(test_data.encode('ascii', 'ignore'))
+        sents = sent_tokenize(test_data)
         all = []
         for s in sents[0:-1]:
             ents = self.get_continuous_chunks(s)# get all the entities in all the story except the last sentence
@@ -466,11 +466,11 @@ class satireDetector:
         self.not_satire = []
 
         i = 0
-        for i in xrange(0, len(train['Full Text'])):
+        for i in range(0, len(train['Full Text'])):
             if train['Satire Flag'][i] == 0:
-                self.not_satire.append(str(train['Full Text'][i]).decode('utf-8',errors='ignore'))
+                self.not_satire.append(train['Full Text'][i])
             else:
-                self.satire.append(str(train['Full Text'][i]).decode('utf-8',errors='ignore'))
+                self.satire.append(train['Full Text'][i])
             i = i + 1
 
         self.notSatireTrain, self.notSatireTest = train_test_split(self.not_satire, train_size = train_percent)
@@ -479,35 +479,35 @@ class satireDetector:
         Xtrain = np.array(self.notSatireTrain + self.satireTrain)
         Ytrain = []
 
-        for x in xrange(len(self.notSatireTrain)):
+        for x in range(len(self.notSatireTrain)):
             Ytrain.append(0)
-        for x in xrange(len(self.satireTrain)):
+        for x in range(len(self.satireTrain)):
             Ytrain.append(1)
 
         Xtest = np.array(self.notSatireTest + self.satireTest)
         Ytest = []
 
-        for x in xrange(len(self.notSatireTest)):
+        for x in range(len(self.notSatireTest)):
             Ytest.append(0)
-        for x in xrange(len(self.satireTest)):
+        for x in range(len(self.satireTest)):
             Ytest.append(1)
 
-        print "Satire Stories for Training: ", len(Xtrain)
-        print "Satire Stories for Testing: ", len(Xtest)
+        print("Satire Stories for Training: ", len(Xtrain))
+        print("Satire Stories for Testing: ", len(Xtest))
 
         self.train(Xtrain, Ytrain)
 
         correct_preds = 0
 
-        for x in xrange(len(Ytest)):
+        for x in range(len(Ytest)):
             pred = self.classifier_linear.predict(self.getScores([Xtest[x]]))
             if pred == Ytest[x]:
                 correct_preds = correct_preds + 1
 
-        print "Correct classifications: ", correct_preds
-        print "Total classifications:   ", len(Ytest)
+        print("Correct classifications: ", correct_preds)
+        print("Total classifications:   ", len(Ytest))
         self.classifierScore_SVM = "SVM Test set score: ", correct_preds / float(len(Ytest))
-        print self.classifierScore_SVM
+        print(self.classifierScore_SVM)
 
     def train(self, train_data, Ytrain, allClassifiers=False, crossValidate=False):
 
@@ -625,39 +625,39 @@ class satireDetector:
             if avgArrayName == "Satire":
                 #set up our list of features averages based on the size of our first sample
                 if len(avgSatire) == 0:
-                    for c in xrange(len(story_features)):
+                    for c in range(len(story_features)):
                         avgSatire.append(0)
 
                 #sum everything to get an average later
-                for x in xrange(len(story_features)):
+                for x in range(len(story_features)):
                     avgSatire[x] = float(avgSatire[x]) + float(story_features[x])
             elif avgArrayName == "NotSatire":
                 #set up our list of features averages based on the size of our first sample
                 if len(avgNotSatire) == 0:
-                    for c in xrange(len(story_features)):
+                    for c in range(len(story_features)):
                         avgNotSatire.append(0)
 
                 #sum everything to get an average later
-                for x in xrange(len(story_features)):
+                for x in range(len(story_features)):
                     avgNotSatire[x] = float(avgNotSatire[x]) + float(story_features[x])
 
-            print train_count, story_features
+            print(train_count, story_features)
 
             train_feat.append(story_features)
 
         Xtrain = np.hstack([train_tdfvectors.toarray(), train_feat])
 
         #divide to get avgs
-        for x in xrange(len(avgSatire)):
+        for x in range(len(avgSatire)):
             avgSatire[x] = avgSatire[x] / float(len(avgSatire))
-        for x in xrange(len(avgNotSatire)):
+        for x in range(len(avgNotSatire)):
             avgNotSatire[x] = avgNotSatire[x] / float(len(avgNotSatire))
 
-        print "AVG Not Satire Feature Scores"
-        print avgSatire
+        print("AVG Not Satire Feature Scores")
+        print(avgSatire)
 
-        print "AVG Satire Feature Scores"
-        print avgNotSatire
+        print("AVG Satire Feature Scores")
+        print(avgNotSatire)
 
         # Perform classification with SVM, kernel=linear
         self.classifier_linear = svm.SVC(kernel='linear', probability = True)
@@ -808,7 +808,7 @@ class satireDetector:
 
         test_data = []
         for testitem in test['Full Text']:
-            test_data.append(str(testitem).decode('utf-8',errors='ignore'))
+            test_data.append(testitem)
 
         pairFeaturesXtest = self.getScores(test_data, True)
         features = pairFeaturesXtest[0]
@@ -819,5 +819,5 @@ class satireDetector:
 
         betterString = str(prediction_scores[0])[1:-1]
         classValues = betterString.split(" ")
-        classValues = filter(None, classValues)
+        classValues = [_f for _f in classValues if _f]
         return ",".join(classValues) + "," + ",".join(str(featScore) for featScore in features)

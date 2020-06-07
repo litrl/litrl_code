@@ -32,7 +32,7 @@
 #-------------------------------------------------------------------------------
 
 import dill
-import cProfile, pstats, StringIO
+import cProfile, pstats, io
 from clickbaitml import clickbaitDetector
 
 #interestingly, even though the detector performs OK on a training/test set
@@ -50,17 +50,17 @@ def testYiminSet(detector):
     badNotCB = 0
 
     resultsFile = open("yimin_results.csv", "w")
-    for x in xrange(len(cbHeadlines)):
-        ranking = detector.predict(unicode(cbHeadlines[x], errors='ignore'), verbose=False)
-        group = detector.predictClass(unicode(cbHeadlines[x], errors='ignore'))
+    for x in range(len(cbHeadlines)):
+        ranking = detector.predict(str(cbHeadlines[x], errors='ignore'), verbose=False)
+        group = detector.predictClass(str(cbHeadlines[x], errors='ignore'))
         if group == 0:
             goodCB = goodCB + 1
         else:
             badCB = badCB + 1
         resultsFile.write(ranking)
-    for x in xrange(len(notCbHeadlines)):
-        ranking = detector.predict(unicode(notCbHeadlines[x], errors='ignore'), verbose=False)
-        group = detector.predictClass(unicode(notCbHeadlines[x], errors='ignore'))
+    for x in range(len(notCbHeadlines)):
+        ranking = detector.predict(str(notCbHeadlines[x], errors='ignore'), verbose=False)
+        group = detector.predictClass(str(notCbHeadlines[x], errors='ignore'))
         if group == 1:
             goodNotCB = goodNotCB + 1
         else:
@@ -69,13 +69,13 @@ def testYiminSet(detector):
     cbHeadlineFile.close()
     notCbHeadlineFile.close()
     resultsFile.close()
-    print "Yimin Study - Clickbait identified as clickbait (+,good): ", goodCB
-    print "Yimin Study - Clickbait identified as legitimate (-,bad): ", badCB
-    print "Yimin Study - Clickbait TOTAL: ", len(cbHeadlines)
-    print "Yimin Study - Legit identified as Legit (+,good): ", goodNotCB
-    print "Yimin Study - Legit identified as clickbait (-,bad): ", badNotCB
-    print "Yimin Study - Legit TOTAL: ", len(notCbHeadlines)
-    print "Yimin Study - Accuracy: ", float(goodCB + goodNotCB) / float(goodCB + badCB + goodNotCB + badNotCB)
+    print("Yimin Study - Clickbait identified as clickbait (+,good): ", goodCB)
+    print("Yimin Study - Clickbait identified as legitimate (-,bad): ", badCB)
+    print("Yimin Study - Clickbait TOTAL: ", len(cbHeadlines))
+    print("Yimin Study - Legit identified as Legit (+,good): ", goodNotCB)
+    print("Yimin Study - Legit identified as clickbait (-,bad): ", badNotCB)
+    print("Yimin Study - Legit TOTAL: ", len(notCbHeadlines))
+    print("Yimin Study - Accuracy: ", float(goodCB + goodNotCB) / float(goodCB + badCB + goodNotCB + badNotCB))
 
 def main():
     #set to 0 to prevent using most common word list as features
@@ -103,14 +103,14 @@ def main():
     #set GraphIndividualFeatures=False to speed things up (but you won't get a performance report)
     #set allClassifiers=False to only use LinearSVM not the KNN, Random Forest, or Naive Bayes. This speeds things up.
     #detector.trainSVMAndTestTrainingSet(graphIndividualFeatures=False, allClassifiers=False, statsPerFeature=featureStats)
-    detector.trainSVMAndTestValidationSet(graphIndividualFeatures=True, allClassifiers=True, statsPerFeature=featureStats)
+    detector.trainSVMAndTestValidationSet(graphIndividualFeatures=True, allClassifiers=False, statsPerFeature=featureStats)
     #detector.testGangulySet()
     #detector.testMiddleOfValidationSet()  #this only works if your not clickbait scores are below 0.5 and clickbait scores are above 0.5
     #detector.predictClass("The top 10 ways to download crap")
     #detector.predict("The top 10 ways to download crap")
 
     if featureStats == False:
-        testYiminSet(detector) #uncomment this line to get comparative results for the qualitative study
+        #testYiminSet(detector) #uncomment this line to get comparative results for the qualitative study
         #dump (serialize) the detector object so we don't have to retrain every time
         #use a dump of the detector that has the highest observed accuracy
         detectorDUMP = open('pickles/clickbait_detector.dill', 'wb')
@@ -118,11 +118,11 @@ def main():
         detectorDUMP.close()
         pr.disable()
 
-    s = StringIO.StringIO()
+    s = io.StringIO()
     sortby = 'cumulative'
     ps = pstats.Stats(pr, stream=s).sort_stats(sortby)
     ps.print_stats(30)
-    print s.getvalue()
+    print(s.getvalue())
 
 if __name__ == '__main__':
     main()

@@ -32,7 +32,7 @@
 #-------------------------------------------------------------------------------
 
 import dill
-import cProfile, pstats, StringIO
+import cProfile, pstats, io
 from satireml import satireDetector
 
 def main():
@@ -50,11 +50,11 @@ def main():
     detectorDUMP.close()
     pr.disable()
 
-    s = StringIO.StringIO()
+    s = io.StringIO()
     sortby = 'cumulative'
     ps = pstats.Stats(pr, stream=s).sort_stats(sortby)
     ps.print_stats(30)
-    print s.getvalue()
+    print(s.getvalue())
 
 if __name__ == '__main__':
     main()

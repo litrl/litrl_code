@@ -89,9 +89,9 @@ class featureUnitTester:
             self.assertGetSwearCount(lstSentWords, testValues)
             self.assertGetNNPLOCCount(lstSentPOS, testValues)
             self.assertGetCharLength(strSentenceText, testValues)
-            print "Clickbait detector has passed all Unit Tests!"
+            print("Clickbait detector has passed all Unit Tests!")
         except AssertionError as e:
-            print e.args #print the "args" part of assertionError, showing expected values
+            print(e.args) #print the "args" part of assertionError, showing expected values
             exit(1)
 
     #self.getWordCount(lstSentWords)

@@ -37,10 +37,10 @@ from nltk.corpus import brown
 from pattern.en import parsetree, ngrams, modality, mood, sentiment, number, wordnet
 from pattern.en.wordlist import TIME, ACADEMIC
 from numpy import array
-from html import HTML
+#from html import HTML
 from scipy import stats
 
-from sklearn import grid_search
+#from sklearn import grid_search
 from sklearn import svm
 from sklearn import preprocessing
 from sklearn.naive_bayes import GaussianNB
@@ -61,10 +61,10 @@ from sklearn.metrics import precision_recall_curve
 class clickbaitDetector:
 
     def __init__(self, topWordsFeatureCount, topTrigramsFeatureCount, includeValidationSet=True, includeGangulySet=False, notClickbaitLowerbound=0.30, clickbaitUpperbound=0.60, buildBagOfWords=False, buildBagOfTrigrams=False, trainSize = 0.7):
-        print "Initializing LITRL Clickbait Detector..."
+        print("Initializing LITRL Clickbait Detector...")
         self.trainSize = trainSize
-        print "Training size: ", self.trainSize
-        print "Test size: ", 1.0-self.trainSize
+        print("Training size: ", self.trainSize)
+        print("Test size: ", 1.0-self.trainSize)
         #use the top words as features (bag-of-words-ish...?)
         self.TOP_WORD_COUNT = topWordsFeatureCount
         #use the top trigrams as features (should detect common clickbait "Here's how", "These 10 things..." etc)
@@ -77,7 +77,7 @@ class clickbaitDetector:
         if buildBagOfWords == False:
             self.TOP_WORD_COUNT = 0
         #print out whole numpy arrays
-        np.set_printoptions(threshold=np.nan)
+        #np.set_printoptions(threshold=np.nan)
         #setup the detector
         self.loadSwearing()
         self.notClickbaitLowerbound = notClickbaitLowerbound
@@ -85,11 +85,11 @@ class clickbaitDetector:
         self.th = TrainingHandler(True, notClickbaitLowerbound, clickbaitUpperbound, includeValidationSet, includeGangulySet)
         self.setupFeatureNameList()
         #used by the dist to NNP features
-        self.tagsNNP = [u"NNP", u"NNPS", u"NNP-POS", u"NNP-PERS"]
-        self.tagsNP  = [u"NN", u"NNS"]
-        self.digits  = [u"1", u"2", u"3", u"4", u"5", u"6", u"7", u"8", u"9", u"0"]
+        self.tagsNNP = ["NNP", "NNPS", "NNP-POS", "NNP-PERS"]
+        self.tagsNP  = ["NN", "NNS"]
+        self.digits  = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
         #some numbers we don't want to include for clickbait, need to be able to parse phone numbers
-        self.numbersToAvoid = [u"911"]
+        self.numbersToAvoid = ["911"]
         #for the classifier - big numbers really slow things down
         self.AMT_TINY = 25
         self.AMT_SMALL = 100
@@ -110,10 +110,10 @@ class clickbaitDetector:
         self.featureNamesTopWord = []
         self.featureNamesTopTrigram = []
         if self.buildBagOfWords == True:
-            for x in xrange(self.TOP_WORD_COUNT):
+            for x in range(self.TOP_WORD_COUNT):
                 self.featureNamesTopWord.append("TopWord: ")
         if self.buildBagOfTrigrams == True:
-            for x in xrange(self.TOP_TRIGRAM_COUNT):
+            for x in range(self.TOP_TRIGRAM_COUNT):
                 self.featureNamesTopTrigram.append("TopTrigram: ")
 
     #this should be called after getting the list of top trigrams/words
@@ -126,7 +126,7 @@ class clickbaitDetector:
         if self.TOP_WORD_COUNT == 0:
             return
         self.topWords = Counter()
-        for x in xrange(0, len(setToProcess)):
+        for x in range(0, len(setToProcess)):
             strSentenceText = setToProcess[x]['text']
             patternParseTree = parsetree(setToProcess[x]['text'], tokenize=True, tags=True, chunks=True, relations=True, lemmata=True)
             for sentence in patternParseTree:
@@ -135,8 +135,8 @@ class clickbaitDetector:
                         self.topWords[word.string] = self.topWords[word.string] + 1
         #add this top word to the list of features so we can see it
         self.topWords = self.topWords.most_common(self.TOP_WORD_COUNT)
-        print "Bag-of-WORDS: ", self.topWords
-        for x in xrange(0, len(self.topWords)):
+        print("Bag-of-WORDS: ", self.topWords)
+        for x in range(0, len(self.topWords)):
             self.featureNamesTopWord[x] = self.featureNamesTopWord[x] + self.topWords[x][0]
 
     #given a clickbait headline determine if it contains any top words
@@ -146,8 +146,8 @@ class clickbaitDetector:
         for tup in self.topWords:
             wordList.append(tup[0])
             features.append(0)
-        for x in xrange(len(lstSentWords)):
-            for y in xrange(len(wordList)):
+        for x in range(len(lstSentWords)):
+            for y in range(len(wordList)):
                 if (lstSentWords[x]== wordList[y]):
                     features[y] = features[y] + 1
                     break
@@ -158,25 +158,25 @@ class clickbaitDetector:
         if self.TOP_TRIGRAM_COUNT == 0:
             return
         self.topTrigrams = Counter()
-        for x in xrange(0, len(setToProcess)):
+        for x in range(0, len(setToProcess)):
             strSentenceText = setToProcess[x]['text']
             patternParseTree = parsetree(setToProcess[x]['text'], tokenize=True, tags=True, chunks=True, relations=True, lemmata=True)
             for sentence in patternParseTree:
                 lstSentenceWords = []
                 for chunk in sentence.chunks:
-                    for w in xrange(len(chunk.words)):
+                    for w in range(len(chunk.words)):
                         lstSentenceWords.append(chunk[w].string)
-                for w in xrange(len(lstSentenceWords)):
+                for w in range(len(lstSentenceWords)):
                     trigram = []
                     if w + 3 < len(lstSentenceWords):
                         #build the trigram, forward only
-                        for n in xrange(3):
+                        for n in range(3):
                             trigram.append(lstSentenceWords[w + n].lower())
                         strTrigram = ','.join(trigram)
                         self.topTrigrams[strTrigram] = self.topTrigrams[strTrigram] + 1
         self.topTrigrams = self.topTrigrams.most_common(self.TOP_TRIGRAM_COUNT)
-        print "Bag-of-TRIGRAMS: ", self.topTrigrams
-        for x in xrange(0, len(self.topTrigrams)):
+        print("Bag-of-TRIGRAMS: ", self.topTrigrams)
+        for x in range(0, len(self.topTrigrams)):
             self.featureNamesTopTrigram[x] = self.featureNamesTopTrigram[x] + self.topTrigrams[x][0]
 
     #compute trigrams for a headline and assign the most commonly occuring trigram features + 1 for each
@@ -186,14 +186,14 @@ class clickbaitDetector:
         for tup in self.topTrigrams:
             trigramList.append(tup[0])
             features.append(0)
-        for w in xrange(len(lstSentenceWords)):
+        for w in range(len(lstSentenceWords)):
             trigram = []
             if w + 3 < len(lstSentenceWords):
                 #build the trigram, forward only
-                for n in xrange(3):
+                for n in range(3):
                     trigram.append(lstSentenceWords[w + n].lower())
                 strTrigram = ','.join(trigram)
-                for t in xrange(len(trigramList)):
+                for t in range(len(trigramList)):
                     if trigramList[t] == strTrigram:
                         features[t] = features[t] + 100
         return features
@@ -204,7 +204,7 @@ class clickbaitDetector:
         sampleSet = []
         avgList = []
 
-        for x in xrange(0, len(setToProcess)):
+        for x in range(0, len(setToProcess)):
             strSentenceText = setToProcess[x]['text']
             truthMean = setToProcess[x]['truth-mean']
             patternParseTree = parsetree(setToProcess[x]['text'], tokenize=True, tags=True, chunks=True, relations=True, lemmata=True)
@@ -273,11 +273,11 @@ class clickbaitDetector:
 
             #set up our list of features averages based on the size of our first sample
             if len(avgList) == 0:
-                for c in xrange(len(sample)):
+                for c in range(len(sample)):
                     avgList.append(0)
 
             #sum everything to get an average later
-            for x in xrange(len(sample)):
+            for x in range(len(sample)):
                 avgList[x] = float(avgList[x]) + float(sample[x])
 
             #kind of poor fix to get the truth means for mean squared error in the train/test
@@ -287,25 +287,25 @@ class clickbaitDetector:
             sample.append(strSentenceText)
             sampleSet.append(sample)
 
-        for x in xrange(len(sample) - 2):  #-2 for poor fix mentioned above
+        for x in range(len(sample) - 2):  #-2 for poor fix mentioned above
             avgList[x] = avgList[x] / float(len(sampleSet))
 
         if verbose == True:
-            print setAveragesTitle
+            print(setAveragesTitle)
 
         formattedAverages = []
 
         #print averages with names of features (easiest way is to maintain an array of names)
         if verbose == True:
-            print len(self.featureNames), len(avgList)
+            print(len(self.featureNames), len(avgList))
 
-        for x in xrange(0, len(sample) - 2):  #-2 for poor fix mentioned above
+        for x in range(0, len(sample) - 2):  #-2 for poor fix mentioned above
             #twodecimals.append([self.featureNames[x], avgList[x]])
             formattedAverages.append(avgList[x])
 
         if verbose == True:
-            print "AVG LIST:"
-            print formattedAverages
+            print("AVG LIST:")
+            print(formattedAverages)
 
         return sampleSet
 
@@ -380,7 +380,7 @@ class clickbaitDetector:
     def getDeterminers(self, lstSentPOS):
         count = 0
         for pos in lstSentPOS:
-            if u"DT" in pos:
+            if "DT" in pos:
                 count = count + 1
         return count
 
@@ -389,27 +389,27 @@ class clickbaitDetector:
 
     #hashtags
     def getHashTagsAndRTs(self, sentence, words):
-        count = sentence.count(u"#")
+        count = sentence.count("#")
         for word in words:
-            if u"RT" in word:
+            if "RT" in word:
                 count = count + 1
         return count
 
     #question marks
     def getQuestionMarks(self, sentence):
-        count = sentence.count(u"?")
+        count = sentence.count("?")
         return count
 
     #@ mentions
     def getAtMentions(self, sentence):
-        count = sentence.count(u"@")
+        count = sentence.count("@")
         return count
 
     #sum the numbers in the headline. clickbait will have more, unit tests expect a float
     def getNumbersSum(self, words):
         #this is ALWAYS 10 for some reason... need to check it
         count = 0
-        for x in xrange(len(words)):
+        for x in range(len(words)):
             for digit in self.digits:
                 if digit in words[x] and words[x] not in self.numbersToAvoid:
                     num = float(number(words[x]))
@@ -452,7 +452,7 @@ class clickbaitDetector:
     def getAdvpCount(self, partsOfSpeech):
         count = 0
         for pos in partsOfSpeech:
-            if pos.count(u"RB") > 0:
+            if pos.count("RB") > 0:
                 count = count + 1
         return count
 
@@ -461,7 +461,7 @@ class clickbaitDetector:
     def getAdjpCount(self, partsOfSpeech):
         count = 0
         for pos in partsOfSpeech:
-            if pos.count(u"JJ") > 0:
+            if pos.count("JJ") > 0:
                 count = count + 1
         return count
 
@@ -469,7 +469,7 @@ class clickbaitDetector:
     def getVerbCount(self, partsOfSpeech):
         count = 0
         for pos in partsOfSpeech:
-            if pos.count(u"VB") > 0:
+            if pos.count("VB") > 0:
                 count = count + 1
         return count
 
@@ -477,7 +477,7 @@ class clickbaitDetector:
     def getNNPCount(self, partsOfSpeech):
         count = 0
         for pos in partsOfSpeech:
-            if u"NNP" == pos and u"NNP-LOC" != pos and u"NNP-PERS" != pos:
+            if "NNP" == pos and "NNP-LOC" != pos and "NNP-PERS" != pos:
                 count = count + 1
         return count
 
@@ -485,7 +485,7 @@ class clickbaitDetector:
     def getPronounCount(self, partsOfSpeech):
         count = 0
         for pos in partsOfSpeech:
-            if u"PRP" == pos or u"PRP$" == pos or u"WP" == pos or u"WP$" == pos:
+            if "PRP" == pos or "PRP$" == pos or "WP" == pos or "WP$" == pos:
                 count = count + 1
         return count
 
@@ -493,9 +493,9 @@ class clickbaitDetector:
     def getNPsCount(self, partsOfSpeech):
         npCount = 0
         for pos in partsOfSpeech:
-            if u"NN" == pos :
+            if "NN" == pos :
                 npCount = npCount + 1
-            elif u"NNS" == pos:
+            elif "NNS" == pos:
                 npCount = npCount + 1
         return npCount
 
@@ -504,9 +504,9 @@ class clickbaitDetector:
         self.swears = set()
         fk = open('swearing.txt', 'r')
         swears = fk.readlines()
-        for x in xrange(len(swears)):
-            self.swears.add(unicode(swears[x].rstrip().lower(), "utf-8"))
-        print "Swear/emotive word count: ", len(self.swears)
+        for x in range(len(swears)):
+            self.swears.add(swears[x].rstrip().lower())
+        print("Swear/emotive word count: ", len(self.swears))
 
     #contains swear words
     #FIXME: only adding 1 if words are exactly equal and some lines in swears are phrases
@@ -520,8 +520,8 @@ class clickbaitDetector:
 
     #brogly
     def getFirstNNPPos(self, sentPOS):
-        for x in xrange(0, len(sentPOS)):
-            if sentPOS[x] == u"NNP":
+        for x in range(0, len(sentPOS)):
+            if sentPOS[x] == "NNP":
                 return x
         return 0
 
@@ -529,7 +529,7 @@ class clickbaitDetector:
     def maxDistFromNPToNNP(self, sentPOS):
         firstNP = -1
         lastNNP = -1
-        for x in xrange(0, len(sentPOS)):
+        for x in range(0, len(sentPOS)):
             if sentPOS[x] in self.tagsNP:
                 if firstNP == -1:
                     firstNP = x
@@ -551,7 +551,7 @@ class clickbaitDetector:
     def maxDistToNNP(self, sentPOS, sentWords):
         nnpDist = 0
         maxNNPDist = 0
-        for x in xrange(0, len(sentPOS)):
+        for x in range(0, len(sentPOS)):
             if sentPOS[x] not in self.tagsNNP:
                 nnpDist = nnpDist + 1
             elif sentPOS[x] in self.tagsNNP:
@@ -565,7 +565,7 @@ class clickbaitDetector:
     def minDistToNNP(self, sentPOS, sentWords):
         nnpDist = 0
         allNNPDist = []
-        for x in xrange(0, len(sentPOS)):
+        for x in range(0, len(sentPOS)):
             if sentPOS[x] not in self.tagsNNP:
                 nnpDist = nnpDist + 1
             elif sentPOS[x] in self.tagsNNP:
@@ -581,14 +581,14 @@ class clickbaitDetector:
     def avgDistToNNP(self, sentPOS, sentWords):
         nnpDist = 0
         nnpDists = []
-        for x in xrange(0, len(sentPOS)):
+        for x in range(0, len(sentPOS)):
             if sentPOS[x] not in self.tagsNNP:
                 nnpDist = nnpDist + 1
             elif sentPOS[x] in self.tagsNNP:
                 nnpDists.append(nnpDist)
                 nnpDist = 0
         total = 0
-        for x in xrange(0, len(nnpDists)):
+        for x in range(0, len(nnpDists)):
             total = total + nnpDists[x]
         if len(nnpDists) > 0:
             return (float(total) / float(len(nnpDists))) * 10
@@ -601,7 +601,7 @@ class clickbaitDetector:
     def getNNPLOCCount(self, poses):
         count = 0
         for pos in poses:
-            if pos == u"NNP-LOC":
+            if pos == "NNP-LOC":
                 count = count + 1
         return count
 
@@ -611,7 +611,7 @@ class clickbaitDetector:
     def getNNPPERSCount(self, poses):
         count = 0
         for pos in poses:
-            if pos == u"NNP-PERS":
+            if pos == "NNP-PERS":
                 count = count + 1
         return count
 
@@ -645,8 +645,8 @@ class clickbaitDetector:
     def maxDistToQuote(self, strSentenceText):
         quoteDist = 0
         maxQuoteDist = 0
-        for x in xrange(0, len(strSentenceText)):
-            if strSentenceText[x] == u"\"":
+        for x in range(0, len(strSentenceText)):
+            if strSentenceText[x] == "\"":
                 if quoteDist > maxQuoteDist:
                     maxQuoteDist = quoteDist
                     quoteDist = 0
@@ -660,8 +660,8 @@ class clickbaitDetector:
     def maxDistToHashTag(self, strSentenceText):
         dist = 0
         maxDist = 0
-        for x in xrange(0, len(strSentenceText)):
-            if strSentenceText[x] == u"#":
+        for x in range(0, len(strSentenceText)):
+            if strSentenceText[x] == "#":
                 if dist > maxDist:
                     maxDist = dist
                     dist = 0
@@ -673,7 +673,7 @@ class clickbaitDetector:
 
     #may be indictative of clickbait. Brogly.
     def maxDistToAt(self, strSentenceText):
-        atIndex = strSentenceText.rfind(u"@")
+        atIndex = strSentenceText.rfind("@")
         if atIndex == -1:
             return 0
         else:
@@ -682,7 +682,7 @@ class clickbaitDetector:
     #Turner, 1975, cited by Mardh
     #there does not appear to be any significant difference between clickbait/non-clickbait when looking at words, but if this is found ANYWHERE in the sentence there is
     def containsOn(self, strSentenceText):
-        if u"on" in strSentenceText or "on" in strSentenceText:
+        if "on" in strSentenceText or "on" in strSentenceText:
             return 1
         else:
             return 0
@@ -690,7 +690,7 @@ class clickbaitDetector:
     #Turner, 1975, cited by Mardh
     #not entirely sure which is more helpful, max or min dist to on
     def minDistToOn(self, strSentenceText):
-        pos = strSentenceText.find(u"on")
+        pos = strSentenceText.find("on")
         if pos == -1:
             return 0
         else:
@@ -698,7 +698,7 @@ class clickbaitDetector:
 
     #real news never contains the following terms. Vicki/Sarah.
     def containsTriggers(self, strSentenceText):
-        triggers = [u"there's", u"a", u"you", u"this", u"that", u"an", u"they", u"why", u"here", u"here's", u"heres",u"watch",u"video",u"ways",u"spot", u"people", u"how", u"meet", u"everything"]
+        triggers = ["there's", "a", "you", "this", "that", "an", "they", "why", "here", "here's", "heres","watch","video","ways","spot", "people", "how", "meet", "everything"]
         triggerCount = 0
         for trigger in triggers:
             if trigger in strSentenceText.lower():
@@ -723,7 +723,7 @@ class clickbaitDetector:
             firstPart = strSentenceText[:15]
         else:
             firstPart = strSentenceText
-        if u":" in firstPart:
+        if ":" in firstPart:
             return 10
         else:
             return 0
@@ -733,7 +733,7 @@ class clickbaitDetector:
         nps = []
         result = 0
 
-        for x in xrange(len(words)):
+        for x in range(len(words)):
             if wordsPOS[x] in self.tagsNP:
                 nps.append(words[x])
             elif wordsPOS[x] in self.tagsNNP:
@@ -744,11 +744,11 @@ class clickbaitDetector:
             #if no nps, there is no similarity
             result = 0
         else:
-            for x in xrange(len(nps)):
+            for x in range(len(nps)):
                 currentNPSynsets = wordnet.synsets(nps[x])
                 if len(currentNPSynsets) > 0:
                     currentNP = currentNPSynsets[0]
-                    for y in xrange(len(nps)):
+                    for y in range(len(nps)):
                         if x != y:
                             otherNPSynsets = wordnet.synsets(nps[y])
                             if len(otherNPSynsets) > 0:
@@ -761,89 +761,90 @@ class clickbaitDetector:
 
     #write out graphs indicating feature comparisons, clickbait vs. non-clickbait
     def graphIndividualFeatures(self, clickbaitSamples, notClickbaitSamples, setname):
-        clickbaitArray = np.array(clickbaitSamples)
-        notClickbaitArray = np.array(notClickbaitSamples)
-
-        h = HTML()
-        h.h1(setname + " Report")
-        h.br()
-        h.a("",name = "topofpage")
-        h.br()
-        h.h2(self.classifierScore_SVM)
-        h.br()
-        h.h3(self.classifierScore_T1T2Good_CBCB)
-        h.br()
-        h.h3(self.classifierScore_T1T2Bad_LegitCB)
-        h.br()
-        h.h3(self.classifierScore_T1T2Bad_CBLegit)
-        h.br()
-        h.h3(self.classifierScore_T1T2Good_LegitLegit)
-        h.br()
-
-        #table of internal links for the report
-        t = h.table(border='1')
-        for x in xrange(len(self.featureNames) - self.TOP_TRIGRAM_COUNT - self.TOP_WORD_COUNT):
-            r = t.tr
-            r.td.a(self.featureNames[x], href=u"#" + self.featureNames[x])
-            r.td('insert feature description here')
-        h.br()
-
-        means = []
-
-        for x in xrange(len(self.featureNames) - self.TOP_TRIGRAM_COUNT - self.TOP_WORD_COUNT):
-            h.a(name=self.featureNames[x]).h2(self.featureNames[x])
-
-            clickbaitFeature = clickbaitArray[:,x]
-            notClickbaitFeature = notClickbaitArray[:,x]
-
-            #writing out data for publication formatting
-            h.br()
-            h.h2("Histogram Bins:")
-
-            h.br()
-            h.h2("Not Clickbait Scores - put these in excel")
-            h.small(str(notClickbaitFeature))
-            h.br()
-            h.h2("Clickbait Scores - put these in excel")
-            h.small(str(clickbaitFeature))
-            h.br()
-
-            means.append(abs(np.mean(clickbaitFeature) - np.mean(notClickbaitFeature)))
-
-            h.br()
-            h.h3(self.featureNames[x] + " Stats - NOT CLICKBAIT")
-            h.br()
-            l = h.ol
-
-            l.li("Mean: " + str(np.mean(notClickbaitFeature)))
-            l.li("Std Dev: " + str(np.std(notClickbaitFeature)))
-            l.li("Variance: " + str(np.var(notClickbaitFeature)))
-            l.li("Min: " + str(np.min(notClickbaitFeature)))
-            l.li("Max: " + str(np.max(notClickbaitFeature)))
-
-            #t-test
-            l.li("(t-statistic, two-tailed p-val): " + str(stats.ttest_ind(notClickbaitFeature, clickbaitFeature, equal_var=False)))
-
-            h.br()
-
-            h.h3(self.featureNames[x] + " Stats - CLICKBAIT")
-            h.br()
-            l = h.ol
-            l.li("Mean: " + str(np.mean(clickbaitFeature)))
-            l.li("Std Dev: " + str(np.std(clickbaitFeature)))
-            l.li("Variance: " + str(np.var(clickbaitFeature)))
-            l.li("Min: " + str(np.min(clickbaitFeature)))
-            l.li("Max: " + str(np.max(clickbaitFeature)))
-
-            h.br()
-            h.h4("Mean Difference: " + str(means[-1]))
-            h.br()
-
-            h.a("Back to Top", href="#topofpage")
-
-        f = open("plots_features/" + setname + "_features_report.html", "w")
-        f.write(unicode(h))
-        f.close()
+        pass
+##        clickbaitArray = np.array(clickbaitSamples)
+##        notClickbaitArray = np.array(notClickbaitSamples)
+##
+##        h = HTML()
+##        h.h1(setname + " Report")
+##        h.br()
+##        h.a("",name = "topofpage")
+##        h.br()
+##        h.h2(self.classifierScore_SVM)
+##        h.br()
+##        h.h3(self.classifierScore_T1T2Good_CBCB)
+##        h.br()
+##        h.h3(self.classifierScore_T1T2Bad_LegitCB)
+##        h.br()
+##        h.h3(self.classifierScore_T1T2Bad_CBLegit)
+##        h.br()
+##        h.h3(self.classifierScore_T1T2Good_LegitLegit)
+##        h.br()
+##
+##        #table of internal links for the report
+##        t = h.table(border='1')
+##        for x in range(len(self.featureNames) - self.TOP_TRIGRAM_COUNT - self.TOP_WORD_COUNT):
+##            r = t.tr
+##            r.td.a(self.featureNames[x], href="#" + self.featureNames[x])
+##            r.td('insert feature description here')
+##        h.br()
+##
+##        means = []
+##
+##        for x in range(len(self.featureNames) - self.TOP_TRIGRAM_COUNT - self.TOP_WORD_COUNT):
+##            h.a(name=self.featureNames[x]).h2(self.featureNames[x])
+##
+##            clickbaitFeature = clickbaitArray[:,x]
+##            notClickbaitFeature = notClickbaitArray[:,x]
+##
+##            #writing out data for publication formatting
+##            h.br()
+##            h.h2("Histogram Bins:")
+##
+##            h.br()
+##            h.h2("Not Clickbait Scores - put these in excel")
+##            h.small(str(notClickbaitFeature))
+##            h.br()
+##            h.h2("Clickbait Scores - put these in excel")
+##            h.small(str(clickbaitFeature))
+##            h.br()
+##
+##            means.append(abs(np.mean(clickbaitFeature) - np.mean(notClickbaitFeature)))
+##
+##            h.br()
+##            h.h3(self.featureNames[x] + " Stats - NOT CLICKBAIT")
+##            h.br()
+##            l = h.ol
+##
+##            l.li("Mean: " + str(np.mean(notClickbaitFeature)))
+##            l.li("Std Dev: " + str(np.std(notClickbaitFeature)))
+##            l.li("Variance: " + str(np.var(notClickbaitFeature)))
+##            l.li("Min: " + str(np.min(notClickbaitFeature)))
+##            l.li("Max: " + str(np.max(notClickbaitFeature)))
+##
+##            #t-test
+##            l.li("(t-statistic, two-tailed p-val): " + str(stats.ttest_ind(notClickbaitFeature, clickbaitFeature, equal_var=False)))
+##
+##            h.br()
+##
+##            h.h3(self.featureNames[x] + " Stats - CLICKBAIT")
+##            h.br()
+##            l = h.ol
+##            l.li("Mean: " + str(np.mean(clickbaitFeature)))
+##            l.li("Std Dev: " + str(np.std(clickbaitFeature)))
+##            l.li("Variance: " + str(np.var(clickbaitFeature)))
+##            l.li("Min: " + str(np.min(clickbaitFeature)))
+##            l.li("Max: " + str(np.max(clickbaitFeature)))
+##
+##            h.br()
+##            h.h4("Mean Difference: " + str(means[-1]))
+##            h.br()
+##
+##            h.a("Back to Top", href="#topofpage")
+##
+##        f = open("plots_features/" + setname + "_features_report.html", "w")
+##        f.write(str(h))
+##        f.close()
 
     #use a training and test set from the training set (2500 items)
     def trainSVMAndTestTrainingSet(self, allClassifiers=False, graphIndividualFeatures=False, statsPerFeature=False):
@@ -882,26 +883,26 @@ class clickbaitDetector:
         #y labels are the same length as sample and represent their class
         #0 - clickbait
         #1 - not clickbait
-        for x in xrange(len(self.clickbaitTrain)):
+        for x in range(len(self.clickbaitTrain)):
             Ytrain.append(0)
-        for x in xrange(len(self.notClickbaitTrain)):
+        for x in range(len(self.notClickbaitTrain)):
             Ytrain.append(1)
 
-        print "Feature count: ", len(self.featureNames)
-        print "Trigram Bag: ", self.TOP_TRIGRAM_COUNT
-        print "Word Bag: ", self.TOP_WORD_COUNT
-        print "CB Training Len: ", len(self.clickbaitTrain)
-        print "NCB Training Len: ", len(self.notClickbaitTrain)
-        print "CB Test Len: ", len(self.clickbaitTest)
-        print "NCB Test Len: ", len (self.notClickbaitTest)
-        print "Validation Set: Not Clickbait used had a mean score < ", self.notClickbaitLowerbound
-        print "Validation Set: Clickbait used had a mean score > ", self.clickbaitUpperbound
+        print("Feature count: ", len(self.featureNames))
+        print("Trigram Bag: ", self.TOP_TRIGRAM_COUNT)
+        print("Word Bag: ", self.TOP_WORD_COUNT)
+        print("CB Training Len: ", len(self.clickbaitTrain))
+        print("NCB Training Len: ", len(self.notClickbaitTrain))
+        print("CB Test Len: ", len(self.clickbaitTest))
+        print("NCB Test Len: ", len (self.notClickbaitTest))
+        print("Validation Set: Not Clickbait used had a mean score < ", self.notClickbaitLowerbound)
+        print("Validation Set: Clickbait used had a mean score > ", self.clickbaitUpperbound)
 
         Xtest = np.array(self.clickbaitTest + self.notClickbaitTest)
         Ytest = []
-        for x in xrange(len(self.clickbaitTest)):
+        for x in range(len(self.clickbaitTest)):
             Ytest.append(0)
-        for x in xrange(len(self.notClickbaitTest)):
+        for x in range(len(self.notClickbaitTest)):
             Ytest.append(1)
 
         #NOTE: precision, recall, and F1 may report as 0 if predictions were poor. Lots of data and equal numbers in clickbait/not-clickbait are needed to avoid this.
@@ -918,18 +919,18 @@ class clickbaitDetector:
 
             #print out predictions % for 0 - clickbait and 1 - not clickbait
             self.proba_pred = self.classifier_linear.predict_proba(Xtest)
-            for x in xrange(1):
-                print self.proba_pred[x], cbTestHeadlines[x]
-                print self.clickbaitTest[x]
-            for x in xrange(1):
-                print self.proba_pred[x + len(self.clickbaitTest)], notCbTestHeadlines[x]
-                print self.notClickbaitTest[x]
+            for x in range(1):
+                print(self.proba_pred[x], cbTestHeadlines[x])
+                print(self.clickbaitTest[x])
+            for x in range(1):
+                print(self.proba_pred[x + len(self.clickbaitTest)], notCbTestHeadlines[x])
+                print(self.notClickbaitTest[x])
 
             #store the predictions
             self.npYtest = np.array(Ytest)
 
             self.classifierScore_SVM = "SVM Validation Test set score: {:.2f}".format(np.mean(self.test_pred == self.npYtest))
-            print self.classifierScore_SVM
+            print(self.classifierScore_SVM)
 
             self.precisionRecallScoreAndCurve("training_svm", self.npYtest, self.test_pred)
 
@@ -949,12 +950,12 @@ class clickbaitDetector:
         self.featureExamplesMaxHeadline = []
         featureExamplesMin = []
         featureExamplesMax = []
-        for x in xrange(len(self.featureNames) - self.TOP_TRIGRAM_COUNT - self.TOP_WORD_COUNT):
+        for x in range(len(self.featureNames) - self.TOP_TRIGRAM_COUNT - self.TOP_WORD_COUNT):
             featureExamplesMin.append(9999999999)
             featureExamplesMax.append(-9999999999)
             self.featureExamplesMinHeadline.append("")
             self.featureExamplesMaxHeadline.append("")
-        for x in xrange(len(self.featureNames) - self.TOP_TRIGRAM_COUNT - self.TOP_WORD_COUNT):
+        for x in range(len(self.featureNames) - self.TOP_TRIGRAM_COUNT - self.TOP_WORD_COUNT):
             for processedScoreRow in headlines:
                 #the min score for everything tends to go to the same short headline which gets 0 for all features
                 #the and condition tries to use another one instead, a minimum that was not already used
@@ -967,7 +968,7 @@ class clickbaitDetector:
 
     #use a training and test set from the challenge validation set and optionally the large 30000 one
     def trainSVMAndTestValidationSet(self, allClassifiers=False, graphIndividualFeatures=False, statsPerFeature=False):
-        print "Running VALIDATION set..."
+        print("Running VALIDATION set...")
         clickbaitValidation = self.buildValidationClickbaitSet()
         self.clickbaitValidationTrain, self.clickbaitValidationTest = train_test_split(clickbaitValidation, train_size = self.trainSize)
         notClickbaitValidation = self.buildValidationNonClickbaitSet()
@@ -1004,9 +1005,9 @@ class clickbaitDetector:
         XtestValidate = np.array(clickbaitValidation + notClickbaitValidation)
         YtestValidate = []
 
-        for x in xrange(len(clickbaitValidation)):
+        for x in range(len(clickbaitValidation)):
             YtestValidate.append(0)
-        for x in xrange(len(notClickbaitValidation)):
+        for x in range(len(notClickbaitValidation)):
             YtestValidate.append(1)
 
         Xtrain = np.array(self.clickbaitValidationTrain + self.notClickbaitValidationTrain)
@@ -1015,26 +1016,26 @@ class clickbaitDetector:
         #y labels are the same length as sample and represent their class
         #0 - clickbait
         #1 - not clickbait
-        for x in xrange(len(self.clickbaitValidationTrain)):
+        for x in range(len(self.clickbaitValidationTrain)):
             Ytrain.append(0)
-        for x in xrange(len(self.notClickbaitValidationTrain)):
+        for x in range(len(self.notClickbaitValidationTrain)):
             Ytrain.append(1)
 
-        print "Feature count: ", len(self.featureNames)
-        print "Trigram Bag: ", self.TOP_TRIGRAM_COUNT
-        print "Word Bag: ", self.TOP_WORD_COUNT
-        print "Validation Set: Not Clickbait used had a mean score < ", self.notClickbaitLowerbound
-        print "Validation Set: Clickbait used had a mean score > ", self.clickbaitUpperbound
-        print "CB Validation Training Len: ", len(self.clickbaitValidationTrain)
-        print "NCB Validation Training Len: ", len(self.notClickbaitValidationTrain)
-        print "CB Validation Test Len: ", len(self.clickbaitValidationTest)
-        print "NCB Validation Test Len: ", len(self.notClickbaitValidationTest)
+        print("Feature count: ", len(self.featureNames))
+        print("Trigram Bag: ", self.TOP_TRIGRAM_COUNT)
+        print("Word Bag: ", self.TOP_WORD_COUNT)
+        print("Validation Set: Not Clickbait used had a mean score < ", self.notClickbaitLowerbound)
+        print("Validation Set: Clickbait used had a mean score > ", self.clickbaitUpperbound)
+        print("CB Validation Training Len: ", len(self.clickbaitValidationTrain))
+        print("NCB Validation Training Len: ", len(self.notClickbaitValidationTrain))
+        print("CB Validation Test Len: ", len(self.clickbaitValidationTest))
+        print("NCB Validation Test Len: ", len(self.notClickbaitValidationTest))
 
         Xtest = np.array(self.clickbaitValidationTest + self.notClickbaitValidationTest)
         Ytest = []
-        for x in xrange(len(self.clickbaitValidationTest)):
+        for x in range(len(self.clickbaitValidationTest)):
             Ytest.append(0)
-        for x in xrange(len(self.notClickbaitValidationTest)):
+        for x in range(len(self.notClickbaitValidationTest)):
             Ytest.append(1)
 
         #NOTE: precision, recall, and F1 may report as 0 if predictions were poor. Lots of data and equal numbers in clickbait/not-clickbait are needed to avoid this.
@@ -1052,19 +1053,19 @@ class clickbaitDetector:
             #print out predictions % for 0 - clickbait and 1 - not clickbait
             self.proba_pred = self.classifier_linear.predict_proba(Xtest)
             clickbaitScore = []
-            for x in xrange(len(self.clickbaitValidationTest)):
+            for x in range(len(self.clickbaitValidationTest)):
                 clickbaitScore.append(self.proba_pred[x].item(0))
-            for x in xrange(len(self.notClickbaitValidationTest)):
+            for x in range(len(self.notClickbaitValidationTest)):
                 clickbaitScore.append(self.proba_pred[x + len(self.clickbaitValidationTest)].item(0))
 
             #compute the mean squared error (this simulates we were doing regression... may give a rough performance indicator compared to 2017 challenge entries)
-            print "Simulated [and inaccurate] Test Set MEAN SQUARED ERROR (MSE): ", mean_squared_error(cbTestTruthMeans + notCbTestTruthMeans, clickbaitScore)
+            print("Simulated [and inaccurate] Test Set MEAN SQUARED ERROR (MSE): ", mean_squared_error(cbTestTruthMeans + notCbTestTruthMeans, clickbaitScore))
 
             #store the predictions
             self.npYtest = np.array(Ytest)
 
             self.classifierScore_SVM = "SVM Validation Test set score: {:.2f}".format(np.mean(self.test_pred == self.npYtest))
-            print self.classifierScore_SVM
+            print(self.classifierScore_SVM)
 
             self.precisionRecallScoreAndCurve("validation_svm", self.npYtest, self.test_pred)
             self.errorsT1T2XLSX("t1t2errorsvalidationSVM")
@@ -1078,47 +1079,48 @@ class clickbaitDetector:
                 self.createClassifiers("Validation", Xtrain, Xtest, Ytrain)
 
     def writeStatsPerFeature(self, Xtrain, Xtest, Ytrain, Ytest, setname):
-        h = HTML()
-        h.h1("Precision-Recall Table")
-        h.h3("Note that for minimum feature score headlines the program tries to use a DIFFERENT minimum headline for each feature, otherwise the same one usually ends up as the minimum for all features.")
-        h.br()
-        #table of internal links for the report
-        t = h.table(border='1')
-        r = t.tr
-        r.td("Feature Name")
-        r.td("Precision Score")
-        r.td("Recall Score")
-        r.td("F1-Score")
-        r.td("Average Correctly Classified (" + " number of headlines)")
-        r.td("Minimum Scoring Headline")
-        r.td("Maximum Scoring Headline")
-
-        for x in xrange(len(self.featureNames) - self.TOP_TRIGRAM_COUNT - self.TOP_WORD_COUNT):
-            linearclf = svm.LinearSVC(class_weight=None,verbose=0,max_iter=2000)
-            self.classifier_linear = CalibratedClassifierCV(linearclf)
-            trainFeatureScores = Xtrain[:,[x]]
-            self.classifier_linear.fit(trainFeatureScores, Ytrain)
-            testFeatureScores = Xtest[:,[x]]
-            self.test_pred = self.classifier_linear.predict(testFeatureScores)
-            #store the predictions
-            self.npYtest = np.array(Ytest)
-            self.classifierScore_SVM = self.featureNames[x] + " correct prediction mean: {:.4f}".format(np.mean(self.test_pred == self.npYtest))
-            print self.classifierScore_SVM
-            print self.featureNames[x] + " precision: ", precision_score(self.npYtest, self.test_pred)
-            print self.featureNames[x] + " recall: ", recall_score(self.npYtest, self.test_pred)
-            print self.featureNames[x] + " f1-score: ", f1_score(self.npYtest, self.test_pred)
-            r = t.tr
-            r.td(self.featureNames[x])
-            r.td(str(round(precision_score(self.npYtest, self.test_pred), 4)))
-            r.td(str(round(recall_score(self.npYtest, self.test_pred), 4)))
-            r.td(str(round(f1_score(self.npYtest, self.test_pred), 4)))
-            r.td(str(round(np.mean(self.test_pred == self.npYtest), 4)))
-            r.td(self.featureExamplesMinHeadline[x].encode('ascii', 'ignore'))
-            r.td(self.featureExamplesMaxHeadline[x].encode('ascii', 'ignore'))
-            h.br()
-        f = open("plots_features/" + setname + "_feature_stats.html", "w")
-        f.write(unicode(h))
-        f.close()
+        pass
+##        h = HTML()
+##        h.h1("Precision-Recall Table")
+##        h.h3("Note that for minimum feature score headlines the program tries to use a DIFFERENT minimum headline for each feature, otherwise the same one usually ends up as the minimum for all features.")
+##        h.br()
+##        #table of internal links for the report
+##        t = h.table(border='1')
+##        r = t.tr
+##        r.td("Feature Name")
+##        r.td("Precision Score")
+##        r.td("Recall Score")
+##        r.td("F1-Score")
+##        r.td("Average Correctly Classified (" + " number of headlines)")
+##        r.td("Minimum Scoring Headline")
+##        r.td("Maximum Scoring Headline")
+##
+##        for x in range(len(self.featureNames) - self.TOP_TRIGRAM_COUNT - self.TOP_WORD_COUNT):
+##            linearclf = svm.LinearSVC(class_weight=None,verbose=0,max_iter=2000)
+##            self.classifier_linear = CalibratedClassifierCV(linearclf)
+##            trainFeatureScores = Xtrain[:,[x]]
+##            self.classifier_linear.fit(trainFeatureScores, Ytrain)
+##            testFeatureScores = Xtest[:,[x]]
+##            self.test_pred = self.classifier_linear.predict(testFeatureScores)
+##            #store the predictions
+##            self.npYtest = np.array(Ytest)
+##            self.classifierScore_SVM = self.featureNames[x] + " correct prediction mean: {:.4f}".format(np.mean(self.test_pred == self.npYtest))
+##            print(self.classifierScore_SVM)
+##            print(self.featureNames[x] + " precision: ", precision_score(self.npYtest, self.test_pred))
+##            print(self.featureNames[x] + " recall: ", recall_score(self.npYtest, self.test_pred))
+##            print(self.featureNames[x] + " f1-score: ", f1_score(self.npYtest, self.test_pred))
+##            r = t.tr
+##            r.td(self.featureNames[x])
+##            r.td(str(round(precision_score(self.npYtest, self.test_pred), 4)))
+##            r.td(str(round(recall_score(self.npYtest, self.test_pred), 4)))
+##            r.td(str(round(f1_score(self.npYtest, self.test_pred), 4)))
+##            r.td(str(round(np.mean(self.test_pred == self.npYtest), 4)))
+##            r.td(self.featureExamplesMinHeadline[x].encode('ascii', 'ignore'))
+##            r.td(self.featureExamplesMaxHeadline[x].encode('ascii', 'ignore'))
+##            h.br()
+##        f = open("plots_features/" + setname + "_feature_stats.html", "w")
+##        f.write(str(h))
+##        f.close()
 
     #call this method and pass in a relevant file name for precision-recall information
     def precisionRecallScoreAndCurve(self, filename, test, score):
@@ -1130,21 +1132,21 @@ class clickbaitDetector:
             self.classifierRndForest = RandomForestClassifier(verbose=True)
             self.classifierRndForest.fit(Xtr_r, Ytrain)
             otherClassifierTestPred = self.classifierRndForest.predict(Xte_r)
-            print "Random Forest " + name + " Test set score: {:.2f}".format(np.mean(otherClassifierTestPred == self.npYtest))
+            print("Random Forest " + name + " Test set score: {:.2f}".format(np.mean(otherClassifierTestPred == self.npYtest)))
             self.precisionRecallScoreAndCurve(name + "_randomforest", self.npYtest, otherClassifierTestPred)
 
         if KNN == True:
             self.classifierKNN = KNeighborsClassifier(n_neighbors=175)
             self.classifierKNN.fit(Xtr_r, Ytrain)
             otherClassifierTestPred = self.classifierKNN.predict(Xte_r)
-            print "K-Nearest Neighbour " + name + " Test set score: {:.2f}".format(np.mean(otherClassifierTestPred == self.npYtest))
+            print("K-Nearest Neighbour " + name + " Test set score: {:.2f}".format(np.mean(otherClassifierTestPred == self.npYtest)))
             self.precisionRecallScoreAndCurve(name + "_knn", self.npYtest, otherClassifierTestPred)
 
         if NB == True:
             self.classifierNaiveBayes = GaussianNB()
             self.classifierNaiveBayes.fit(Xtr_r, Ytrain)
             otherClassifierTestPred = self.classifierNaiveBayes.predict(Xte_r)
-            print "Naive Bayes " + name + " Test set score: {:.2f}".format(np.mean(otherClassifierTestPred == self.npYtest))
+            print("Naive Bayes " + name + " Test set score: {:.2f}".format(np.mean(otherClassifierTestPred == self.npYtest)))
             self.precisionRecallScoreAndCurve(name + "_naivebayes", self.npYtest, otherClassifierTestPred)
 
     #primarily for the ganguly set, for now, but you can use any headline
@@ -1179,14 +1181,14 @@ class clickbaitDetector:
         ncbAcc = float(amtNotClickbaitCorrect)/float(amtNotClickbait)
         totalAcc = float(amtClickbaitCorrect + amtNotClickbaitCorrect) / float(amtClickbait + amtNotClickbait)
 
-        print "Ganguly Clickbait Amt: ", amtClickbait
-        print "Ganguly Not Clickbait Amt: ", amtNotClickbait
-        print "Ganguly Clickbait Correct: ", amtClickbaitCorrect
-        print "Ganguly Not Clickbait Correct: ", amtNotClickbaitCorrect
-        print "Ganguly TOTAL: ", amtClickbait + amtNotClickbait
-        print "Ganguly Clickbait Accuracy: ", cbAcc
-        print "Ganguly Not Clickbait Accuracy: ", ncbAcc
-        print "Ganguly Overall: ", totalAcc
+        print("Ganguly Clickbait Amt: ", amtClickbait)
+        print("Ganguly Not Clickbait Amt: ", amtNotClickbait)
+        print("Ganguly Clickbait Correct: ", amtClickbaitCorrect)
+        print("Ganguly Not Clickbait Correct: ", amtNotClickbaitCorrect)
+        print("Ganguly TOTAL: ", amtClickbait + amtNotClickbait)
+        print("Ganguly Clickbait Accuracy: ", cbAcc)
+        print("Ganguly Not Clickbait Accuracy: ", ncbAcc)
+        print("Ganguly Overall: ", totalAcc)
 
     #Use the test set from the challenge with this function to get a better idea of MSE, still not sure about accuracy though
     def testAllOfValidationSet(self):
@@ -1195,9 +1197,9 @@ class clickbaitDetector:
         amtNotClickbaitCorrect = 0
         amtNotClickbait = len(self.th.validationAllNotClickbait)
 
-        print "Validation All Not Clickbait Amt: ", amtNotClickbait
-        print "Validation All Clickbait Amt: ", amtClickbait
-        print "Validation All TOTAL: ", amtClickbait + amtNotClickbait
+        print("Validation All Not Clickbait Amt: ", amtNotClickbait)
+        print("Validation All Clickbait Amt: ", amtClickbait)
+        print("Validation All TOTAL: ", amtClickbait + amtNotClickbait)
 
         allTruthMeans = []
         predictedTruthMeans = []
@@ -1219,17 +1221,17 @@ class clickbaitDetector:
             predictedTruthMeans.append(self.predict(headline, False, True))
 
         #compute the mean squared error (this simulates we were doing regression... may give a rough performance indicator compared to 2017 challenge entries)
-        print "Simulated [and inaccurate] MEAN SQUARED ERROR (MSE) ALL VALIDATION: ", mean_squared_error(allTruthMeans, predictedTruthMeans)
+        print("Simulated [and inaccurate] MEAN SQUARED ERROR (MSE) ALL VALIDATION: ", mean_squared_error(allTruthMeans, predictedTruthMeans))
 
         cbAcc = float(amtClickbaitCorrect)/float(amtClickbait)
         ncbAcc = float(amtNotClickbaitCorrect)/float(amtNotClickbait)
         totalAcc = float(amtClickbaitCorrect + amtNotClickbaitCorrect) / float(amtClickbait + amtNotClickbait)
 
-        print "Validation All Clickbait Correct: ", amtClickbaitCorrect
-        print "Validation All Not Clickbait Correct: ", amtNotClickbaitCorrect
-        print "Validation All Clickbait Accuracy: ", cbAcc
-        print "Validation All Not Clickbait Accuracy: ", ncbAcc
-        print "Validation All Overall: ", totalAcc
+        print("Validation All Clickbait Correct: ", amtClickbaitCorrect)
+        print("Validation All Not Clickbait Correct: ", amtNotClickbaitCorrect)
+        print("Validation All Clickbait Accuracy: ", cbAcc)
+        print("Validation All Not Clickbait Accuracy: ", ncbAcc)
+        print("Validation All Overall: ", totalAcc)
 
     #TODO: refactor
     def predict(self, headline, verbose=True, quick=False):
@@ -1248,7 +1250,7 @@ class clickbaitDetector:
         if verbose == False:
             betterString = str(prob[0])[1:-1]
             classValues = betterString.split(" ")
-            classValues = filter(None, classValues) # fastest
+            classValues = [_f for _f in classValues if _f] # fastest
             return ",".join(classValues) + "," + ",".join(str(featScore) for featScore in Xsamples[0][:38]) + "," + headline
 
         additionalMessage = "This link is "
@@ -1268,8 +1270,8 @@ class clickbaitDetector:
         additionalMessage = additionalMessage + "and "
 
         if verbose == True:
-            print type(prob[0][0])
-            print type(prob[0][1])
+            print(type(prob[0][0]))
+            print(type(prob[0][1]))
 
         #details about legitimacy score (class 1)
         if prob[0][1] > 0.90:
@@ -1294,7 +1296,7 @@ class clickbaitDetector:
         list3 = []
         list4 = []
 
-        for x in xrange(len(lstTestPred)):
+        for x in range(len(lstTestPred)):
             #square row1col1
             #clickbait, labelled clickbait (+, good)
             if lstTestPred[x] == 0 and Ytest[x] == 0:
@@ -1321,32 +1323,32 @@ class clickbaitDetector:
         worksheet.set_column('A:D', 100)
 
         worksheet.write(0, 0, "clickbait, labelled clickbait (+, good)")
-        for x in xrange(len(list1)):
+        for x in range(len(list1)):
             worksheet.write(x + 1, 0, list1[x])
 
         self.classifierScore_T1T2Good_CBCB = "length of clickbait identified as clickbait (+,good): " + str(len(list1)) + self.getPercent(len(list1), len(list1) + len(list3))
-        print self.classifierScore_T1T2Good_CBCB
+        print(self.classifierScore_T1T2Good_CBCB)
 
         worksheet.write(0, 1, "legitimate headlines, labelled clickbait (-,bad)")
-        for x in xrange(len(list2)):
+        for x in range(len(list2)):
             worksheet.write(x + 1, 1, list2[x])
 
         self.classifierScore_T1T2Bad_LegitCB = "length of legit headlines identified as clickbait (-,bad): " + str(len(list2)) + self.getPercent(len(list2), len(list2) + len(list4))
-        print self.classifierScore_T1T2Bad_LegitCB
+        print(self.classifierScore_T1T2Bad_LegitCB)
 
         worksheet.write(0, 2, "clickbait, labelled legitimate headlines (-,bad)")
-        for x in xrange(len(list3)):
+        for x in range(len(list3)):
             worksheet.write(x + 1, 2, list3[x])
 
         self.classifierScore_T1T2Bad_CBLegit = "length of clickbait identified as legit headlines (-,bad): " + str(len(list3)) + self.getPercent(len(list3), len(list1) + len(list3))
-        print self.classifierScore_T1T2Bad_CBLegit
+        print(self.classifierScore_T1T2Bad_CBLegit)
 
         worksheet.write(0, 3, "legitimate headlines, labelled legitimate headlines (+, good)")
-        for x in xrange(len(list4)):
+        for x in range(len(list4)):
             worksheet.write(x + 1, 3, list4[x])
 
         self.classifierScore_T1T2Good_LegitLegit = "length of legit headlines identified as legit headlines (+,good): " + str(len(list4)) + self.getPercent(len(list4), len(list2) + len(list4))
-        print self.classifierScore_T1T2Good_LegitLegit
+        print(self.classifierScore_T1T2Good_LegitLegit)
 
     def getPercent(self, amt, totalAmt):
         result =  (float(amt) / float(totalAmt)) * 100

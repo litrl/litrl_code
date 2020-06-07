@@ -1615,7 +1615,7 @@ namespace Decoy
             HtmlNode bodyNode = htm.DocumentNode.SelectSingleNode("//body");
             bodyNode.Attributes.Remove();
             lastURL = "";   //need to clear so refreshes work
-            c.Browser.LoadString(htm.DocumentNode.OuterHtml, "http://yourinputdoc");
+            c.Browser.LoadHtml(htm.DocumentNode.OuterHtml, "http://yourinputdoc");
             TabsBrowser.SelectTab(0);
         }
 

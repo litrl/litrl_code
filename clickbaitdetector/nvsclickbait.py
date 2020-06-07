@@ -41,9 +41,8 @@ def main():
     detector = dill.load(detectorDUMP)
 
     while True:
-        headline = raw_input()
-        headline = unicode(headline, errors='ignore')
-        print detector.predict(headline, verbose=False)
+        headline = input()
+        print(detector.predict(headline, verbose=False))
         sys.stdout.flush() #so the nvs browser gets the output... windows buffering won't print stuff without this line
 
 if __name__ == '__main__':

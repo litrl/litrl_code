@@ -51,7 +51,7 @@ class TrainingHandler:
             self.loadGanguly("./ganguly-stop-clickbait/clickbait_data", "./ganguly-stop-clickbait/non_clickbait_data")
 
     def setupClickbaitCollections(self):
-        print "Loading training sets."
+        print("Loading training sets.")
         self.validationSet = {}
         self.validationSetNoClickbait = []
         self.validationSetClickbait = []
@@ -61,14 +61,14 @@ class TrainingHandler:
         self.gangulyNoClickbait = []
 
     def loadTruthJSONValidation(self, filename):
-        print "Opening Clickbait Challenge 2017 VALIDATION truth file."
+        print("Opening Clickbait Challenge 2017 VALIDATION truth file.")
         with open(filename, 'rb') as f:
             for item in json_lines.reader(f):
                 self.validationSet[item['id']] = {'truth-mean': item['truthMean'], 'truth': item['truthClass'], 'text': '', 'id': item['id']}
-        print "Finished reading truth file."
+        print("Finished reading truth file.")
 
     def loadDetailsJSONValidation(self, filename):
-        print "Opening Clickbait Challenge 2017 VALIDATION details file."
+        print("Opening Clickbait Challenge 2017 VALIDATION details file.")
         with open(filename, 'rb') as f:
             i = 0
             for item in json_lines.reader(f):
@@ -90,21 +90,21 @@ class TrainingHandler:
 
                 i = i + 1
 
-        print "Finished reading details file."
-        print "Attempting to use equal numbers of clickbait/not clickbait."
+        print("Finished reading details file.")
+        print("Attempting to use equal numbers of clickbait/not clickbait.")
         self.validationSetNoClickbait = self.validationSetNoClickbait[0:len(self.validationSetClickbait)]
-        print "VALIDATION TRAIN/TEST CLICKBAIT LENGTH: ", len(self.validationSetClickbait)
-        print "VALIDATION TRAIN/TEST NOT CLICKBAIT LENGTH: ", len(self.validationSetNoClickbait)
-        print "VALIDATION ALL CLICKBAIT LENGTH: ", len(self.validationAllClickbait)
-        print "VALIDATION ALL NOT CLICKBAIT LENGTH: ", len(self.validationAllNotClickbait)
-        print "The Clickbait Challenge 2017 VALIDATION set (14000) includes truth-mean values in the range 0.0-1.0."
+        print("VALIDATION TRAIN/TEST CLICKBAIT LENGTH: ", len(self.validationSetClickbait))
+        print("VALIDATION TRAIN/TEST NOT CLICKBAIT LENGTH: ", len(self.validationSetNoClickbait))
+        print("VALIDATION ALL CLICKBAIT LENGTH: ", len(self.validationAllClickbait))
+        print("VALIDATION ALL NOT CLICKBAIT LENGTH: ", len(self.validationAllNotClickbait))
+        print("The Clickbait Challenge 2017 VALIDATION set (14000) includes truth-mean values in the range 0.0-1.0.")
 
     def loadGanguly(self, clickbaitFilename, noClickbaitFilename):
-        print "Opening Ganguly (Large 300000) training set files."
+        print("Opening Ganguly (Large 300000) training set files.")
         with io.open(clickbaitFilename, 'r', encoding="utf-8") as cb:
             lines = (line.rstrip() for line in cb)
             gangulyClickbaitTmp = list(line for line in lines if line != "")
-            for x in xrange(len(gangulyClickbaitTmp)):
+            for x in range(len(gangulyClickbaitTmp)):
                 newGangulyHeadline = {}
                 newGangulyHeadline['text'] = gangulyClickbaitTmp[x]
                 newGangulyHeadline['truth-mean'] = 1.0 #in this set, you are either clickbait or you are not
@@ -112,11 +112,11 @@ class TrainingHandler:
         with io.open(noClickbaitFilename, 'r', encoding="utf-8") as ncb:
             lines = (line.rstrip() for line in ncb)
             gangulyNoClickbaitTmp = list(line for line in lines if line != "")
-            for x in xrange(len(gangulyNoClickbaitTmp)):
+            for x in range(len(gangulyNoClickbaitTmp)):
                 newGangulyHeadline = {}
                 newGangulyHeadline['text'] = gangulyNoClickbaitTmp[x]
                 newGangulyHeadline['truth-mean'] = 0.0 #in this set, you are either clickbait or you are not
                 self.gangulyNoClickbait.append(newGangulyHeadline)
-        print "GANGULY CLICKBAIT LENGTH: ", len(self.gangulyClickbait)
-        print "GANGULY NOTCLICKBAIT LENGTH: ", len(self.gangulyNoClickbait)
-        print "The Ganguly (Large) set (30000) only includes binary classes (clickbait, or not clickbait)."
+        print("GANGULY CLICKBAIT LENGTH: ", len(self.gangulyClickbait))
+        print("GANGULY NOTCLICKBAIT LENGTH: ", len(self.gangulyNoClickbait))
+        print("The Ganguly (Large) set (30000) only includes binary classes (clickbait, or not clickbait).")

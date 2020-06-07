@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="richTextBox1.Text" xml:space="preserve">
-    <value>Copyright 2017-2018 Victoria L. Rubin (FIMS, Western University).
+    <value>Copyright 2017-2020 Victoria L. Rubin (FIMS, Western University).
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by

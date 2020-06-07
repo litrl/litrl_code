@@ -1,5 +1,4 @@
-'''
-    Copyright Victoria L. Rubin 2017-2018.
+''' Copyright Victoria L. Rubin 2017-2018.
 
     This file is part of Litrl Browser.
 
@@ -68,53 +67,53 @@ class falsificationDetector:
         self.loadSwearing()
 
     def train(self):
-        print "Training Falsifications Detector..."
+        print("Training Falsifications Detector...")
         legitScores = []
         falseScores = []
 
         avgLegitScores = []
         avgFalseScores = []
 
-        for x in xrange(1, self.AMT_STORIES_LEGIT):
+        for x in range(1, self.AMT_STORIES_LEGIT):
             lineLIST = self.getParagraphs(self.PATH_LEGIT, x)
             legitScore = self.getScores(lineLIST)
 
             #set up our list of features averages based on the size of our first sample
             if len(avgLegitScores) == 0:
-                for c in xrange(len(legitScore)):
+                for c in range(len(legitScore)):
                     avgLegitScores.append(0)
 
             #sum everything to get an average later
-            for x in xrange(len(legitScore)):
+            for x in range(len(legitScore)):
                 avgLegitScores[x] = float(avgLegitScores[x]) + float(legitScore[x])
 
             legitScores.append(legitScore)
-        for x in xrange(1, self.AMT_STORIES_FAKE):
+        for x in range(1, self.AMT_STORIES_FAKE):
             lineLIST = self.getParagraphs(self.PATH_FAKE, x)
             falseScore = self.getScores(lineLIST)
 
             #set up our list of features averages based on the size of our first sample
             if len(avgFalseScores) == 0:
-                for c in xrange(len(falseScore)):
+                for c in range(len(falseScore)):
                     avgFalseScores.append(0)
 
             #sum everything to get an average later
-            for x in xrange(len(falseScore)):
+            for x in range(len(falseScore)):
                 avgFalseScores[x] = float(avgFalseScores[x]) + float(falseScore[x])
 
             falseScores.append(falseScore)
 
         #divide to get avgs
-        for x in xrange(len(avgFalseScores)):
+        for x in range(len(avgFalseScores)):
             avgFalseScores[x] = avgFalseScores[x] / float(len(avgFalseScores))
-        for x in xrange(len(avgLegitScores)):
+        for x in range(len(avgLegitScores)):
             avgLegitScores[x] = avgLegitScores[x] / float(len(avgLegitScores))
 
-        print "AVG Legit Scores"
-        print avgLegitScores
+        print("AVG Legit Scores")
+        print(avgLegitScores)
 
-        print "AVG False Scores"
-        print avgFalseScores
+        print("AVG False Scores")
+        print(avgFalseScores)
 
         legitTrain, legitTest = train_test_split(legitScores, train_size = self.TRAIN_SIZE)
         falseTrain, falseTest = train_test_split(falseScores, train_size = self.TRAIN_SIZE)
@@ -123,18 +122,18 @@ class falsificationDetector:
         Ytrain = []
 
         Xtrain = legitTrain + falseTrain
-        for x in xrange(len(legitTrain)):
+        for x in range(len(legitTrain)):
             Ytrain.append(0)
-        for x in xrange(len(falseTrain)):
+        for x in range(len(falseTrain)):
             Ytrain.append(1)
 
         Xtest = []
         Ytest = []
 
         Xtest = legitTest + falseTest
-        for x in xrange(len(legitTest)):
+        for x in range(len(legitTest)):
             Ytest.append(0)
-        for x in xrange(len(falseTest)):
+        for x in range(len(falseTest)):
             Ytest.append(1)
 
         # Perform classification with SVM, kernel=linear
@@ -147,26 +146,26 @@ class falsificationDetector:
         npYtest = np.array(Ytest)
         classifierScoreSVM = "Test set score: {:.2f}".format(np.mean(test_pred == npYtest))
 
-        print "Train set Legit Stories Amount: ", str(len(legitTrain))
-        print "Train set False Stories Amount: ", str(len(falseTrain))
+        print("Train set Legit Stories Amount: ", str(len(legitTrain)))
+        print("Train set False Stories Amount: ", str(len(falseTrain)))
 
-        print "Test set Legit Stories Amount: ", str(len(legitTest))
-        print "Test set False Stories Amount: ", str(len(falseTest))
+        print("Test set Legit Stories Amount: ", str(len(legitTest)))
+        print("Test set False Stories Amount: ", str(len(falseTest)))
 
-        print classifierScoreSVM
+        print(classifierScoreSVM)
 
     def predict(self, text):
         lineLIST = text.split(".")
 
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
-            features = self.getScores(lineLIST)
+            features = [self.getScores(lineLIST)]
             prediction_linear = self.classifier_linear.predict(features)
             prediction_scores = self.classifier_linear.predict_proba(features)
 
         betterString = str(prediction_scores[0])[1:-1]
         classValues = betterString.split(" ")
-        classValues = filter(None, classValues) # fastest
+        classValues = [_f for _f in classValues if _f] # fastest
         return ",".join(classValues) + "," + ",".join(str(featScore) for featScore in features)
 
     def getScores(self, lineLIST):
@@ -190,92 +189,92 @@ class falsificationDetector:
         fileextension = '.txt'
         fullPath = filePath + str(storyNum) + fileextension
         with codecs.open(fullPath,"rU", encoding="utf-8", errors='ignore') as f:
-			for line in f:
-				line1 = line.encode('utf-8', errors='ignore')
-				line2 = line1.decode('utf-8').strip()
-				lineLIST.append(line2)
+            for line in f:
+                line1 = line.encode('utf-8', errors='ignore')
+                line2 = line1.decode('utf-8').strip()
+                lineLIST.append(line2)
 
         return lineLIST
 
     def getSentences(self, lineLIST):
-		ALLsentences=list()
-		everyLINE=0
-		paragraphcount=0
-		sentencecount=0
-		Sentences1=[]
-		wordCount=0
-		for everyPARAGRAPH in lineLIST:
-			Sentences1=sent_tokenize(lineLIST[everyLINE])
-			ALLsentences.append(Sentences1)
-			everyLINE=everyLINE+1
-		return ALLsentences
+        ALLsentences=list()
+        everyLINE=0
+        paragraphcount=0
+        sentencecount=0
+        Sentences1=[]
+        wordCount=0
+        for everyPARAGRAPH in lineLIST:
+            Sentences1=sent_tokenize(lineLIST[everyLINE])
+            ALLsentences.append(Sentences1)
+            everyLINE=everyLINE+1
+        return ALLsentences
 
     def getAVGNoOfWordsPerParagraph(self, lineLIST):
-		everyLINE=0
-		paragraphcount=0
-		sentencecount=0
-		Sentences1=[]
-		wordCount=0
-		for everyPARAGRAPH in lineLIST:
-			Sentences1=sent_tokenize(lineLIST[everyLINE])
-			newsentencecount=len(Sentences1)
-			everyLINE=everyLINE+1
-			count1=0
-			for everysentence in Sentences1:
-				if count1<len(Sentences1)and len(Sentences1)>0:
-					newSentences1=word_tokenize(Sentences1[count1])
-					wordCount=len(newSentences1)+wordCount
-					sentencecount=sentencecount+newsentencecount
-					count1=count1+1
-		paragraphcount=len(lineLIST)
-		AVGwordsperParagraph=float(wordCount)/paragraphcount
-		return AVGwordsperParagraph
+        everyLINE=0
+        paragraphcount=0
+        sentencecount=0
+        Sentences1=[]
+        wordCount=0
+        for everyPARAGRAPH in lineLIST:
+            Sentences1=sent_tokenize(lineLIST[everyLINE])
+            newsentencecount=len(Sentences1)
+            everyLINE=everyLINE+1
+            count1=0
+            for everysentence in Sentences1:
+                if count1<len(Sentences1)and len(Sentences1)>0:
+                    newSentences1=word_tokenize(Sentences1[count1])
+                    wordCount=len(newSentences1)+wordCount
+                    sentencecount=sentencecount+newsentencecount
+                    count1=count1+1
+        paragraphcount=len(lineLIST)
+        AVGwordsperParagraph=float(wordCount)/paragraphcount
+        return AVGwordsperParagraph
 
     def getAVGNoOfWordsPerSentence(self, lineLIST):
-		everyLINE=0
-		paragraphcount=0
-		sentencecount=0
-		Sentences1=[]
-		wordCount=0
-		for everyPARAGRAPH in lineLIST:
-			Sentences1=sent_tokenize(lineLIST[everyLINE])
-			newsentencecount=len(Sentences1)
-			everyLINE=everyLINE+1
-			count1=0
-			for everysentence in Sentences1:
-				if count1<len(Sentences1)and len(Sentences1)>0:
-					newSentences1=word_tokenize(Sentences1[count1])
-					wordCount=len(newSentences1)+wordCount
-					sentencecount=sentencecount+newsentencecount
-					count1=count1+1
-		paragraphcount=len(lineLIST)
-		AVGwordsperSentence=float(wordCount)/sentencecount
-		return AVGwordsperSentence
+        everyLINE=0
+        paragraphcount=0
+        sentencecount=0
+        Sentences1=[]
+        wordCount=0
+        for everyPARAGRAPH in lineLIST:
+            Sentences1=sent_tokenize(lineLIST[everyLINE])
+            newsentencecount=len(Sentences1)
+            everyLINE=everyLINE+1
+            count1=0
+            for everysentence in Sentences1:
+                if count1<len(Sentences1)and len(Sentences1)>0:
+                    newSentences1=word_tokenize(Sentences1[count1])
+                    wordCount=len(newSentences1)+wordCount
+                    sentencecount=sentencecount+newsentencecount
+                    count1=count1+1
+        paragraphcount=len(lineLIST)
+        AVGwordsperSentence=float(wordCount)/sentencecount
+        return AVGwordsperSentence
 
     def getAVGNoOfSentencesPerParagraph(self, lineLIST):
-		everyLINE=0
-		paragraphcount=0
-		sentencecount=0
-		Sentences1=[]
-		wordCount=0
-		for everyPARAGRAPH in lineLIST:
-			Sentences1=sent_tokenize(lineLIST[everyLINE])
-			newsentencecount=len(Sentences1)
-			everyLINE=everyLINE+1
-			count1=0
-			for everysentence in Sentences1:
-				if count1<len(Sentences1)and len(Sentences1)>0:
-					newSentences1=word_tokenize(Sentences1[count1])
-					wordCount=len(newSentences1)+wordCount
-					sentencecount=sentencecount+newsentencecount
-					count1=count1+1
-		paragraphcount=len(lineLIST)
-		AVGsentenceperParagraph=float(sentencecount)/paragraphcount
-		return AVGsentenceperParagraph
+        everyLINE=0
+        paragraphcount=0
+        sentencecount=0
+        Sentences1=[]
+        wordCount=0
+        for everyPARAGRAPH in lineLIST:
+            Sentences1=sent_tokenize(lineLIST[everyLINE])
+            newsentencecount=len(Sentences1)
+            everyLINE=everyLINE+1
+            count1=0
+            for everysentence in Sentences1:
+                if count1<len(Sentences1)and len(Sentences1)>0:
+                    newSentences1=word_tokenize(Sentences1[count1])
+                    wordCount=len(newSentences1)+wordCount
+                    sentencecount=sentencecount+newsentencecount
+                    count1=count1+1
+        paragraphcount=len(lineLIST)
+        AVGsentenceperParagraph=float(sentencecount)/paragraphcount
+        return AVGsentenceperParagraph
 
     def getNoOfParagraphsPerNewsStory(self, lineLIST):
-		paragraphcount=len(lineLIST)
-		return paragraphcount
+        paragraphcount=len(lineLIST)
+        return paragraphcount
 
     def getAVGWordLength(self, lineLIST):
         wordLength=list()
@@ -285,114 +284,114 @@ class falsificationDetector:
         Sentences1=[]
         wordCount=0
         for everyPARAGRAPH in lineLIST:
-        	Sentences1=sent_tokenize(lineLIST[everyLINE])
-        	newsentencecount=len(Sentences1)
-        	everyLINE=everyLINE+1
-        	count1=0
-        	for everysentence in Sentences1:
-        		if count1<len(Sentences1)and len(Sentences1)>0:
-        			newSentences1=word_tokenize(Sentences1[count1])
-        			count1=count1+1
-        			for word in newSentences1:
-        				lenOfWord=len(word)
+            Sentences1=sent_tokenize(lineLIST[everyLINE])
+            newsentencecount=len(Sentences1)
+            everyLINE=everyLINE+1
+            count1=0
+            for everysentence in Sentences1:
+                if count1<len(Sentences1)and len(Sentences1)>0:
+                    newSentences1=word_tokenize(Sentences1[count1])
+                    count1=count1+1
+                    for word in newSentences1:
+                        lenOfWord=len(word)
                         wordLength.append(lenOfWord)
         sumWordLengths = sum(wordLength)
         return float(sumWordLengths) / float(len(wordLength))
 
     def getLEXICALdiversity(self, lineLIST):
-		everyLINE=0
-		paragraphcount=0
-		sentencecount=0
-		Sentences1=[]
-		wordLIST=list()
-		setwordLIST=list()
-		wordCount=0
-		for everyPARAGRAPH in lineLIST:
-			Sentences1=sent_tokenize(lineLIST[everyLINE])
-			newsentencecount=len(Sentences1)
-			everyLINE=everyLINE+1
-			count1=0
-			for everysentence in Sentences1:
-				if count1<len(Sentences1)and len(Sentences1)>0:
-					newSentences1=word_tokenize(Sentences1[count1])
-					count1=count1+1
-					c=0
-					for everyword in newSentences1:
-						lowercaseCHAR=newSentences1[c].lower()
-						wordLIST.append(lowercaseCHAR)
-						c=c+1
-		setwordLIST=set(wordLIST)
-		allTOKENS=float(len(wordLIST))
-		setTOKENS=float(len(setwordLIST))
-		LexicalDIVERSITY=float(allTOKENS/setTOKENS)
-		return LexicalDIVERSITY
+        everyLINE=0
+        paragraphcount=0
+        sentencecount=0
+        Sentences1=[]
+        wordLIST=list()
+        setwordLIST=list()
+        wordCount=0
+        for everyPARAGRAPH in lineLIST:
+            Sentences1=sent_tokenize(lineLIST[everyLINE])
+            newsentencecount=len(Sentences1)
+            everyLINE=everyLINE+1
+            count1=0
+            for everysentence in Sentences1:
+                if count1<len(Sentences1)and len(Sentences1)>0:
+                    newSentences1=word_tokenize(Sentences1[count1])
+                    count1=count1+1
+                    c=0
+                    for everyword in newSentences1:
+                        lowercaseCHAR=newSentences1[c].lower()
+                        wordLIST.append(lowercaseCHAR)
+                        c=c+1
+        setwordLIST=set(wordLIST)
+        allTOKENS=float(len(wordLIST))
+        setTOKENS=float(len(setwordLIST))
+        LexicalDIVERSITY=float(allTOKENS/setTOKENS)
+        return LexicalDIVERSITY
 
     def getPausality(self, lineLIST):
-		wordLIST=list()
-		everyLINE=0
-		paragraphcount=0
-		sentencecount=0
-		Sentences1=[]
-		wordCount=0
-		for everyPARAGRAPH in lineLIST:
-			Sentences1=sent_tokenize(lineLIST[everyLINE])
-			newsentencecount=len(Sentences1)
-			sentencecount=sentencecount+newsentencecount
-			count1=0
-			for everysentence in Sentences1:
-				if count1<len(Sentences1)and len(Sentences1)>0:
-					newSentences1=word_tokenize(Sentences1[count1])
-					count1=count1+1
-					c=0
-					for everyword in newSentences1:
-						lowercaseCHAR=newSentences1[c].lower()
-						wordLIST.append(lowercaseCHAR)
-						c=c+1
-			everyLINE=everyLINE+1
-		POS_text =nltk.pos_tag(wordLIST)
-		tagged = nltk.FreqDist(tag for (word, tag) in POS_text)
-		full_stop=tagged.get('.', None)
-		if full_stop==None:
-			full_stop=0
-		comma=tagged.get(',', None)
-		if comma==None:
-			comma=0
-		question_mark=tagged.get('?', None)
-		if question_mark==None:
-			question_mark=0
-		inverted_comma=tagged.get('\'', None)
-		if inverted_comma==None:
-			inverted_comma=0
-		colon=tagged.get(':', None)
-		if colon==None:
-			colon=0
-		semi_colon=tagged.get(';', None)
-		if semi_colon==None:
-			semi_colon=0
-		quotation_mark=tagged.get('"', None)
-		if quotation_mark==None:
-			quotation_mark=0
-		exclamation_mark=tagged.get('!', None)
-		if exclamation_mark==None:
-			exclamation_mark=0
-		at_mark=tagged.get('@', None)
-		if at_mark==None:
-			at_mark=0
-		ash_mark=tagged.get('#', None)
-		if ash_mark==None:
-			ash_mark=0
-		dollar_mark=tagged.get('$', None)
-		if dollar_mark==None:
-			dollar_mark=0
-		percentage_mark=tagged.get('%', None)
-		if percentage_mark==None:
-			percentage_mark=0
-		and_mark=tagged.get('&', None)
-		if and_mark==None:
-			and_mark=0
-		Punctuations=float(full_stop+comma+question_mark+inverted_comma+colon+semi_colon+quotation_mark+exclamation_mark+at_mark+ash_mark+dollar_mark+percentage_mark+and_mark)
-		Pausality=float(Punctuations/sentencecount)
-		return Pausality
+        wordLIST=list()
+        everyLINE=0
+        paragraphcount=0
+        sentencecount=0
+        Sentences1=[]
+        wordCount=0
+        for everyPARAGRAPH in lineLIST:
+            Sentences1=sent_tokenize(lineLIST[everyLINE])
+            newsentencecount=len(Sentences1)
+            sentencecount=sentencecount+newsentencecount
+            count1=0
+            for everysentence in Sentences1:
+                if count1<len(Sentences1)and len(Sentences1)>0:
+                    newSentences1=word_tokenize(Sentences1[count1])
+                    count1=count1+1
+                    c=0
+                    for everyword in newSentences1:
+                        lowercaseCHAR=newSentences1[c].lower()
+                        wordLIST.append(lowercaseCHAR)
+                        c=c+1
+            everyLINE=everyLINE+1
+        POS_text =nltk.pos_tag(wordLIST)
+        tagged = nltk.FreqDist(tag for (word, tag) in POS_text)
+        full_stop=tagged.get('.', None)
+        if full_stop==None:
+            full_stop=0
+        comma=tagged.get(',', None)
+        if comma==None:
+            comma=0
+        question_mark=tagged.get('?', None)
+        if question_mark==None:
+            question_mark=0
+        inverted_comma=tagged.get('\'', None)
+        if inverted_comma==None:
+            inverted_comma=0
+        colon=tagged.get(':', None)
+        if colon==None:
+            colon=0
+        semi_colon=tagged.get(';', None)
+        if semi_colon==None:
+            semi_colon=0
+        quotation_mark=tagged.get('"', None)
+        if quotation_mark==None:
+            quotation_mark=0
+        exclamation_mark=tagged.get('!', None)
+        if exclamation_mark==None:
+            exclamation_mark=0
+        at_mark=tagged.get('@', None)
+        if at_mark==None:
+            at_mark=0
+        ash_mark=tagged.get('#', None)
+        if ash_mark==None:
+            ash_mark=0
+        dollar_mark=tagged.get('$', None)
+        if dollar_mark==None:
+            dollar_mark=0
+        percentage_mark=tagged.get('%', None)
+        if percentage_mark==None:
+            percentage_mark=0
+        and_mark=tagged.get('&', None)
+        if and_mark==None:
+            and_mark=0
+        Punctuations=float(full_stop+comma+question_mark+inverted_comma+colon+semi_colon+quotation_mark+exclamation_mark+at_mark+ash_mark+dollar_mark+percentage_mark+and_mark)
+        Pausality=float(Punctuations/sentencecount)
+        return Pausality
 
     def getVerifiableFACTSperSENTENCE(self, lineLIST):
         wordLIST=list()
@@ -424,18 +423,18 @@ class falsificationDetector:
                     prev = None
                     current_chunk = []
                     for i in chunked:
-						if type(i) == Tree:
-							current_chunk.append(" ".join([token for token, pos in i.leaves()]))
-						elif current_chunk:
-							named_entity = " ".join(current_chunk)
-							continuous_chunk.append(named_entity)
-							current_chunk = []
-						else:
-							continue
+                        if type(i) == Tree:
+                            current_chunk.append(" ".join([token for token, pos in i.leaves()]))
+                        elif current_chunk:
+                            named_entity = " ".join(current_chunk)
+                            continuous_chunk.append(named_entity)
+                            current_chunk = []
+                        else:
+                            continue
                     parse_tree = nltk.ne_chunk(nltk.tag.pos_tag(everysentence.split()), binary=True)
                     for t in parse_tree.subtrees():
-						if t.label() == 'NE':
-							named_entities.append(t)
+                        if t.label() == 'NE':
+                            named_entities.append(t)
                     count1=count1+1
             everyLINE=everyLINE+1
         noofnamed_ENTITY=len(named_entities)
@@ -444,104 +443,104 @@ class falsificationDetector:
         return verifableFACTSperSENTENCE
 
     def getEMOTIVENESS(self, lineLIST):
-		wordLIST=list()
-		everyLINE=0
-		paragraphcount=0
-		sentencecount=0
-		Sentences1=[]
-		wordCount=0
-		for everyPARAGRAPH in lineLIST:
-			Sentences1=sent_tokenize(lineLIST[everyLINE])
-			newsentencecount=len(Sentences1)
-			sentencecount=sentencecount+newsentencecount
-			count1=0
-			for everysentence in Sentences1:
-				if count1<len(Sentences1)and len(Sentences1)>0:
-					newSentences1=word_tokenize(Sentences1[count1])
-					count1=count1+1
-					c=0
-					for everyword in newSentences1:
-						lowercaseCHAR=newSentences1[c].lower()
-						wordLIST.append(lowercaseCHAR)
-						c=c+1
-			everyLINE=everyLINE+1
-		POS_text =nltk.pos_tag(wordLIST)
-		tagged = nltk.FreqDist(tag for (word, tag) in POS_text)
-		Noun = tagged.get('NN', None)
-		if Noun ==None:
-			Noun=0
-		Proper_Noun=tagged.get('NNP', None)
-		if Proper_Noun ==None:
-			Proper_Noun=0
-		Plural_Noun=tagged.get('NNS', None)
-		if Plural_Noun==None:
-			Plural_Noun=0
-		Plural_Proper_Noun=tagged.get('NNPS', None)
-		if Plural_Proper_Noun==None:
-			Plural_Proper_Noun=0
-		Adj=tagged.get('JJ', None)
-		if Adj==None:
-			Adj=0
-		Comp_Adj=tagged.get('JJR', None)
-		if Comp_Adj==None:
-			Comp_Adj=0
-		Super_Adj=tagged.get('JJS', None)
-		if Super_Adj==None:
-			Super_Adj=0
-		Personal_Pronoun=tagged.get('PRP', None)
-		if Personal_Pronoun==None:
-			Personal_Pronoun=0
-		Possessive_Pronoun=tagged.get('PRP$', None)
-		if Possessive_Pronoun==None:
-			Possessive_Pronoun=0
-		Wh_Pronoun=tagged.get('WP', None)
-		if Wh_Pronoun==None:
-			Wh_Pronoun=0
-		Possesive_wh_Pronoun=tagged.get('WP$', None)
-		if Possesive_wh_Pronoun==None:
-			Possesive_wh_Pronoun=0
-		Adverb=tagged.get('RB', None)
-		if Adverb==None:
-			Adverb=0
-		Comp_Adverb=tagged.get('RBR', None)
-		if Comp_Adverb==None:
-			Comp_Adverb=0
-		Super_Adverb=tagged.get('RBS', None)
-		if Super_Adverb==None:
-			Super_Adverb=0
-		Wh_Adverb=tagged.get('WRB', None)
-		if Wh_Adverb==None:
-			Wh_Adverb=0
-		Verb=tagged.get('VB', None)
-		if Verb==None:
-			Verb=0
-		Past_Verb=tagged.get('VBD', None)
-		if Past_Verb==None:
-			Past_Verb=0
-		Gerund_Verb=tagged.get('VBG', None)
-		if Gerund_Verb==None:
-			Gerund_Verb=0
-		Past_Participle_Verb=tagged.get('VBN', None)
-		if Past_Participle_Verb==None:
-			Past_Participle_Verb=0
-		Non3rd_Verb=tagged.get('VBP', None)
-		if Non3rd_Verb==None:
-			Non3rd_Verb=0
-		thirdPerson_Verb=tagged.get('VPZ', None)
-		if thirdPerson_Verb==None:
-			thirdPerson_Verb=0
-		Emotiveness_denominator=float(Plural_Proper_Noun+Plural_Noun+Proper_Noun+Noun+Verb+Past_Verb+Gerund_Verb+Past_Participle_Verb+Non3rd_Verb+thirdPerson_Verb)
-		Modifiers=float(Adj+Comp_Adj+Super_Adj+Adverb+Comp_Adverb+Super_Adverb+Wh_Adverb)
-		Emotiveness=float(Modifiers/Emotiveness_denominator)
-		return Emotiveness
+        wordLIST=list()
+        everyLINE=0
+        paragraphcount=0
+        sentencecount=0
+        Sentences1=[]
+        wordCount=0
+        for everyPARAGRAPH in lineLIST:
+            Sentences1=sent_tokenize(lineLIST[everyLINE])
+            newsentencecount=len(Sentences1)
+            sentencecount=sentencecount+newsentencecount
+            count1=0
+            for everysentence in Sentences1:
+                if count1<len(Sentences1)and len(Sentences1)>0:
+                    newSentences1=word_tokenize(Sentences1[count1])
+                    count1=count1+1
+                    c=0
+                    for everyword in newSentences1:
+                        lowercaseCHAR=newSentences1[c].lower()
+                        wordLIST.append(lowercaseCHAR)
+                        c=c+1
+            everyLINE=everyLINE+1
+        POS_text =nltk.pos_tag(wordLIST)
+        tagged = nltk.FreqDist(tag for (word, tag) in POS_text)
+        Noun = tagged.get('NN', None)
+        if Noun ==None:
+            Noun=0
+        Proper_Noun=tagged.get('NNP', None)
+        if Proper_Noun ==None:
+            Proper_Noun=0
+        Plural_Noun=tagged.get('NNS', None)
+        if Plural_Noun==None:
+            Plural_Noun=0
+        Plural_Proper_Noun=tagged.get('NNPS', None)
+        if Plural_Proper_Noun==None:
+            Plural_Proper_Noun=0
+        Adj=tagged.get('JJ', None)
+        if Adj==None:
+            Adj=0
+        Comp_Adj=tagged.get('JJR', None)
+        if Comp_Adj==None:
+            Comp_Adj=0
+        Super_Adj=tagged.get('JJS', None)
+        if Super_Adj==None:
+            Super_Adj=0
+        Personal_Pronoun=tagged.get('PRP', None)
+        if Personal_Pronoun==None:
+            Personal_Pronoun=0
+        Possessive_Pronoun=tagged.get('PRP$', None)
+        if Possessive_Pronoun==None:
+            Possessive_Pronoun=0
+        Wh_Pronoun=tagged.get('WP', None)
+        if Wh_Pronoun==None:
+            Wh_Pronoun=0
+        Possesive_wh_Pronoun=tagged.get('WP$', None)
+        if Possesive_wh_Pronoun==None:
+            Possesive_wh_Pronoun=0
+        Adverb=tagged.get('RB', None)
+        if Adverb==None:
+            Adverb=0
+        Comp_Adverb=tagged.get('RBR', None)
+        if Comp_Adverb==None:
+            Comp_Adverb=0
+        Super_Adverb=tagged.get('RBS', None)
+        if Super_Adverb==None:
+            Super_Adverb=0
+        Wh_Adverb=tagged.get('WRB', None)
+        if Wh_Adverb==None:
+            Wh_Adverb=0
+        Verb=tagged.get('VB', None)
+        if Verb==None:
+            Verb=0
+        Past_Verb=tagged.get('VBD', None)
+        if Past_Verb==None:
+            Past_Verb=0
+        Gerund_Verb=tagged.get('VBG', None)
+        if Gerund_Verb==None:
+            Gerund_Verb=0
+        Past_Participle_Verb=tagged.get('VBN', None)
+        if Past_Participle_Verb==None:
+            Past_Participle_Verb=0
+        Non3rd_Verb=tagged.get('VBP', None)
+        if Non3rd_Verb==None:
+            Non3rd_Verb=0
+        thirdPerson_Verb=tagged.get('VPZ', None)
+        if thirdPerson_Verb==None:
+            thirdPerson_Verb=0
+        Emotiveness_denominator=float(Plural_Proper_Noun+Plural_Noun+Proper_Noun+Noun+Verb+Past_Verb+Gerund_Verb+Past_Participle_Verb+Non3rd_Verb+thirdPerson_Verb)
+        Modifiers=float(Adj+Comp_Adj+Super_Adj+Adverb+Comp_Adverb+Super_Adverb+Wh_Adverb)
+        Emotiveness=float(Modifiers/Emotiveness_denominator)
+        return Emotiveness
 
     def loadSwearing(self):
         self.swears = set()
         fk = open('swearing.txt', 'r')
         swears = fk.readlines()
-        for x in xrange(len(swears)):
-            self.swears.add(unicode(swears[x].rstrip().lower(), "utf-8"))
-        print "Swear/emotive word count: ", len(self.swears)
+        for x in range(len(swears)):
+            self.swears.add(swears[x].rstrip().lower())
+        print("Swear/emotive word count: ", len(self.swears))
 
     def isSwear(self, CHAR):
         if CHAR.lower() in self.swears:
@@ -550,102 +549,102 @@ class falsificationDetector:
             return False
 
     def getINFORMALITY(self, lineLIST):
-		wordLIST=list()
-		swearwordCOUNTER=0
-		slangCOUNTER=0
-		everyLINE=0
-		paragraphcount=0
-		sentencecount=0
-		Sentences1=[]
-		wordCount=0
-		for everyPARAGRAPH in lineLIST:
-			Sentences1=sent_tokenize(lineLIST[everyLINE])
-			newsentencecount=len(Sentences1)
-			sentencecount=sentencecount+newsentencecount
-			count1=0
-			for everysentence in Sentences1:
-				if count1<len(Sentences1)and len(Sentences1)>0:
-					newSentences1=word_tokenize(Sentences1[count1])
-					count1=count1+1
-					c=0
-					for everyword in newSentences1:
-						lowercaseCHAR=newSentences1[c].lower()
-						wordLIST.append(lowercaseCHAR)
-						c=c+1
-						if lowercaseCHAR in slangARRAY:
-						   slangCOUNTER=slangCOUNTER+1
-						if self.isSwear(lowercaseCHAR):
-						   swearwordCOUNTER=swearwordCOUNTER+1
-			everyLINE=everyLINE+1
-		totalINFORMAL=float(swearwordCOUNTER+slangCOUNTER)
-		informality=float(totalINFORMAL/sentencecount)
-		return informality
+        wordLIST=list()
+        swearwordCOUNTER=0
+        slangCOUNTER=0
+        everyLINE=0
+        paragraphcount=0
+        sentencecount=0
+        Sentences1=[]
+        wordCount=0
+        for everyPARAGRAPH in lineLIST:
+            Sentences1=sent_tokenize(lineLIST[everyLINE])
+            newsentencecount=len(Sentences1)
+            sentencecount=sentencecount+newsentencecount
+            count1=0
+            for everysentence in Sentences1:
+                if count1<len(Sentences1)and len(Sentences1)>0:
+                    newSentences1=word_tokenize(Sentences1[count1])
+                    count1=count1+1
+                    c=0
+                    for everyword in newSentences1:
+                        lowercaseCHAR=newSentences1[c].lower()
+                        wordLIST.append(lowercaseCHAR)
+                        c=c+1
+                        if lowercaseCHAR in slangARRAY:
+                           slangCOUNTER=slangCOUNTER+1
+                        if self.isSwear(lowercaseCHAR):
+                           swearwordCOUNTER=swearwordCOUNTER+1
+            everyLINE=everyLINE+1
+        totalINFORMAL=float(swearwordCOUNTER+slangCOUNTER)
+        informality=float(totalINFORMAL/sentencecount)
+        return informality
 
     def getAFFECT(self, lineLIST):
-		wordLIST=list()
-		positiveCOUNTER=0
-		negativeCOUNTER=0
-		everyLINE=0
-		sentencecount=0
-		Sentences1=[]
-		for everyPARAGRAPH in lineLIST:
-			Sentences1=sent_tokenize(lineLIST[everyLINE])
-			newsentencecount=len(Sentences1)
-			sentencecount=sentencecount+newsentencecount
-			count1=0
-			for everysentence in Sentences1:
-				if count1<len(Sentences1)and len(Sentences1)>0:
-					newSentences1=word_tokenize(Sentences1[count1])
-					count1=count1+1
-					c=0
-					for everyword in newSentences1:
-						lowercaseCHAR=newSentences1[c].lower()
-						wordLIST.append(lowercaseCHAR)
-						c=c+1
-						if positive(lowercaseCHAR, threshold=0.5):
-						   positiveCOUNTER=positiveCOUNTER+1
-						else:
-						   negativeCOUNTER=negativeCOUNTER+1
-		totalAFFECT=float(negativeCOUNTER+positiveCOUNTER)
-		Affect=float(totalAFFECT/sentencecount)
-		return Affect
+        wordLIST=list()
+        positiveCOUNTER=0
+        negativeCOUNTER=0
+        everyLINE=0
+        sentencecount=0
+        Sentences1=[]
+        for everyPARAGRAPH in lineLIST:
+            Sentences1=sent_tokenize(lineLIST[everyLINE])
+            newsentencecount=len(Sentences1)
+            sentencecount=sentencecount+newsentencecount
+            count1=0
+            for everysentence in Sentences1:
+                if count1<len(Sentences1)and len(Sentences1)>0:
+                    newSentences1=word_tokenize(Sentences1[count1])
+                    count1=count1+1
+                    c=0
+                    for everyword in newSentences1:
+                        lowercaseCHAR=newSentences1[c].lower()
+                        wordLIST.append(lowercaseCHAR)
+                        c=c+1
+                        if positive(lowercaseCHAR, threshold=0.5):
+                           positiveCOUNTER=positiveCOUNTER+1
+                        else:
+                           negativeCOUNTER=negativeCOUNTER+1
+        totalAFFECT=float(negativeCOUNTER+positiveCOUNTER)
+        Affect=float(totalAFFECT/sentencecount)
+        return Affect
 
     def getPRONOUNcountperSENTENCE(self, lineLIST):
-		wordLIST=list()
-		everyLINE=0
-		paragraphcount=0
-		sentencecount=0
-		Sentences1=[]
-		wordCount=0
-		for everyPARAGRAPH in lineLIST:
-			Sentences1=sent_tokenize(lineLIST[everyLINE])
-			newsentencecount=len(Sentences1)
-			sentencecount=sentencecount+newsentencecount
-			count1=0
-			for everysentence in Sentences1:
-				if count1<len(Sentences1)and len(Sentences1)>0:
-					newSentences1=word_tokenize(Sentences1[count1])
-					count1=count1+1
-					c=0
-					for everyword in newSentences1:
-						lowercaseCHAR=newSentences1[c].lower()
-						wordLIST.append(lowercaseCHAR)
-						c=c+1
-			everyLINE=everyLINE+1
-		POS_text =nltk.pos_tag(wordLIST)
-		tagged = nltk.FreqDist(tag for (word, tag) in POS_text)
-		Personal_Pronoun=tagged.get('PRP', None)
-		if Personal_Pronoun==None:
-			Personal_Pronoun=0
-		Possessive_Pronoun=tagged.get('PRP$', None)
-		if Possessive_Pronoun==None:
-			Possessive_Pronoun=0
-		Wh_Pronoun=tagged.get('WP', None)
-		if Wh_Pronoun==None:
-			Wh_Pronoun=0
-		Possesive_wh_Pronoun=tagged.get('WP$', None)
-		if Possesive_wh_Pronoun==None:
-			Possesive_wh_Pronoun=0
-		Pronoun_Count=float(Possessive_Pronoun+Personal_Pronoun+Possesive_wh_Pronoun+Wh_Pronoun)
-		Pronoun_CountperSENTENCE=float(Pronoun_Count/sentencecount)
-		return Pronoun_CountperSENTENCE
+        wordLIST=list()
+        everyLINE=0
+        paragraphcount=0
+        sentencecount=0
+        Sentences1=[]
+        wordCount=0
+        for everyPARAGRAPH in lineLIST:
+            Sentences1=sent_tokenize(lineLIST[everyLINE])
+            newsentencecount=len(Sentences1)
+            sentencecount=sentencecount+newsentencecount
+            count1=0
+            for everysentence in Sentences1:
+                if count1<len(Sentences1)and len(Sentences1)>0:
+                    newSentences1=word_tokenize(Sentences1[count1])
+                    count1=count1+1
+                    c=0
+                    for everyword in newSentences1:
+                        lowercaseCHAR=newSentences1[c].lower()
+                        wordLIST.append(lowercaseCHAR)
+                        c=c+1
+            everyLINE=everyLINE+1
+        POS_text =nltk.pos_tag(wordLIST)
+        tagged = nltk.FreqDist(tag for (word, tag) in POS_text)
+        Personal_Pronoun=tagged.get('PRP', None)
+        if Personal_Pronoun==None:
+            Personal_Pronoun=0
+        Possessive_Pronoun=tagged.get('PRP$', None)
+        if Possessive_Pronoun==None:
+            Possessive_Pronoun=0
+        Wh_Pronoun=tagged.get('WP', None)
+        if Wh_Pronoun==None:
+            Wh_Pronoun=0
+        Possesive_wh_Pronoun=tagged.get('WP$', None)
+        if Possesive_wh_Pronoun==None:
+            Possesive_wh_Pronoun=0
+        Pronoun_Count=float(Possessive_Pronoun+Personal_Pronoun+Possesive_wh_Pronoun+Wh_Pronoun)
+        Pronoun_CountperSENTENCE=float(Pronoun_Count/sentencecount)
+        return Pronoun_CountperSENTENCE

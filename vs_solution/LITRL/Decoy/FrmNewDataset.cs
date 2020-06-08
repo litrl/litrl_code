@@ -113,7 +113,6 @@ namespace Decoy
                     `satireScore` REAL, 
                     `notSatireScore` REAL,
                     `absurdity` REAL,
-                    `humor` REAL,
                     `pronouns` REAL,
                     `personalPronouns` REAL,
                     `impersonalPronouns` REAL,

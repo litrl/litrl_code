@@ -125,7 +125,7 @@ namespace Decoy
 
             //clickbait
             GraphPane clickbaitPane = new GraphPane();
-            clickbaitPane.Title.Text = "The LiTRL Clickbait Detector thinks the input text is...";
+            clickbaitPane.Title.Text = "The LiTRL Experimental Clickbait Detector thinks the input text is...";
             clickbaitPane.YAxis.Title = new AxisLabel("Amount", "Consolas", 12, Color.Black, true, false, false);
             clickbaitPane.XAxis.Title = new AxisLabel("Clickbait Detection Scores", "Consolas", 12, Color.Black, true, false, false);
             clickbaitPane.XAxis.Type = AxisType.Text;
@@ -139,7 +139,7 @@ namespace Decoy
 
             //satire
             GraphPane satirePane = new GraphPane();
-            satirePane.Title.Text = "The LiTRL Satire Detector thinks the input text is...";
+            satirePane.Title.Text = "The LiTRL Experimental Satire Detector thinks the input text is...";
             satirePane.YAxis.Title = new AxisLabel("Amount", "Consolas", 12, Color.Black, true, false, false);
             satirePane.XAxis.Title = new AxisLabel("Satire Detection Scores", "Consolas", 12, Color.Black, true, false, false);
             satirePane.XAxis.Type = AxisType.Text;
@@ -152,7 +152,7 @@ namespace Decoy
 
             //falsifications
             GraphPane falsificationPane = new GraphPane();
-            falsificationPane.Title.Text = "The LiTRL Falsifications Detector thinks the input text is...";
+            falsificationPane.Title.Text = "The LiTRL Experimental Falsifications Detector thinks the input text is...";
             falsificationPane.YAxis.Title = new AxisLabel("Amount", "Consolas", 12, Color.Black, true, false, false);
             falsificationPane.XAxis.Title = new AxisLabel("Falsification Detection Scores", "Consolas", 12, Color.Black, true, false, false);
             falsificationPane.XAxis.Type = AxisType.Text;

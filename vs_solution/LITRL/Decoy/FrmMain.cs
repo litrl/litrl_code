@@ -228,7 +228,7 @@ namespace Decoy
             if (e.Button == MouseButtons.Left)
             {
                 //note: this won't work all the time because the Text won't nessecarily match what is on the page due to encoding
-                c.Browser.GetBrowser().Find(0, clickbaitPanel.LstViewClickbait.SelectedItems[0].SubItems[4].Text, true, false, false);
+                //c.Browser.GetBrowser().Find(0, clickbaitPanel.LstViewClickbait.SelectedItems[0].SubItems[4].Text, true, false, false);
             }
             else if (e.Button == MouseButtons.Right)
             {

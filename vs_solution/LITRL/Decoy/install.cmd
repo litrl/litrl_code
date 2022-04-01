@@ -9,6 +9,7 @@ set path=C:\Python36
 echo Setting up Python packages needed by NVS...
 python -m pip install virtualenv
 python -m virtualenv pydeps
+".\pydeps\Scripts\python" -m pip install mysqlclient==1.4.6
 ".\pydeps\Scripts\python" -m pip install scipy==1.4.1
 ".\pydeps\Scripts\python" -m pip install numpy==1.18.5
 ".\pydeps\Scripts\python" -m pip install nltk==3.5

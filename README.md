@@ -31,21 +31,18 @@ Rubin, Victoria L.; Brogly, Chris; Conroy, Nadia; Chen, Yimin; Cornwell, Sarah E
 Various plugins have already been attempted in this area. We decided to develop a separate research tool for deception with a simple user interface that allowed for easier real-world testing of our group's previous work.
 
 ## System Requirements
-- Windows 7, 8.1 (untested), or 10.
+- Windows 10 or 11.
 - 1280x720 (720p) minimum screen resolution.
 - 1920x1080 (1080p) recommended screen resolution.
-- 4:3 (Square) monitors may work but are not supported.
 - Relatively modern quad-core 64-bit CPU.
 - 4GB of RAM.
 
 ## Installing the software
-Prerequisites to install:
-1) VC++ 2017 redistributable: https://aka.ms/vs/15/release/vc_redist.x64.exe
-2) .NET 4.6.2 (minimum) runtime: https://dotnet.microsoft.com/download/thank-you/net462
+If you run into issues, try installing the following first:
+1) VC++ 2019 redistributable: https://aka.ms/vs/17/release/vc_redist.x64.exe
+2) .NET 4.8 runtime: https://dotnet.microsoft.com/en-us/download/dotnet-framework/thank-you/net48-web-installer
 
-Then run the installer for the Litrl Browser. Dependencies are not included.
-
-The installer package for modern Windows systems (7, 8.1, 10) is available under "Releases." The installer takes a few minutes - please be patient! A lot of work is currently done with a batch script - the command prompt may be open for a few minutes - do not close it. The default install location is your desktop, where one folder and one shortcut will be created (other locations are untested).
+The installer package for Windows 10 and 11 is available under "Releases." The installer takes a few minutes - please be patient! A lot of work is currently done with a batch script - the command prompt may be open for a few minutes - do not close it. The default install location is your desktop, where one folder and one shortcut will be created (other locations are untested).
 
 ## Uninstalling the software
 Simply delete the Litrl Browser shortcut and LITRL folder from your desktop. That's it!

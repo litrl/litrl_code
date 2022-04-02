@@ -1,6 +1,6 @@
 # Litrl Browser
 
-Download latest version of Litrl Browser: https://github.com/litrl/litrl_code/releases/tag/experimental-0.15.0.1
+Download latest version of Litrl Browser: https://github.com/litrl/litrl_code/releases/tag/experimental-0.15.0.1b
 
 Demonstration: https://www.youtube.com/watch?v=OtitQ-f4AL4
 
